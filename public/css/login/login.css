@@ -1,0 +1,186 @@
+*{
+    margin: 0;
+    padding: 0;
+    color: #123859;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+/*
+#F24822 Naranjado
+#343A40 Plomo oscuro
+#29D884 verde
+
+*/
+
+#contenedor{
+    display: grid;
+    height: 100vh;
+    grid-template-areas: "slide inicio_sesion";
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+#slide{
+    grid-area: slide;
+    /*background: red;*/
+}
+
+#inicio_sesion{
+    
+    grid-area: inicio_sesion;
+    /*background: rgb(205, 23, 211);*/
+    display: grid;
+    grid-template-areas: "inicio_sesion_uno inicio_sesion_dos inicio_sesion_tres";
+    grid-template-rows: 1fr;
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+}
+
+#inicio_sesion_uno{
+    grid-area: inicio_sesion_uno;
+    /*background: green;*/
+}
+
+#inicio_sesion_dos{
+    grid-area: inicio_sesion_dos;
+    /*background: yellow;*/
+    display: grid;
+    grid-template-areas: "inicio_sesion_dos_top"
+                            "inicio_sesion_dos_bottom " ;
+
+    grid-template-rows: 0.5fr 1fr; 
+    grid-template-columns: 1fr;
+}
+
+#inicio_sesion_tres{
+    grid-area: inicio_sesion_tres;
+    /*background: orange;*/
+}
+
+
+#inicio_sesion_dos_top{
+    grid-area: inicio_sesion_dos_top;
+    /*background: pink;*/
+}
+
+#inicio_sesion_dos_bottom{
+    grid-area: inicio_sesion_dos_bottom;
+    /*background: blue;*/
+}
+
+#inicio_sesion_dni{
+    width: 100%;
+    height: 30px;
+    border-width: 0.5px;
+    border-radius: 5px;
+
+    box-sizing: border-box;
+    border: 1px solid #123859;
+
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+
+}
+
+#inicio_sesion_dni:focus{
+    border-color: #F24822;
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+}
+
+
+
+.inicio_sesion_box_bottom{
+    /*background: cadetblue;*/
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+}
+
+#inicio_sesion_button_enviar{
+    background: #F24822;
+    color: white;
+    border-color: #F24822;
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#inicio_sesion_titulo , #inicio_sesion_subtitulo{
+    margin-top: 50px;
+
+}
+
+#slide_imagen{
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+
+}
+
+#inicio_sesion_box_error{
+    color: red;
+    font-weight: bold;
+}
+
+
+@media only screen and (max-width: 620px) {
+
+    #contenedor{
+
+        grid-template-areas: "inicio_sesion";
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+    }
+
+    #inicio_sesion{
+
+        grid-template-areas: "inicio_sesion_dos";
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+    }
+
+    #inicio_sesion_dos{
+        grid-template-areas: "inicio_sesion_dos_top " "inicio_sesion_dos_bottom " ;
+        grid-template-rows: 0.2fr 1fr; 
+        grid-template-columns: 1fr;
+    }
+
+    #slide{
+        display: none;
+    }
+
+    /*Modificar el div del inicio de sesión*/
+
+
+    .inicio_sesion_box_top {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .inicio_sesion_box_bottom{
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+    }
+        
+    #inicio_sesion_button_enviar{
+        width: 80%;
+        height: 50px;
+        border-radius: 5px;
+    }
+    
+    #inicio_sesion_titulo{
+        width: 80%;
+        padding: 10px;
+        font-size: 24px;
+    }
+    #inicio_sesion_dni{
+        width: 80%;
+    }
+  }
