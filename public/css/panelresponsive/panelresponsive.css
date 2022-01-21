@@ -124,12 +124,8 @@
       /* For mobile phones: */
   
       .item{
-          border: 3px solid #ffffff;
           padding: 1rem;
-          font-family: arial;
-          color: white;
           text-align: center;
-          background: linear-gradient(135deg, rgb(97, 234, 222) 0%, rgb(30, 168, 255) 100%);
           display: grid;
           grid-template-columns: 1fr;
           gap: 10px;

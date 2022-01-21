@@ -567,3 +567,23 @@ a{
 .w100p {
     width: 100%;
 }
+
+
+
+
+@media only screen and (max-width: 620px) {
+
+    .wrap_document_format_head_icon img{
+        width: 90%;
+        height: 100%;
+    }
+    .wrap_document_format_head_title p {
+        font-size: 16px;
+    }
+    .wrap_document_format_head_code p {
+        font-size: 10px;
+    }
+    .item_format_select ,.item_format_input{
+        width: 100%;
+    }
+  }

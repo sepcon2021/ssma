@@ -461,20 +461,20 @@ $(document).ready(function () {
                                 <div class="contenidoRepuestaStart">
                                     <h4>Acción propuesta</h4>
                                 </div>
-                                <div class="contenidoRepuestaStart"> <textarea class="item_format_textarea"> ${jsonDetalleAccion.contenido.detalleSeguimiento.accion_propuesta} </textarea> </p>
+                                <div class="contenidoRepuestaStart"> <textarea class="item_format_textarea" readonly> ${jsonDetalleAccion.contenido.detalleSeguimiento.accion_propuesta} </textarea> </p>
                                 </div>
 
                                 <div class="contenidoRepuestaStart">
                                     <h4>Fecha de inicio</h4>
                                 </div>
                                 <div class="contenidoRepuestaStart"> 
-                                    <input type="date" value="${(jsonDetalleAccion.contenido.detalleSeguimiento.fecha).split(" ")[0]}">
+                                    <input type="date" value="${(jsonDetalleAccion.contenido.detalleSeguimiento.fecha).split(" ")[0]}" readonly>
                                 </div>
                                 <div class="contenidoRepuestaStart">
                                     <h4>Fecha de cumplimiento</h4>
                                 </div>
                                 <div class="contenidoRepuestaStart"> 
-                                    <input type="date" value="${jsonDetalleAccion.contenido.detalleSeguimiento.fecha_cumplimiento}">
+                                    <input type="date" value="${jsonDetalleAccion.contenido.detalleSeguimiento.fecha_cumplimiento}" readonly>
                                 </div>
 
                             </div>
