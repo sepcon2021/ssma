@@ -61,32 +61,10 @@ ul.tabs li a .tab-text {
     text-align: justify;
 }
 
-@media screen and (max-width: 600px) {
-    ul.tabs li {
-        width: 40%;
-    }
-    ul.tabs li a {
-        padding: 15px 0px;
-    }
-    .secciones article {
-        padding: 10px;
-    }
-    .div-table {
-        padding-top: 150px;
-        width: 100%;
-    }
-    .styled-table {
-        width: 100%;
-        display: block;
-        overflow-x: auto;
-    }
-
-}
 
 .styled-table {
     border-collapse: collapse;
-    /*   margin: 25px 0;*/
-    font-size: 0.9em;
+    font-size: 16px;
     font-family: sans-serif;
     width: 100%;
     top: 50px;
@@ -197,3 +175,30 @@ ul.tabs li a .tab-text {
       width: 400px;
       height: 300px;
   }
+
+  .font_title_big{
+      font-size: 12px;
+  }
+
+  
+@media screen and (max-width: 600px) {
+    ul.tabs li {
+        width: 40%;
+    }
+    ul.tabs li a {
+        padding: 15px 0px;
+    }
+    .secciones article {
+        padding: 10px;
+    }
+    .div-table {
+        padding-top: 150px;
+        width: 100%;
+    }
+    .styled-table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+}

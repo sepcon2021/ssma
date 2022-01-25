@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/documento/container_documento.css?<?php echo constant('VERSION'); ?>">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/documento/general_format.css?<?php echo constant('VERSION'); ?>">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/prueba.css?<?php echo constant('VERSION'); ?>">
-
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/seguimiento.css?<?php echo constant('VERSION'); ?>">
 
     <title>Control Documentario SSMA</title>
 </head>
@@ -79,7 +79,6 @@
 
     <script src="<?php echo constant('URL'); ?>public/js/jquery.js"></script>
     <script src="<?php echo constant('URL'); ?>public/js/funciones.js?<?php echo constant('VERSION'); ?>"></script>
-    
     <script src="<?php echo constant('URL'); ?>public/js/panelresponsive/panelresponsive.js?<?php echo constant('VERSION'); ?>"></script>
 
 

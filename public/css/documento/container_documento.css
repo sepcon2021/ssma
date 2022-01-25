@@ -1,4 +1,4 @@
-.container_documento{
+.container_documento , .container_reporte{
     overflow: scroll;
     overflow-x: auto;
     overflow-y:auto;
@@ -25,6 +25,7 @@
 #container_documento_popular{
     height: 60%;
     width: 98%;
+    font-size: 18px;
 }
 #container_documento_popular_titulo , #container_documento_otros_titulo{
     display: flex;

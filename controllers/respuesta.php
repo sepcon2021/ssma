@@ -31,5 +31,20 @@ class Respuesta{
         // tell browser that its a json data
         return json_encode($return);
     }
+
+    function enviarRespuestaExcel($data){
+
+        $return["state"] = "false";
+        $return["result"] = [];
+
+        if (strlen($data) > 0) {
+            $return["state"] = "true";
+            $return["result"] = $data;
+        }
+
+        header('Content-Type: application/json');
+        // tell browser that its a json data
+        return json_encode($return);
+    }
 }
 ?>

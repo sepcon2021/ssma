@@ -61,8 +61,11 @@ $(function () {
         }
 
         if(indexPage == REPORTES){
-            $(".mainpage").load("views/dashboard/reporte.html");
+            $.post(RUTA + 'reporte/render', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
             removeClass()
+
         }
         if(indexPage == ESTADISTICA){
             $(".mainpage").load("views/dashboard/estadistica.html");

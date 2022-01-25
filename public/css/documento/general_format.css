@@ -206,7 +206,7 @@ input[type = "file"]{
 figure{
     width: 20%;
 }
-img{
+figure img{
     width: 30%;
 }
 figcaption{
@@ -216,7 +216,7 @@ figcaption{
 }
 
 /* LOAD */
-.wrap_load{
+.wrap_load , .container_reporte_load{
     display: grid;
     grid-template-areas: "wrap_load_container"
                             "wrap_load_message";
@@ -286,6 +286,17 @@ figcaption{
     color: white;
     cursor: grab;
     font-size: 18px;
+}
+.button_report_download{
+    background: #29D884;
+    border-radius: 5px;
+    border-color: transparent;
+    color: white;
+    cursor: grab;
+    font-size: 16px;
+    margin-left: 20px;
+    padding: 5px;
+    width: 120px;
 }
 
 a{
@@ -482,6 +493,7 @@ a{
 }
 
 
+
 .w5p {
     width: 5%;
 }
@@ -569,6 +581,9 @@ a{
 }
 
 
+.img_report{
+    height: 80px;
+}
 
 
 @media only screen and (max-width: 620px) {
