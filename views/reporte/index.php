@@ -20,11 +20,11 @@
                     <select class="item_format_select" name="tipo_documento" id="tipo_documento">
                         <option value="" disabled="" selected="" hidden=""> Seleccionar</option>
 
-                        <option value="1">Tarjetas Top </option>
+                        <option value=1>Tarjetas Top </option>
+                        <option value=2>Inspección Planeada de Seguridad </option>
                         <option value="php/inspecciones.php">Inspección Gerencial </option>
                         <option value="#">Suspención de Trabajos </option>
                         <option value="#">Auditoria PTAR </option>
-                        <option value="php/seguridad.php">Inspección Planeada de Seguridad </option>
                         <option value="php/repoincidencia.php">Reporte de Incidencias </option>
                         <option value="php/opt.php">OPT </option>
                         <option value="php/riesgos.php">Riesgos Críticos </option>

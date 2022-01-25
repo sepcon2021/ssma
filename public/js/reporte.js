@@ -12,6 +12,9 @@ $(function () {
     const DATE = 2;
     const INPUT = 3;
 
+    const TOP = 1;
+    const SEGURIDAD = 2;
+    const INSPECCION = 3;
 
  
 
@@ -49,6 +52,7 @@ $(function () {
         let form = new FormData(this);
         let formJson = $(this).serializeArray();
 
+        let tipoDocumento = formJson[0].value;
         let proyecto = getProyecto(formJson[1].value);
         let fecha_inicio = formJson[2].value;
         let fecha_fin = formJson[3].value;
@@ -63,8 +67,8 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 $(".wrap_load").hide();
-
-                $(".mainpage").html(htmlTopReport(data,proyecto,fecha_inicio,fecha_fin));
+       
+                chooseTypeFormat(data,tipoDocumento,proyecto,fecha_inicio,fecha_fin);                
                 downloadReport( formJson);
                 goHome();
 
@@ -73,6 +77,24 @@ $(function () {
 
 
     });
+
+    function chooseTypeFormat(data,typeDocument,proyecto,fecha_inicio,fecha_fin){
+
+        let contentHTml = ``;
+
+        if(typeDocument == TOP){
+            contentHTml = htmlTopReport(data,proyecto,fecha_inicio,fecha_fin,'Tops');            
+        }else if(typeDocument == SEGURIDAD){
+            contentHTml = htmlSeguridad(data,proyecto,fecha_inicio,fecha_fin,'Inspección planeada de seguridad');
+        }else if(typeDocument == INSPECCION){
+    
+        }else {
+
+        }
+
+        $(".mainpage").html(contentHTml);
+
+    }
 
     function downloadReport(formJson) {
 

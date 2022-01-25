@@ -36,10 +36,12 @@
                 <input type="hidden" id="usuario" name="usuario">
 
                 <div class="box_format">
+
                     <!--TITLE ELEMENT-->
                     <div class="item_format">
                         <label for="">Proyecto</label>
                     </div>
+
                     <!--CONTENT ELEMENT-->
                     <div class="item_format">
                         <select class="item_format_select" name="proyecto" id="proyecto">
@@ -54,11 +56,17 @@
                             <option value="9">Obras Electromecánicas Varias</option>
                         </select>
                     </div>
+
                     <!-- ERRROR ELEMENT -->
                     <div class="item_format">
                         <p class="error_message" id="proyecto_error"></p>
                     </div>
+                    
                 </div>
+
+
+
+
 
                 <div class="box_format">
                     <!--TITLE ELEMENT-->

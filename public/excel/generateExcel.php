@@ -8,7 +8,7 @@ class GenerateExcel
     const FORMATO1 = 1;
     const FORMATO2 = 2;
 
-    function typeFormaTops($type, $list)
+    function typeFormTops($type, $list)
     {
         $url = '';
         switch ($type) {
@@ -713,5 +713,483 @@ class GenerateExcel
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         $objWriter->save('public/reports/matriztops.xlsx');
         return "public/reports/matriztops.xlsx";
+    }
+
+
+    function typeFormSeguridad($type, $list)
+    {
+        $url = '';
+        switch ($type) {
+            case self::FORMATO1:
+                $url = $this->generateSeguridadFormato1($list);
+                break;
+            case self::FORMATO2:
+                $url = $this->generateSeguridadFormato2($list);
+                break;
+        }
+
+        return $url;
+    }
+
+
+    function generateSeguridadFormato1($list)
+    {
+
+        // Se crea el objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        // Se asignan las propiedades del libro
+        $objPHPExcel->getProperties()->setCreator("Helena Minaya"); // Nombre del autor
+        $objPHPExcel->getProperties()->setLastModifiedBy("Helena Minaya"); //Ultimo usuario que lo modificó
+        $objPHPExcel->getProperties()->setTitle("Inspeccion de Seguridad"); // Titulo
+        $objPHPExcel->getProperties()->setSubject("Reporte Excel con PHP y MySQL"); //Asunto
+        $objPHPExcel->getProperties()->setDescription("Inspeccion Planeada de Seguridad"); //Descripción
+        $objPHPExcel->getProperties()->setKeywords("Inspeccion Seguridad"); //Etiquetas
+        $objPHPExcel->getProperties()->setCategory("Reporte excel"); //Categorias
+
+        $Titulo = array(
+            'font'  => array(
+                'bold'  => true,
+                'size'  => 14,
+                'name'  => 'Verdana'
+            )
+        );
+
+        $TituloTabla = array(
+            'font'  => array(
+                'bold'  => true,
+                'size'  => 9,
+                'name'  => 'Arial'
+            )
+        );
+
+        // Crea un nuevo objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        //combinar celdas
+        $objPHPExcel->getActiveSheet()->mergeCells('A3:N3');
+
+        //estilo de fuentes
+        $objPHPExcel->getActiveSheet()->getStyle('A3')->applyFromArray($Titulo);
+        $objPHPExcel->getActiveSheet()->getStyle('A5:W5')->applyFromArray($TituloTabla);
+
+        //alineacion
+        $objPHPExcel->getActiveSheet()->getStyle('A3:M3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('A5:Z5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        //Titulo 
+        $objPHPExcel->getActiveSheet()->setCellValue('A3', 'INSPECCIÓN PLANEADA DE SEGURIDAD');
+        $objPHPExcel->getActiveSheet()->getStyle('A5:Z2000')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $objPHPExcel->getActiveSheet()->getStyle('A5:Z2000')->getAlignment()->setWrapText(true);
+
+        //ancho de columnas
+        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(22);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(40);
+
+
+        //alto de la fila
+        $objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(50);
+
+        // Agregar Informacion
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('A5', 'ITEM');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('B5', 'PROYECTO');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('C5', 'AREA');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D5', 'UBICACIÓN');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('E5', 'FECHA DE LA INSPECCIÓN');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('F5', 'INSPECCIÓN REALIZADA POR');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('G5', 'TIPO DE INSPECCIÓN');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('H5', 'CONDICIÓN O ACTO SUBESTANDAR');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('I5', 'EVIDENCIA DE LO ENCONTRADO (REGISTRO, IMAGEN O FOTO, OTROS)');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('J5', 'ACCIÓN CORRECTIVA');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('K5', 'CLASIFICACIÓN');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('L5', 'DIAS DE IMPLEMENTACIÓN');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('M5', 'FECHA DE IMPLEMENTACIÓN');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('N5', 'RESPONSABLE DE LA EJECUCIÓN');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('O5', 'EVIDENCIA DE LA ACCIÓN  CORRECTIVA IMPLEMENTADA (REGISTRO, IMAGEN O FOTO)');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('P5', 'COMENTARIOS ADICIONALES');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Q5', 'Registro');
+
+
+
+        //aca iran los datos de la tabla
+        $fila = 6;
+        $item = 1;
+
+
+        foreach ($list as $item) {
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('A' . $fila,);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('B' . $fila, $item['proyecto']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('C' . $fila, $item['areaNombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('D' . $fila, $item['ubicacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('E' . $fila, $item['fechaInspeccion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('F' . $fila, $item['inspeccionado']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('G' . $fila, $item['tipo']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('H' . $fila, $item['condicion']);
+
+            $evidencia = explode(",", $item['fotos']);
+
+            $cantidad = 1;
+
+            foreach ($evidencia as $elemento) {
+
+                if (strlen($elemento) > 0) {
+
+                    if (strpos($elemento, '.jpg') > 0 || strpos($elemento, '.png') > 0) {
+
+                        $foto = "public/photos/" . $elemento;
+
+                        if ($elemento != '' && file_exists($foto)) {
+                            $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(200);
+                            $objDrawing = new PHPExcel_Worksheet_Drawing();
+                            $objDrawing->setOffsetX(1);
+                            $objDrawing->setOffsetY($cantidad);
+                            $objDrawing->setCoordinates('I' . $fila);
+                            $objDrawing->setName($elemento);
+                            $objDrawing->setDescription(constant("URL") . "photos/" . $elemento);
+                            $objDrawing->setPath("public/photos/" . $elemento);
+                            $objDrawing->setHeight(50);
+                            $objDrawing->setHeight(50);
+                            $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+                        }
+                    }
+                }
+                $cantidad += 50;
+            }
+
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('J' . $fila, $item['accion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('K' . $fila, $item['clasificacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('L' . $fila, $item['diasImplementacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('M' . $fila, $item['fechaCumplimiento']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('N' . $fila, $item['responsable']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Q' . $fila, $item['registro']);
+
+            $fila++;
+            $item++;
+        }
+        // Renombrar Hoja
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('public/reports/seguridadFormato1.xlsx');
+        return 'public/reports/seguridadFormato1.xlsx';
+    }
+
+    function generateSeguridadFormato2($list)
+    {
+
+
+        // Se crea el objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        // Se asignan las propiedades del libro
+        $objPHPExcel->getProperties()->setCreator("SEPCON"); // Nombre del autor
+        $objPHPExcel->getProperties()->setLastModifiedBy("SEPCON"); //Ultimo usuario que lo modificó
+        $objPHPExcel->getProperties()->setTitle("Matriz Reporte Inspecciones Planificadas SSMA"); // Titulo
+        $objPHPExcel->getProperties()->setSubject("reporte"); //Asunto
+        $objPHPExcel->getProperties()->setDescription("reporte"); //Descripción
+        $objPHPExcel->getProperties()->setKeywords("ssma"); //Etiquetas
+        $objPHPExcel->getProperties()->setCategory("Reporte excel"); //Categorias
+
+        $Titulo = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 14,
+                'name' => 'Verdana',
+            )
+        );
+
+        $subTitulo = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 9,
+                'name' => 'Verdana',
+                'color' => array('rgb' => 'FF0000'),
+            )
+        );
+
+        $TituloTabla = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 9,
+                'name' => 'Arial',
+            )
+        );
+
+        $borderCellRight = array(
+            'borders' => array(
+                'right' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('rgb' => '000000'),
+                ),
+            ),
+        );
+
+        $borderCellLeft = array(
+            'borders' => array(
+                'left' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('rgb' => '000000'),
+                ),
+            ),
+        );
+
+        $borderCellAll = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('rgb' => '000000'),
+                ),
+            ),
+        );
+
+        $objPHPExcel->getActiveSheet()->getStyle('A1:Z100')->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => 'FFFFFF',
+            ),
+        ));
+
+
+        $backgroundCellRed = array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => 'FF0000',
+            ),
+        );
+
+        $backgroundCellYellowLight = array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => 'FFFF00',
+            ),
+        );
+
+        $backgroundCellGreen = array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => '00DD00',
+            ),
+        );
+
+        //estilo de fuentes
+        $objPHPExcel->getActiveSheet()->getStyle('D2')->applyFromArray($Titulo);
+        $objPHPExcel->getActiveSheet()->getStyle('B8:Q8')->applyFromArray($TituloTabla);
+
+
+        //Alineación de todos las celdas centradas
+        $objPHPExcel->getActiveSheet()->getStyle('A1:Z100')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:Z100')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        $objPHPExcel->getActiveSheet()->getStyle('B2:Z2000')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('B2:Z2000')->getAlignment()->setWrapText(true);
+
+
+        //Alineación de la seccion de leyenda de acronimos
+        $objPHPExcel->getActiveSheet()->getStyle('I4:K7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+        $objPHPExcel->getActiveSheet()->getStyle('I4:K7')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+
+        $objPHPExcel->getActiveSheet()->getStyle('I4:K7')->getAlignment()->setVertical(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+        $objPHPExcel->getActiveSheet()->getStyle('I4:K7')->getAlignment()->setWrapText(true);
+
+
+
+
+        // Bordes que faltaban completar a los costado del reporte
+        $objPHPExcel->getActiveSheet()->getStyle('B4')->applyFromArray($borderCellLeft);
+        $objPHPExcel->getActiveSheet()->getStyle('B7')->applyFromArray($borderCellLeft);
+        $objPHPExcel->getActiveSheet()->getStyle('S4:S7')->applyFromArray($borderCellRight);
+
+
+
+
+        // =====================================CABECERA 1  DEL EXCEL ===================================================
+
+        $objPHPExcel->getActiveSheet()->getStyle('B2:S3')->applyFromArray($borderCellAll);
+
+        //LOGO DE LA EMPRESA
+        $objPHPExcel->getActiveSheet()->mergeCells('B2:C3');
+        $objPHPExcel->getActiveSheet()->getRowDimension(2)->setRowHeight(50);
+        $objDrawing = new PHPExcel_Worksheet_Drawing();
+        $objDrawing->setCoordinates('B2');
+        $objDrawing->setName('nueva imagen');
+        $objDrawing->setDescription('imagen ');
+        $objDrawing->setPath("public/img/logo.png");
+        $objDrawing->setHeight(80);
+        $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+        $objDrawing->setOffsetX(25);
+        $objDrawing->setOffsetY(5);
+
+
+        //TITULO DEL REPORTE
+        $objPHPExcel->getActiveSheet()->mergeCells('D2:O3');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D2', 'MATRIZ DE REPORTE INSPECCIONES PLANIFICADAS SSMA');
+
+        //FECHA Y REVISION DEL DOCUMENTO
+        $objPHPExcel->getActiveSheet()->getRowDimension('2')->setRowHeight(60);
+        $objPHPExcel->getActiveSheet()->mergeCells('P2:S3');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('P2', "Código: \n Revisión:0 \n Emisión:13/06/2021 \n Página: 1 de 1 ");
+
+
+        // =====================================CABECERA 2 DEL EXCEL ===================================================
+
+
+        $objPHPExcel->getActiveSheet()->getStyle('B5:G6')->applyFromArray($borderCellAll);
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B5:C5');
+        $objPHPExcel->getActiveSheet()->getStyle('B5')->applyFromArray($TituloTabla);
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('B5', 'SEDE/PROYECTO:');
+
+        $objPHPExcel->getActiveSheet()->mergeCells('D5:G5');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D5', 'HUDBAY/PROYECTO 20PP03 - NUEVA LÍNEA DE RELAVES ESTE - TMF');
+
+        $objPHPExcel->getActiveSheet()->mergeCells('B6:C6');
+        $objPHPExcel->getActiveSheet()->getStyle('B6')->applyFromArray($TituloTabla);
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('B6', 'ELABORADO POR:');
+
+        $objPHPExcel->getActiveSheet()->mergeCells('D6:G6');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D6', 'SSMA');
+
+        // =====================================CUERPO DEL EXCEL ===================================================
+
+
+        //ancho de columnas
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(8);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(25);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(40);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getRowDimension('8')->setRowHeight(50);
+
+
+        // Cabecera del cuerpo
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('B8', 'item');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('C8', "Proyecto");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D8', 'Fecha de la inspección');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('E8', 'Área:');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('F8', 'Ubicación');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('G8', "Inspección realizada por");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('H8', "Tipo de inspección");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('I8', "Condición o Acto subestandar");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('J8', "Descripción del acto u codición subestandra encontrado");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('K8', "Evidencia de lo encontrado \n (Registro,imagen i foto,otros)");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('L8', "Acción correctiva");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('M8', "Clasificación");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('N8', "Dias de implementación");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('O8', "Fecha de implementación");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('P8', "Responsable de la ejecución");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Q8', "Evidencia de la acción correctiva implementada \n  (Registro,imagen i foto,otros)");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('R8', "Estado de la correción");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('S8', "Comentarios finales");
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('T8', "Registro");
+
+        $fila = 9;
+
+        foreach ($list as $item) {
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('B' . $fila, '');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('C' . $fila, $item['proyecto']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('D' . $fila, $item['fechaInspeccion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('E' . $fila, $item['areaNombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('F' . $fila, $item['ubicacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('G' . $fila, $item['inspeccionado']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('H' . $fila, $item['tipoObservacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('I' . $fila, $item['condicion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('J' . $fila, '');
+
+
+            $evidencia = explode(",", $item['fotos']);
+            $cantidad = 1;
+
+            foreach ($evidencia as $elemento) {
+
+                if (strlen($elemento) > 0) {
+
+                    if (strpos($elemento, '.jpg') > 0 || strpos($elemento, '.png') > 0) {
+
+                        $foto = "public/photos/" . $elemento;
+
+                        if ($elemento != '' && file_exists($foto)) {
+                            $objPHPExcel->getActiveSheet()->getRowDimension($fila)->setRowHeight(200);
+                            $objDrawing = new PHPExcel_Worksheet_Drawing();
+                            $objDrawing->setOffsetX(1);
+                            $objDrawing->setOffsetY($cantidad);
+                            $objDrawing->setCoordinates('K' . $fila);
+                            $objDrawing->setName($elemento);
+                            $objDrawing->setDescription(constant("URL") . "photos/" . $elemento);
+                            $objDrawing->setPath("public/photos/" . $elemento);
+                            $objDrawing->setHeight(50);
+                            $objDrawing->setHeight(50);
+                            $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+                        }
+                    }
+                }
+                $cantidad += 50;
+            }
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('L' . $fila, $item['accion']);
+
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('M' . $fila, $item['clasificacion']);
+
+            if ($item['clasificacion'] == "A") {
+                $objPHPExcel->getActiveSheet()->getStyle('M' . $fila)->getFill()->applyFromArray($backgroundCellRed);
+            }
+            if ($item['clasificacion'] == "B") {
+                $objPHPExcel->getActiveSheet()->getStyle('M' . $fila)->getFill()->applyFromArray($backgroundCellYellowLight);
+            }
+
+            if ($item['clasificacion'] == "C") {
+                $objPHPExcel->getActiveSheet()->getStyle('M' . $fila)->getFill()->applyFromArray($backgroundCellGreen);
+            }
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('N' . $fila, $item['diasImplementacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('O' . $fila, $item['fechaCumplimiento']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('P' . $fila, $item['responsable']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('T' . $fila, $item['registro']);
+
+
+
+            $fila++;
+            $item++;
+        }
+
+        // Bordes para todos las celdas que contengan informacion acerca del reporte
+        $objPHPExcel->getActiveSheet()->getStyle('B8:S' . $fila)->applyFromArray($borderCellAll);
+
+        // Renombrar Hoja
+        $objPHPExcel->getActiveSheet()->setTitle('Matriz');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('public/reports/seguridadFormato2.xlsx');
+        return 'public/reports/seguridadFormato2.xlsx';
     }
 }

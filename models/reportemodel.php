@@ -175,7 +175,7 @@ FROM
                 );
 
 
-                array_push($listReport,$top);
+                array_push($listReport, $top);
             }
 
             return $listReport;
@@ -223,4 +223,100 @@ FROM
         return $name;
     }
 
+
+
+
+    function seguridadReport($proyecto, $fechaInicio, $fechaFin)
+    {
+
+        $listReport = array();
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "sede <> '$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "sede = '$proyecto'";
+        }
+
+        $statement = "SELECT
+                        detseguridad.idreg,
+                        detseguridad.iddoc,
+                        detseguridad.condicion,
+                        detseguridad.clasificacion,
+                        detseguridad.accion,
+                        detseguridad.fecha as fechaCumplimiento,
+                        detseguridad.seguimiento,
+                        
+                        inspeccion_tipo.nombre AS tipo,
+                        seguridad.sede,
+                        seguridad.lugar,
+                        seguridad.fecha AS fechaInspeccion,
+                        seguridad.inspeccionado,
+                        seguridad.responsable,
+                        seguridad.obser01,
+                        seguridad.obser02,
+                        seguridad.obser03,
+                        seguridad.reg AS registro,
+                        detseguridad.evidencia,
+                        proyectos.nombre AS proyecto ,
+                        TIMESTAMPDIFF(DAY, seguridad.fecha , detseguridad.fecha) AS diasImplementacion ,
+                        seguridad.ubicacion,
+                        area_general.nombre AS area_nombre,
+                        tipo_observacion.nombre AS  tipo_observacion
+
+
+                    FROM
+                        detseguridad
+                        INNER JOIN seguridad ON detseguridad.iddoc = seguridad.iddoc
+                        INNER JOIN general AS proyectos ON seguridad.sede = proyectos.cod 
+                        INNER JOIN area_general ON seguridad.idAreaObservada= area_general.id
+                        INNER JOIN tipo_observacion ON detseguridad.tipo = tipo_observacion.id
+                        INNER JOIN inspeccion_tipo ON inspeccion_tipo.id = seguridad.tipo
+                            
+                    WHERE  proyectos.clase = '00' AND  seguridad.reg >= '$fechaInicio'  AND  seguridad.reg <  DATE_ADD( '$fechaFin' ,INTERVAL 1 DAY) AND $sedeSQL        
+                    
+                    ORDER BY seguridad.reg DESC";
+
+
+        $query = $this->db->connect()->prepare($statement);
+
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+
+                $seguridad = array(
+                    "proyecto" => $item["proyecto"],
+                    "areaNombre" => $item["area_nombre"],
+                    "ubicacion" => $item["ubicacion"],
+                    "fechaInspeccion" => $item["fechaInspeccion"],
+                    "registro" => $item["registro"],
+                    "inspeccionado" => $item["inspeccionado"],
+                    "tipo" => $item["tipo"],
+                    "tipoObservacion" => $item["tipo_observacion"],
+                    "condicion" => $item["condicion"],
+                    "fotos" => $item["evidencia"],
+                    "accion" => $item["accion"],
+                    "clasificacion" => $this->convertClasificacion($item["clasificacion"]),
+                    "diasImplementacion" => $item["diasImplementacion"],
+                    "fechaCumplimiento" => $item["fechaCumplimiento"],
+                    "responsable" => $item["responsable"],
+                    "seguimiento" => $item["seguimiento"]
+                );
+                array_push($listReport, $seguridad);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    function convertClasificacion($clasificacion)
+    {
+        $listClasificacion = ["", "A", "B", "C", "", ""];
+        return $listClasificacion[(int)$clasificacion];
+    }
 }
+

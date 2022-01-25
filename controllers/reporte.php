@@ -47,7 +47,7 @@ class Reporte extends Controller{
            $result =  $this->model->topsReport($proyecto, $fechaInicio, $fechaFin);
         }
         if($typeDocument == self::SEGURIDAD){
-
+            $result =  $this->model->seguridadReport($proyecto, $fechaInicio, $fechaFin);
         }
         if($typeDocument == self::INCIDENCIA){
 
@@ -92,10 +92,11 @@ class Reporte extends Controller{
         
         if($typeDocument == self::TOP){
             $listReport =  $this->model->topsReport($proyecto, $fechaInicio, $fechaFin);
-            $result = $reportExcel->typeFormaTops($formatoReporte,$listReport);
+            $result = $reportExcel->typeFormTops($formatoReporte,$listReport);
         }
         if($typeDocument == self::SEGURIDAD){
-
+            $listReport =  $this->model->seguridadReport($proyecto, $fechaInicio, $fechaFin);
+            $result = $reportExcel->typeFormSeguridad($formatoReporte,$listReport);
         }
         if($typeDocument == self::INCIDENCIA){
 
