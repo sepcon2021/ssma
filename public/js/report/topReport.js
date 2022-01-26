@@ -154,6 +154,172 @@ function htmlSeguridad(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) 
     return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable)
 }
 
+function htmlIncidencia(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
+
+    let list = ``;
+    let amount = 1;
+
+    json.result.forEach(element => {
+
+        list += `<tr>
+                    <td></td>
+                    <td>${element.proyectoNombre}</td>
+                    <td>${element.cliente}</td>
+                    <td>${element.lugar}</td>
+                    <td class="center">${element.fecha}</td>
+                    <td class="center">${element.hora}</td>
+                    <td>${element.descripcion}</td>
+                    <td>${element.elaborado}</td>
+                    <td class="center"><a href="${element.urlPdf}" target="_blank">PDF</td>
+                </tr>`;
+
+        amount++;
+
+    });
+
+    htmlTable = `
+                <table id="topsTableNuevo" class="styled-table">
+                <thead>
+                    <tr>
+                        <th width="10px">Item</th>
+                        <th width="20px">proyecto</th>
+                        <th width="20px">cliente</th>
+                        <th width="20px">lugar</th>
+                        <th width="20px">fecha incidente</th>
+                        <th width="20px">hora</th>
+                        <th width="140px">descripción</th>
+                        <th width="250px">Elaborado por</th>
+                        <th width="20px">PDF</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${list}
+                </tbody>
+            </table>
+    `;
+
+    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+}
+
+
+function htmlOpt(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
+
+    let list = ``;
+    let amount = 1;
+
+    json.result.forEach(element => {
+
+        list += `<tr>
+                    <td></td>
+                    <td>${element.opt.usuario_nombres} ${element.opt.usuario_apellidos}</td>
+                    <td>${element.opt.proyecto_nombre}</td>
+                    <td>${element.opt.area_nombre}</td>
+                    <td class="center">${element.opt.ubicacion}</td>
+                    <td class="center">${element.opt.area_observada_nombre}</td>
+                    <td>${element.opt.tiempo_proyecto}</td>
+                    <td>${element.opt.registro}</td>
+                    <td>${element.opt.nombre}</td>
+                    <td>${element.opt.tiempo_trabajo}</td>
+                    <td>${element.opt.guardia}</td>
+                    <td>${element.opt.ocupacion}</td>
+                    <td>${element.opt.tarea}</td>
+                    <td>${element.opt.responsable}</td>
+                    <td>${element.opt.riesgoCritico}</td>
+                    <td>${element.opt.petLog}</td>
+                    <td>${element.opt.razon_opt}</td>
+                    <td>${element.opt.oportunidades}</td>
+
+                </tr>`;
+
+        amount++;
+
+    });
+
+    htmlTable = `
+                <table id="topsTableNuevo" class="styled-table">
+                <thead>
+                    <tr>
+                        <th width="20px">N° </th>
+                        <th width="20px">Elaborado por </th>
+                        <th width="20px">Proyecto</th>
+                        <th width="20px">Área</th>
+                        <th width="20px">Ubicación</th>
+                        <th width="20px">Área Observada</th>
+                        <th width="20px">Tiempo en el proyecto</th>
+                        <th width="20px">Fecha</th>
+                        <th width="20px">Nombre </th>
+                        <th width="20px">Tiempo en el trabajo</th>
+                        <th width="20px">Guardia </th>
+                        <th width="20px">Ocupación</th>
+                        <th width="20px">Tarea</th>
+                        <th width="20px">Responsable</th>
+                        <th width="20px">Riesgo crítico</th>
+                        <th width="20px">Pet Log</th>
+                        <th width="20px">Razón de la OPT</th>
+                        <th width="20px">Oportunidades</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${list}
+                </tbody>
+            </table>
+    `;
+
+    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+}
+
+function htmlIperc(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
+
+    let list = ``;
+    let amount = 1;
+
+    json.result.forEach(element => {
+
+        list += `<tr>
+                    <td></td>
+                    <td>${element.nombres_usuario} ${element.apellidos_usuario}</td>
+                    <td>${element.nombre_proyecto}</td>
+                    <td>${element.nombre_area}</td>
+                    <td>${element.area_observada}</td>
+                    <td>${element.ubicacion}</td>
+                    <td>${element.nombre_tarea}</td> 
+                    <td>${element.fecha}</td>
+                    <td>${element.registro}</td>
+                    <td>${element.empresa}</td>
+                    <td>${element.tipoRiesgo}</td>
+
+                </tr>`;
+
+        amount++;
+
+    });
+
+    htmlTable = `
+                <table id="topsTableNuevo" class="styled-table">
+                <thead>
+                    <tr>
+                    <th width="20px"> item </th>
+                    <th width="100px"> Elaborado por </th>
+                    <th width="100px"> Proyecto </th>
+                    <th width="100px"> Área </th>
+                    <th width="100px"> Área Observada</th>
+                    <th width="100px"> Ubicación </th>
+                    <th width="100px"> Tarea </th>
+                    <th width="50px"> fecha </th>
+                    <th width="50px"> registro </th>
+                    <th width="100px"> Empresa </th>
+                    <th width="50px"> Tipo riesgo crítico </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${list}
+                </tbody>
+            </table>
+    `;
+
+    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+}
+
 
 function contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable) {
     return `
@@ -212,8 +378,6 @@ function contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTabl
 </div>
     `;
 }
-
-
 
 function convertListPhotoToHtml(list) {
 

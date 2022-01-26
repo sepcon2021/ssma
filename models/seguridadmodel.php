@@ -77,13 +77,14 @@ class SeguridadModel extends Model
 
 
         try {
-            $query = $this->db->connect()->prepare('INSERT INTO detseguridad (IDREG,IDDOC,CONDICION,CLASIFICACION,ACCION,RESPONSABLE,FECHA,SEGUIMIENTO,TIPO,EVIDENCIA)
-                                                        VALUES(:reg,:doc,:con,:cla,:acc,:res,:fec,:seg,:tipo,:evidencia)');
+            $query = $this->db->connect()->prepare('INSERT INTO detseguridad (IDREG,IDDOC,CONDICION,CLASIFICACION,ACCION,RESPONSABLE,FECHA,SEGUIMIENTO,TIPO,EVIDENCIA,DETALLE)
+                                                        VALUES(:reg,:doc,:con,:cla,:acc,:res,:fec,:seg,:tipo,:evidencia,:detalle)');
 
             $query->execute([
                 'reg' => $datos['sid'],
                 'doc' => $datos['idd'],
                 'con' => $datos['condicion'],
+                'detalle' => $datos['detalle'],
                 'cla' => $datos['clasificacion'],
                 'acc' => $datos['accion_correctiva'],
                 'res' => $datos['responsable'],

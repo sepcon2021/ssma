@@ -258,7 +258,8 @@ class Opt extends Controller
     }
 
     public function pruebaOPT1(){
-        $resultado = $this->model->buscarByIdOpt("126");
+        $resultado = $this->model->buscarByIdOpt("127");
+        header('Content-Type: application/json');
         echo json_encode($resultado);
 
     }

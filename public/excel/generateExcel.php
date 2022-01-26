@@ -1192,4 +1192,955 @@ class GenerateExcel
         $objWriter->save('public/reports/seguridadFormato2.xlsx');
         return 'public/reports/seguridadFormato2.xlsx';
     }
+
+    function generateIncidenciaFormato1($list)
+    {
+
+        // Se crea el objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        // Se asignan las propiedades del libro
+        $objPHPExcel->getProperties()->setCreator("Helena Minaya"); // Nombre del autor
+        $objPHPExcel->getProperties()->setLastModifiedBy("Helena Minaya"); //Ultimo usuario que lo modificó
+        $objPHPExcel->getProperties()->setTitle("Reporte Incidencias"); // Titulo
+        $objPHPExcel->getProperties()->setSubject("Reporte Excel con PHP y MySQL"); //Asunto
+        $objPHPExcel->getProperties()->setDescription("Reporte de Incidencias"); //Descripción
+        $objPHPExcel->getProperties()->setKeywords("reportes de incidencias"); //Etiquetas
+        $objPHPExcel->getProperties()->setCategory("Reporte excel"); //Categorias
+
+        $Titulo = array(
+            'font'  => array(
+                'bold'  => true,
+                'size'  => 14,
+                'name'  => 'Verdana'
+            )
+        );
+
+        $TituloTabla = array(
+            'font'  => array(
+                'bold'  => true,
+                'size'  => 9,
+                'name'  => 'Arial'
+            )
+        );
+
+        // Crea un nuevo objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        //combinar celdas
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:U3');
+
+        //estilo de fuentes
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->applyFromArray($Titulo);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:AM5')->applyFromArray($TituloTabla);
+
+        //alineacion
+        $objPHPExcel->getActiveSheet()->getStyle('B3:M3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:AM5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        //Titulo 
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'REPORTE DE INCIDENCIAS');
+
+        $objPHPExcel->getActiveSheet()->getStyle('B5:Z2000')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:Z2000')->getAlignment()->setWrapText(true);
+
+        //ancho de columnas
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(22);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('X')->setWidth(35);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Z')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AH')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AI')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AJ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AK')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AL')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AM')->setWidth(35);
+
+        //alto de la fila
+        $objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(50);
+
+        // Agregar Informacion
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('B5', 'Proyecto /Sede');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('C5', 'Área');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D5', 'Cliente');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('E5', 'Daño material < $500');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('F5', 'Daño material > $500');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('G5', 'Derrame de Hidrocarburos < 2 m3 ');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('H5', 'Derrame de Hidrocarburos > 2 m3');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('I5', 'Accidente Vehicular con Herido');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('J5', 'Accidente Vehicular sin Herido');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('K5', 'Accidente Vehicular < 500 $');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('L5', 'Accidente Vehicular > 500 $');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('M5', '(F.A.C) Caso de Primeros Auxilios');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('N5', '(M.T.O) Accidente Con Tratamiento Médico');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('O5', '(R.W.C) Accidente Con Trabajo Restringido');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('P5', '(L.T.I) Accidente Con Pérdida de Jornada');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Q5', '(F.T.L) Fatalidad');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('R5', 'Incidente');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('S5', '(E.O) Enfermedad Ocupacional');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('T5', 'Lugar');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('U5', 'Fecha');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('V5', 'hora');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('W5', 'Nombre de la persona involucrada');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('X5', 'DNI/CE');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Y5', 'Sexo');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Z5', 'Edad');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AA5', 'Cuenta con seguro (SI/NO)');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AB5', 'Lugar y fecha de nacimiento');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AC5', 'domicilio');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AD5', 'estado civil');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AE5', 'departamento');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AF5', 'provincia');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AG5', 'cargo');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AH5', 'instrucción');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AI5', 'DESCRIPCIÓN DEL ACCIDENTE/INCIDENTE/ENFERMEDAD OCUPACIONAL (Incluyendo nombres y cargos de las personas involucradas)');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AJ5', 'ACCIONES INMEDIATAS DESPUES DEL ACCIDENTE/INCIDENTE/ENFERMEDAD OCUPACIONAL (Atención médica, evacuación, reparación de daños materiales, acciones correctivas, etc)');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AK5', 'Elaborado por ');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AL5', 'Evidencia');
+
+
+        //aca iran los datos de la tabla
+        $fila = 6;
+
+
+        //salida de datos
+        foreach ($list as $item) {
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('B' . $fila, $item['proyectoNombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('C' . $fila, $item['areaNombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('D' . $fila, $item['cliente']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('E' . $fila, $item['materialMenor'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('F' . $fila, $item['materialMayor'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('G' . $fila, $item['derrameMenor'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('H' . $fila, $item['derrameMayor'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('I' . $fila, $item['conHerido'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('J' . $fila, $item['sinHerido'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('K' . $fila, $item['vehicularMenor'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('L' . $fila, $item['vehicularMayor'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('M' . $fila, $item['fac'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('N' . $fila, $item['mto'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('O' . $fila, $item['rwc'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('P' . $fila, $item['lti'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Q' . $fila, $item['ftl'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('R' . $fila, $item['incidente'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('S' . $fila, $item['eo'] == "1" ? "x" : "");
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('T' . $fila, $item['lugar']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('U' . $fila, $item['fecha']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('V' . $fila, $item['hora']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('W' . $fila, $item['persona']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('X' . $fila, $item['documento']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Y' . $fila, $item['sexo'] = "MA" ? "MASCULINO" : "FEMENINO");
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Z' . $fila, $item['edad']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AA' . $fila, $item['seguro']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AB' . $fila, $item['nacimiento']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AC' . $fila, $item['domicilio']);
+            $estado_civil = '';
+            switch ($item['civil']) {
+                case 'CO':
+                    $estado_civil = 'CONVIVIENTE';
+                    break;
+                case 'CA':
+                    $estado_civil = 'CASADO';
+                    break;
+                case 'SO':
+                    $estado_civil = 'SOLTERO';
+                    break;
+                case 'DI':
+                    $estado_civil = 'DIVORCIADO';
+                    break;
+                case 'VI':
+                    $estado_civil = 'VIUDO';
+                    break;
+                case 'OT':
+                    $estado_civil = 'OT';
+                    break;
+            }
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AD' . $fila, $estado_civil);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AE' . $fila, $item['dpto']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AF' . $fila, $item['prov']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AG' . $fila, $item['cargo']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AH' . $fila, $item['instruccion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AI' . $fila, $item['descripcion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AJ' . $fila, $item['acciones']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AK' . $fila, $item['elaborado']);
+
+            $fila++;
+        }
+
+
+        // Renombrar Hoja
+        $objPHPExcel->getActiveSheet()->setTitle('Reportes de Incidencias');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('public/reports/incidencias.xlsx');
+        return 'public/reports/incidencias.xlsx';
+    }
+
+
+    function generateOptFormato1($list)
+    {
+
+        // Se crea el objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        // Se asignan las propiedades del libro
+        $objPHPExcel->getProperties()->setCreator("Helena Minaya"); // Nombre del autor
+        $objPHPExcel->getProperties()->setLastModifiedBy("Helena Minaya"); //Ultimo usuario que lo modificó
+        $objPHPExcel->getProperties()->setTitle("Reporte OPT"); // Titulo
+        $objPHPExcel->getProperties()->setSubject("Reporte Excel con PHP y MySQL"); //Asunto
+        $objPHPExcel->getProperties()->setDescription("Reporte de OPT"); //Descripción
+        $objPHPExcel->getProperties()->setKeywords("OPT"); //Etiquetas
+        $objPHPExcel->getProperties()->setCategory("Reporte excel"); //Categorias
+
+        $Titulo = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 14,
+                'name' => 'Verdana',
+            )
+        );
+
+        $TituloTabla = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 9,
+                'name' => 'Arial',
+            )
+        );
+
+        // Crea un nuevo objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        //combinar celdas
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:U3');
+
+        //estilo de fuentes
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->applyFromArray($Titulo);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:BK5')->applyFromArray($TituloTabla);
+
+        $objPHPExcel->getActiveSheet()->getStyle('B6:BK6')->applyFromArray($TituloTabla);
+
+        //$objPHPExcel->getActiveSheet()->getStyle('B5:BK5')->applyFromArray( array( 'fill' => array( 'type' => PHPExcel_Style_Fill::FILL_SOLID, 'color' => array('rgb' => 'FF0000') ) ) );
+
+        //alineacion
+        $objPHPExcel->getActiveSheet()->getStyle('B3:M3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:Z5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('B6:Z6')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        //Titulo
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'REPORTE DE OPT');
+
+        $objPHPExcel->getActiveSheet()->getStyle('B5:Z2000')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:Z2000')->getAlignment()->setWrapText(true);
+
+        //ancho de columnas
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(22);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('X')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Y')->setWidth(50);
+
+        //alto de la fila
+        $objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(50);
+
+        // Agregar Informacion
+
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('B5', 'N°');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('C5', 'Elaborado por');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D5', 'Proyecto');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('E5', 'Área');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('F5', 'Ubicación');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('G5', 'Área observada');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('H5', 'Nombre del equipo observado');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('I5', 'Tiempo en el trabajo');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('J5', 'Tiempo en el trabajo actual');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('K5', 'Guardia');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('L5', 'Ocupación');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('M5', 'Tarea');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('N5', 'Fecha de elaboración');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('O5', 'Razón para la OPT');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('N5', 'responsable');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('O5', 'Riesgo crítico');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('P5', 'Pet Log');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Q5', 'Fecha de elaboración');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('R5', 'Razón para la OPT');
+        $objPHPExcel->getActiveSheet()->mergeCells('S5:T5');
+        $objPHPExcel->getActiveSheet()->setCellValue('S5', 'Observación de la Tarea');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('S6', 'Pasos');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('T6', 'Observaciones');
+        $objPHPExcel->getActiveSheet()->setCellValue('U5', 'Observación planeada de tarea de resultados');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('U6', 'Fortalezas - Oportunidades para felicitar');
+        $objPHPExcel->getActiveSheet()->mergeCells('V5:W5');
+        $objPHPExcel->getActiveSheet()->setCellValue('V5', 'Recomendaciones');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('V6', 'Acciones');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('W6', 'Fecha');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('X5', 'Nombre de los observadores');
+
+        $fila = 7;
+
+        foreach ($list as $item) {
+
+
+            // PRIMERO VAMOS A TRAER TODAS LAS OBSREVACIONES , OBSERVADORES Y RECOMENDACIONES QUE ESTEN RELACIONADOS A UN DOCUMENTO
+
+            $data_observacion = "";
+            $data2_observacion = "";
+
+            //OBSERVACION
+            $contador = 1;
+            foreach ($item["optObservacion"] as $item_observacion) {
+
+                $data_observacion .= ($contador . ". " . $item_observacion['pasos'] . " \n \n \n");
+                $data2_observacion .= ($contador . ". " . $item_observacion['observaciones'] . "  \n \n \n");
+                $contador++;
+            }
+
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('S' . $fila, $data_observacion);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('T' . $fila,  $data2_observacion);
+
+            //FORTALEZS
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('U' . $fila, $item["opt"]['oportunidades']);
+
+            //RECOMENDACIONES
+
+            $data_recomendacion = "";
+            $data1_recomendacion = "";
+            $data2_recomendacion = "";
+
+            $contador = 1;
+
+            foreach ($item["optRecomendaciones"]  as $item_recomendaciones) {
+
+                $data_recomendacion .= ($contador . ". " . $item_recomendaciones['acciones'] . " \n \n \n");
+                $data2_recomendacion .= ($contador . ". " . $item_recomendaciones['fecha'] . "  \n \n \n");
+
+                $contador++;
+            }
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('V' . $fila, $data_recomendacion);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('W' . $fila, $data2_recomendacion);
+
+
+
+            //OBSERVADORES
+
+            $data_observadores = "";
+            $contador = 1;
+
+            foreach ($item["optObservadores"] as $item_osbervadores) {
+
+                $data_observadores .= ($contador . ". " .  $item_osbervadores['nombre'] . "  \n \n \n");
+
+                $contador++;
+            }
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('X' . $fila, $data_observadores);
+
+            // VAMOS HACER UN MERGE CELDA DE LA CANTIDAD MAYOR DE LOS CONTADORES ANTERIORES
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('B' . $fila, '');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('C' . $fila, $item["opt"]['usuario_nombres'] . " " . $item["opt"]['usuario_apellidos']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('D' . $fila,  $item["opt"]['proyecto_nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('E' . $fila,  $item["opt"]['area_nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('F' . $fila,  $item["opt"]['ubicacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('G' . $fila,  $item["opt"]['area_observada_nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('H' . $fila, $item["opt"]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('I' . $fila, $item["opt"]['tiempo_proyecto']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('J' . $fila,  $item["opt"]['tiempo_trabajo']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('K' . $fila,  $item["opt"]['guardia']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('L' . $fila, $item["opt"]['ocupacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('M' . $fila,  $item["opt"]['tarea']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('N' . $fila,  $item["opt"]['responsable']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('O' . $fila,  $item["opt"]['riesgoCritico']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('P' . $fila,  $item["opt"]['petLog']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Q' . $fila, $item["opt"]['registro']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('R' . $fila,  $item["opt"]['razon_opt']);
+
+
+            $fila++;
+        }
+
+
+        // Renombrar Hoja
+        $objPHPExcel->getActiveSheet()->setTitle('Reportes de OPT');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('public/reports/opt.xlsx');
+        return 'public/reports/opt.xlsx';
+    }
+
+    function generateIpercFormato1($list,$listRiesgoCritico)
+    {
+
+
+
+        define('RIESGO_1', '¿He realizado este trabajo anteriormente?');
+        define('RIESGO_2', '¿Poseo las habilidades, los conocimientos o los permisos requeridos?');
+        define('RIESGO_3', '¿Puedo cumplir con las Reglas por la Vida?');
+        define('RIESGO_4', '¿Existe alguna evaluación de RIESGOS_CRITICOS o instrucción de trabajo para esta tarea?');
+        define('RIESGO_5', '¿Se requiere algún permiso para realizar este trabajo?');
+        define('RIESGO_6', '¿Este trabajo requiere “aislamiento”?');
+        define('RIESGO_7', '¿Se trata de un espacio confinado?');
+        define('RIESGO_8', '¿Estoy trabajando en alturas?');
+        define('RIESGO_9', '¿Estoy realizando una excavación?');
+        define('RIESGO_10', '¿He identificado algún impacto ambiental?');
+        define('RIESGO_11', '¿Existe algún riesgo de lesión en las manos en este trabajo?');
+        define('RIESGO_12', '¿Se utilizarán productos químicos');
+        define('RIESGO_13', '¿El área de trabajo se encuentra ordenada y libre de obstáculos?');
+        define('RIESGO_14', '¿He verificado si podría afectar u obstaculizar a los demás?');
+        define('RIESGO_15', '¿Tengo las herramientas adecuadas para este trabajo?');
+        define('RIESGO_16', '¿Poseo el Equipo de Protección Personal adecuado? ¿Estoy capacitado para utilizarlo?');
+
+        define('RIESGO_CRITICO1', '¿El trabajo cuenta con el ICA respectivo aprobado y este se encuentra en el área de trabajo?');
+        define('RIESGO_CRITICO2', '¿Requiere un permiso de trabajo de alto riesgo para la labor que realizará?: espacio confinado, trabajo en caliente, excavaciones, armado de andamios, riesgo de caída, excavaciones entre otros');
+        define('RIESGO_CRITICO3', '¿El personal realizará labores dentro del radio de trabajo o en áreas de tránsito de equipos pesados?');
+        define('RIESGO_CRITICO4', '¿El trabajo se realizara cerca o al borde de: un talud, presa de relaves, cuerpos de agua con más de 1.50 m. de profundidad?');
+        define('RIESGO_CRITICO5', '¿El trabajo contempla la posibilidad que el personal tenga contacto con sustancia química, inflamable o explosiva? ¿Existe la posibilidad de una descarga no controlada?');
+        define('RIESGO_CRITICO6', '¿El trabajo requiere retirar la guarda de algún equipo mientras este se encuentre en funcionamiento?');
+        define('RIESGO_CRITICO7', '¿Realizará excavaciones o perforaciones de más de 0.30 m. cerca o en plantas, instalaciones o líneas eléctricas?');
+        define('RIESGO_CRITICO8', '¿El personal realizara trabajos en plataformas o alturas de 1.50 metros o mayores, que no estén protegidas con barandas?');
+        define('RIESGO_CRITICO9', '¿Realizará maniobras de izaje de estructuras?');
+
+
+        define('RIESGO_MANO1', '¿La tarea conlleva a exponer las manos a la línea de fuego (golpeado por objetos en movimiento ej.golpear con martillo)?');
+        define('RIESGO_MANO2', '¿La tarea conlleva a exponer las manos en puntos de atricción y/o atrapamiento (atrapado entre, ej. colocar mano entre marco y la puerta)?');
+        define('RIESGO_MANO3', '¿La tarea conlleva a exponer las manos a bordes filosos y/o cortantes: La tarea conlleva a manipular cuchillas y/o herramientas punzocortantes?');
+
+
+        define('RIESGO_COVID1', '¿Se utilizan protector Facial para trabajos a menos de 1 m?');
+        define('RIESGO_COVID2', '¿Se mantiene distanciamiento 2 m como mínimo?');
+        define('RIESGO_COVID3', '¿Se utiliza la protección respiratoria (mascarilla KN95)?');
+        define('RIESGO_COVID4', '¿Se lavan/desinfectan las manos de manera frecuente?');
+        define('RIESGO_COVID5', '¿Se limpia/desinfectan las herramientas y equipos?');
+        define('RIESGO_COVID6', '¿Se limpió/desinfectó el vehículo/Equipo?');
+        define('RIESGO_COVID7', '¿Se respeta el aforo del vehículo/Equipo?');
+
+        // Se crea el objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        // Se asignan las propiedades del libro
+        $objPHPExcel->getProperties()->setCreator("Helena Minaya"); // Nombre del autor
+        $objPHPExcel->getProperties()->setLastModifiedBy("Helena Minaya"); //Ultimo usuario que lo modificó
+        $objPHPExcel->getProperties()->setTitle("Reporte IPER"); // Titulo
+        $objPHPExcel->getProperties()->setSubject("Reporte Excel con PHP y MySQL"); //Asunto
+        $objPHPExcel->getProperties()->setDescription("Reporte de IPERC"); //Descripción
+        $objPHPExcel->getProperties()->setKeywords("IPERC"); //Etiquetas
+        $objPHPExcel->getProperties()->setCategory("Reporte excel"); //Categorias
+
+        $Titulo = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 14,
+                'name' => 'Verdana',
+                'wrap' => true
+            )
+        );
+
+        $TituloTabla = array(
+            'font' => array(
+                'bold' => true,
+                'size' => 9,
+                'name' => 'Arial',
+                'wrap' => true
+            )
+        );
+
+        // Crea un nuevo objeto PHPExcel
+        $objPHPExcel = new PHPExcel();
+
+        //combinar celdas
+        $objPHPExcel->getActiveSheet()->mergeCells('B3:U3');
+
+        //estilo de fuentes
+        $objPHPExcel->getActiveSheet()->getStyle('B3')->applyFromArray($Titulo);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:BK5')->applyFromArray($TituloTabla);
+
+        //$objPHPExcel->getActiveSheet()->getStyle('B5:BK5')->applyFromArray( array( 'fill' => array( 'type' => PHPExcel_Style_Fill::FILL_SOLID, 'color' => array('rgb' => 'FF0000') ) ) );
+
+        //alineacion
+        $objPHPExcel->getActiveSheet()->getStyle('B3:M3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:CX5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+        //Titulo
+        $objPHPExcel->getActiveSheet()->setCellValue('B3', 'REPORTE DE IPERC game');
+
+        $objPHPExcel->getActiveSheet()->getStyle('B5:CX2000')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+        $objPHPExcel->getActiveSheet()->getStyle('B5:CX000')->getAlignment()->setWrapText(true);
+
+        //ancho de columnas
+        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(50);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth(22);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth(30);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth(20);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('U')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('V')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('W')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('X')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('Z')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AH')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AI')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AJ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AK')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AL')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AM')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AN')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AO')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AP')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AQ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AR')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AS')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AT')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AU')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AV')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AW')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AX')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AY')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('AZ')->setWidth(35);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BA')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BB')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BC')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BD')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BE')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BF')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BG')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BH')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BI')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BJ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BK')->setWidth(35);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BL')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BM')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BN')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BO')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BP')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BQ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BR')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BS')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BT')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BU')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BV')->setWidth(35);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BW')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BX')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BY')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('BZ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CA')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CB')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CC')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CD')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CE')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CF')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CG')->setWidth(35);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CH')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CI')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CJ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CK')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CL')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CM')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CN')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CO')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CP')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CQ')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CR')->setWidth(35);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CS')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CT')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CU')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CV')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CW')->setWidth(35);
+        $objPHPExcel->getActiveSheet()->getColumnDimension('CX')->setWidth(35);
+
+
+        //alto de la fila
+        $objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(50);
+
+        // Agregar Informacion
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('B5', 'Orden');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('C5', 'Elaborado por');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('D5', 'Proyecto');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('E5', 'Área');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('F5', 'Ubicación');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('G5', 'Área observada');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('H5', 'Tarea');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('I5', 'Empresa');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('J5', 'Riesgo crítico');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('K5', 'Fecha');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('L5', 'Registro');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('M5', constant('RIESGO_1'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('N5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('O5', constant('RIESGO_2'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('P5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Q5', constant('RIESGO_3'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('R5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('S5', constant('RIESGO_4'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('T5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('U5', constant('RIESGO_5'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('V5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('W5', constant('RIESGO_6'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('X5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Y5', constant('RIESGO_7'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('Z5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AA5', constant('RIESGO_8'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AB5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AC5', constant('RIESGO_9'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AD5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AE5', constant('RIESGO_10'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AF5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AG5', constant('RIESGO_11'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AH5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AI5', constant('RIESGO_12'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AJ5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AK5', constant('RIESGO_13'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AL5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AM5', constant('RIESGO_14'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AN5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AO5', constant('RIESGO_15'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AP5', 'Comentario');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AQ5', constant('RIESGO_16'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AR5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AS5', constant('RIESGO_MANO1'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AT5', constant('RIESGO_MANO2'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AU5', constant('RIESGO_MANO3'));
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AV5', constant('RIESGO_COVID1'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AW5', constant('RIESGO_COVID2'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AX5', constant('RIESGO_COVID3'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AY5', constant('RIESGO_COVID4'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('AZ5', constant('RIESGO_COVID5'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BA5', constant('RIESGO_COVID6'));
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BB5', constant('RIESGO_COVID7'));
+
+
+
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BC5', 'Pregunta 1');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BD5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BE5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BF5', 'Pregunta 2');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BG5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BH5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BI5', 'Pregunta 3');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BJ5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BK5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BL5', 'Pregunta 4');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BM5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BN5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BO5', 'Pregunta 5');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BP5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BQ5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BR5', 'Pregunta 6');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BS5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BT5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BU5', 'Pregunta 7');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BV5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BW5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BX5', 'Pregunta 8');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BY5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('BZ5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CA5', 'Pregunta 9');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CB5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CC5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CD5', 'Pregunta 10');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CE5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CF5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CG5', 'Pregunta 11');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CH5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CI5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CJ5', 'Pregunta 12');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CK5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CL5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CM5', 'Pregunta 13');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CN5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CO5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CP5', 'Pregunta 14');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CQ5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CR5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CS5', 'Pregunta 15');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CT5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CU5', 'Comentario');
+
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CV5', 'Pregunta 16');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CW5', 'respuesta');
+        $objPHPExcel->setActiveSheetIndex()->setCellValue('CX5', 'Comentario');
+
+
+        //aca iran los datos de la tabla
+        $fila = 6;
+
+
+        foreach ($list as $item) {
+
+            $listaRiesgos = $this->listaRiesgosCriticosById($listRiesgoCritico, $item['idTipoRiesgo']);
+
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('B' . $fila, $item['id']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('C' . $fila, $item['nombres_usuario'] . ' ' . $item['apellidos_usuario']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('D' . $fila, $item['nombre_proyecto']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('E' . $fila, $item['nombre_area']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('F' . $fila, $item['ubicacion']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('G' . $fila, $item['area_observada']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('H' . $fila, $item['nombre_tarea']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('I' . $fila, $item['empresa']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('J' . $fila, $item['tipoRiesgo']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('K' . $fila, $item['fecha']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('L' . $fila, $item['registro']);
+
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('M' . $fila, $item['riesgo1'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('N' . $fila, $item['comentario1']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('O' . $fila, $item['riesgo2'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('P' . $fila, $item['comentario2']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Q' . $fila, $item['riesgo3'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('R' . $fila, $item['comentario3']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('S' . $fila, $item['riesgo4'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('T' . $fila, $item['comentario4']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('U' . $fila, $item['riesgo5'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('V' . $fila, $item['comentario5']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('W' . $fila, $item['riesgo6'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('X' . $fila, $item['comentario6']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Y' . $fila, $item['riesgo7'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('Z' . $fila, $item['comentario7']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AA' . $fila, $item['riesgo8'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AB' . $fila, $item['comentario8']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AC' . $fila, $item['riesgo9'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AD' . $fila, $item['comentario9']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AE' . $fila, $item['riesgo10'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AF' . $fila, $item['comentario10']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AG' . $fila, $item['riesgo11'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AH' . $fila, $item['comentario11']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AI' . $fila, $item['riesgo12'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AJ' . $fila, $item['comentario12']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AK' . $fila, $item['riesgo13'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AL' . $fila, $item['comentario13']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AM' . $fila, $item['riesgo14'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AN' . $fila, $item['comentario14']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AO' . $fila, $item['riesgo15'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AP' . $fila, $item['comentario15']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AQ' . $fila, $item['riesgo16'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AR' . $fila, $item['comentario16']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AS' . $fila, $item['riesgo_manos1'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AT' . $fila, $item['riesgo_manos2'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AU' . $fila, $item['riesgo_manos3'] == '1' ? 'Si' : 'No');
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AV' . $fila, '');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AW' . $fila, $item['riesgo_covid2'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AX' . $fila, $item['riesgo_covid3'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AY' . $fila, $item['riesgo_covid4'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('AZ' . $fila, $item['riesgo_covid5'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BA' . $fila, $item['riesgo_covid6'] == '1' ? 'Si' : 'No');
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BB' . $fila, $item['riesgo_covid7'] == '1' ? 'Si' : 'No');
+
+
+
+
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BC' . $fila,  $listaRiesgos[0]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BD' . $fila,  $this->convertirRespuesta($item['riesgo_critico1']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BE' . $fila,  $item['comentario_critico1']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BF' . $fila,  $listaRiesgos[1]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BG' . $fila,   $this->convertirRespuesta($item['riesgo_critico2']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BH' . $fila,  $item['comentario_critico2']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BI' . $fila,  $listaRiesgos[2]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BJ' . $fila,   $this->convertirRespuesta($item['riesgo_critico3']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BK' . $fila,  $item['comentario_critico3']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BL' . $fila,  $listaRiesgos[3]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BM' . $fila,   $this->convertirRespuesta($item['riesgo_critico4']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BN' . $fila,  $item['comentario_critico4']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BO' . $fila,  $listaRiesgos[4]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BP' . $fila,   $this->convertirRespuesta($item['riesgo_critico5']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BQ' . $fila,  $item['comentario_critico5']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BR' . $fila,  $listaRiesgos[5]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BS' . $fila,   $this->convertirRespuesta($item['riesgo_critico6']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BT' . $fila,  $item['comentario_critico6']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BU' . $fila,  $listaRiesgos[6]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BV' . $fila,   $this->convertirRespuesta($item['riesgo_critico7']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BW' . $fila,  $item['comentario_critico7']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BX' . $fila,  $listaRiesgos[7]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BY' . $fila,   $this->convertirRespuesta($item['riesgo_critico8']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('BZ' . $fila,  $item['comentario_critico8']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CA' . $fila,  $listaRiesgos[8]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CB' . $fila,   $this->convertirRespuesta($item['riesgo_critico9']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CC' . $fila,  $item['comentario_critico9']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CD' . $fila,  $listaRiesgos[9]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CE' . $fila,   $this->convertirRespuesta($item['riesgo_critico10']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CF' . $fila,  $item['comentario_critico10']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CG' . $fila,  $listaRiesgos[10]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CH' . $fila,   $this->convertirRespuesta($item['riesgo_critico11']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CI' . $fila,  $item['comentario_critico11']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CJ' . $fila,  $listaRiesgos[11]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CK' . $fila,   $this->convertirRespuesta($item['riesgo_critico12']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CL' . $fila,  $item['comentario_critico12']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CM' . $fila,  $listaRiesgos[12]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CN' . $fila,   $this->convertirRespuesta($item['riesgo_critico13']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CO' . $fila,  $item['comentario_critico13']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CP' . $fila,  $listaRiesgos[13]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CQ' . $fila,   $this->convertirRespuesta($item['riesgo_critico14']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CR' . $fila,  $item['comentario_critico14']);
+
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CS' . $fila,  $listaRiesgos[14]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CT' . $fila,   $this->convertirRespuesta($item['riesgo_critico15']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CU' . $fila,  $item['comentario_critico15']);
+
+            /*$objPHPExcel->setActiveSheetIndex()->setCellValue('CV' . $fila,  $listaRiesgos[15]['nombre']);
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CW' . $fila,   $this->convertirRespuesta($item['riesgo_critico16']));
+            $objPHPExcel->setActiveSheetIndex()->setCellValue('CX' . $fila,  $item['comentario_critico16']);*/
+
+            $fila++;
+        };
+        // Renombrar Hoja
+        $objPHPExcel->getActiveSheet()->setTitle('Reportes de IPERC');
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save('public/reports/ipercNuevo.xlsx');
+        return 'public/reports/ipercNuevo.xlsx';
+    }
+
+    function listaRiesgosCriticosById($lista , $idRiesgoCritico){
+
+        $listaRiesgos = [];
+
+        foreach($lista as $elemento){
+
+                if($elemento['id_riesgo_critico'] == $idRiesgoCritico){
+                        array_push($listaRiesgos,$elemento);
+                }
+        }
+
+
+        $cantidad = 16 - count($listaRiesgos);
+
+        for($index = 1 ; $index < $cantidad ; $index++){
+                $elemento =  [ "id_riesgo_critico" => 14, "nombre" => ""];
+                array_push($listaRiesgos,$elemento);
+        }
+
+        return $listaRiesgos;
+
+
+    }
+
+    function convertirRespuesta($alternativa){
+
+        $respuesta = '';
+
+        if($alternativa == 1){
+            $respuesta= 'Si';
+        }
+        if($alternativa == 2){
+            $respuesta= 'No';
+        }
+        if($alternativa == 3){
+            $respuesta= 'NA';
+        }
+
+        return $respuesta;
+    }
 }

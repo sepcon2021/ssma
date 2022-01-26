@@ -61,7 +61,6 @@ class ReporteModel extends Model
         tops.reg AS registro,
         IF ( LENGTH(seguimiento_aquarius.responsable) > 0 ,seguimiento_aquarius.responsable, '-' ) AS responsable 
 				
-
 FROM
         ssma.tops
         
@@ -317,6 +316,506 @@ FROM
     {
         $listClasificacion = ["", "A", "B", "C", "", ""];
         return $listClasificacion[(int)$clasificacion];
+    }
+
+    function incidenciaReport($proyecto, $fechaInicio, $fechaFin){
+        $listReport = array();
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "incidencias.proyecto <> '0$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "incidencias.proyecto = '0$proyecto'";
+        }
+
+        $statement = "SELECT
+        incidencias.iddoc,
+        incidencias.proyecto,
+        incidencias.cliente,
+        incidencias.lugar,
+        incidencias.fecha,
+        incidencias.hora,
+        incidencias.descripcion,
+        incidencias.reg,
+        incidencias.elaborado,
+        incidencias.foto,
+
+        incidencias.materialmenor,
+        incidencias.materialmayor,
+        incidencias.derramemenor,
+        incidencias.derramemayor,
+        incidencias.conherido,
+        incidencias.sinherido,
+        incidencias.vehicularmenor,
+        incidencias.vehicularmayor,
+        incidencias.fac,
+        incidencias.mto,
+        incidencias.rwc,
+        incidencias.lti,
+        incidencias.ftl,
+        incidencias.incidente,
+        incidencias.eo,
+        incidencias.persona,
+        incidencias.documento,
+        incidencias.sexo,
+        incidencias.edad,
+        incidencias.nacimiento,
+        incidencias.domicilio,
+        incidencias.civil,
+        incidencias.dpto,
+        incidencias.prov,
+        incidencias.dist,
+        incidencias.cargo,
+        incidencias.instruccion,
+        incidencias.acciones,
+        incidencias.usuario,
+        incidencias.seguro,
+        incidencias.acciones,
+        incidencias.url_pdf AS urlPdf,
+        area_general.nombre AS area_nombre,
+        proyectos.nombre AS  proyectoNombre
+
+        FROM
+        
+        incidencias
+
+        INNER JOIN general AS proyectos ON incidencias.proyecto = proyectos.cod
+        INNER JOIN area_general ON incidencias.idAreaObservada=area_general.id
+        
+        WHERE
+            proyectos.clase = 00 AND incidencias.reg >= '$fechaInicio'  AND  incidencias.reg <  DATE_ADD( '$fechaFin' ,INTERVAL 1 DAY) AND $sedeSQL    
+        ORDER BY  incidencias.reg DESC";
+
+        $query = $this->db->connect()->prepare($statement);
+
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+
+                $seguridad = array(
+                    "iddoc" => $item["iddoc"],
+                    "proyectoNombre" => $item["proyectoNombre"],
+                    "cliente" => $item["cliente"],
+                    "lugar" => $item["lugar"],
+                    "fecha" => $item["fecha"],
+                    "hora" => $item["hora"],
+                    "descripcion" => $item["descripcion"],
+                    "elaborado" => $item["elaborado"],
+                    "foto" => $item["foto"],
+                    "materialMenor" => $item["materialmenor"],
+                    "materialMayor" => $item["materialmayor"],
+                    "derrameMenor" => $item["derramemenor"],
+                    "derrameMayor" => $item["derramemayor"],
+                    "conHerido" => $item["conherido"],
+                    "sinHerido" => $item["sinherido"],
+                    "vehicularMenor" => $item["vehicularmenor"],
+                    "vehicularMayor" => $item["vehicularmayor"],
+                    "fac" => $item["fac"],
+                    "mto" => $item["mto"],
+                    "rwc" => $item["rwc"],
+                    "lti" => $item["lti"],
+                    "ftl" => $item["ftl"],
+                    "incidente" => $item["incidente"],
+                    "eo" => $item["eo"],
+                    "persona" => $item["persona"],
+                    "documento" => $item["documento"],
+                    "sexo" => $item["sexo"],
+                    "edad" => $item["edad"],
+                    "nacimiento" => $item["nacimiento"],
+                    "domicilio" => $item["domicilio"],
+                    "civil" => $item["civil"],
+                    "dpto" => $item["dpto"],
+                    "prov" => $item["prov"],
+                    "dist" => $item["dist"],
+                    "cargo" => $item["cargo"],
+                    "instruccion" => $item["instruccion"],
+                    "acciones" => $item["acciones"],
+                    "usuario" => $item["usuario"],
+                    "seguro" => $item["seguro"],
+                    "acciones" => $item["acciones"],
+                    "areaNombre" => $item["area_nombre"],
+                    "urlPdf" => $item["urlPdf"]
+                );
+                array_push($listReport, $seguridad);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+
+    public function optReport($proyecto, $fechaInicio, $fechaFin)
+    {
+
+        $listReport = array();
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "idProyecto <> '$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "idProyecto = '$proyecto'";
+        }
+
+
+        $query = $this->db->connect()->prepare("SELECT
+        id ,
+        usuario_nombres ,
+        usuario_apellidos ,
+        proyecto_nombre ,
+        area_nombre ,
+        ubicacion,
+        area_observada_nombre,
+        tiempo_proyecto,
+        fecha ,
+        registro ,
+        nombre ,
+        tiempo_trabajo,
+        guardia,
+        ocupacion ,
+        tarea ,
+        razon_opt ,
+        oportunidades ,
+        firma_gerente ,
+        area,
+        responsable,
+        riesgoCritico,
+        petLog
+        FROM view_opt 
+        WHERE  registro >= '$fechaInicio'  AND  registro <  DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL ORDER BY registro desc
+        ");
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+                $opt = array(
+                    "opt" => $item ,
+                    "optObservacion" => $this->buscarByIdOptObservaciones($item["id"]),
+                    "optObservadores" => $this->buscarByIdOptObservadores($item["id"]),
+                    "optRecomendaciones" => $this->buscarByIdOptRecomendaciones($item["id"]),
+                );
+
+                array_push($listReport,$opt);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+
+    public function buscarByIdOptObservaciones($idOpt)
+    {
+
+        $arrayOptObservaciones = array();
+
+        $query = $this->db->connect()->prepare("SELECT id,pasos,observaciones FROM optobservacion WHERE idOpt=  $idOpt ");
+        try {
+
+            $query->execute();
+
+            while ($row = $query->fetch()) {
+               
+                array_push($arrayOptObservaciones,$row);
+
+            }
+
+            return $arrayOptObservaciones;
+
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    
+    public function buscarByIdOptObservadores($idOpt)
+    {
+
+        $arrayOptObservadores = array();
+
+        $query = $this->db->connect()->prepare("SELECT id,nombre FROM optobservadores WHERE idOpt= $idOpt ");
+        try {
+            $query->execute();
+            while ($row = $query->fetch()) {
+                array_push($arrayOptObservadores,$row);
+            }
+            return $arrayOptObservadores;
+
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function buscarByIdOptRecomendaciones($idOpt)
+    {
+        $arrayOptRecomendacion = array();
+     
+        $query = $this->db->connect()->prepare("SELECT id,acciones,CAST(fecha AS DATE) AS fecha FROM optrecomendaciones WHERE idOpt= $idOpt");
+     
+        try {
+            $query->execute();
+
+            while ($row = $query->fetch()) {
+                array_push($arrayOptRecomendacion,$row);
+            }
+            return $arrayOptRecomendacion;
+
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+
+    public function ipercReport($proyecto, $fechaInicio, $fechaFin)
+    {
+
+        $listReport = array();
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "idProyecto <> '$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "idProyecto = '$proyecto'";
+        }
+
+
+        $query = $this->db->connect()->prepare("SELECT 
+            id,
+            idProyecto,
+            nombre_proyecto,
+            nombre_area,
+            ubicacion,
+            area_observada,
+            nombre_tarea,
+            fecha,
+            nombres_usuario,
+            apellidos_usuario,
+            empresa,
+            idTipoRiesgo,
+            tipoRiesgo,
+            registro,
+            riesgo1,
+            comentario1,
+            riesgo2,
+            comentario2,
+            riesgo3,
+            comentario3,
+             riesgo4,
+            comentario4,
+             riesgo5,
+            comentario5,
+             riesgo6,
+            comentario6,
+             riesgo7,
+            comentario7,
+             riesgo8,
+            comentario8,
+             riesgo9,
+            comentario9,
+             riesgo10,
+             comentario10,
+             riesgo11,
+             comentario11,
+             riesgo12,
+             comentario12,
+             riesgo13,
+             comentario13,
+             riesgo14,
+             comentario14,
+             riesgo15,
+             comentario15,
+             riesgo16,
+             comentario16,
+    
+            riesgo_critico1 ,
+             comentario_critico1,
+            riesgo_critico2 ,
+             comentario_critico2,
+            riesgo_critico3 ,
+             comentario_critico3,
+            riesgo_critico4 ,
+             comentario_critico4,
+            riesgo_critico5 ,
+             comentario_critico5,
+            riesgo_critico6 ,
+             comentario_critico6,
+            riesgo_critico7 ,
+             comentario_critico7,
+            riesgo_critico8 ,
+             comentario_critico8,
+            riesgo_critico9 ,
+             comentario_critico9,
+             riesgo_critico10 ,
+            comentario_critico10,
+                    riesgo_critico11 ,
+            comentario_critico11,
+                    riesgo_critico12 ,
+            comentario_critico12,
+                    riesgo_critico13 ,
+            comentario_critico13,
+                    riesgo_critico14 ,
+            comentario_critico14,
+                    riesgo_critico15 ,
+            comentario_critico15,
+                    riesgo_critico16 ,
+            comentario_critico16,
+                    riesgo_critico17 ,
+            comentario_critico17,
+                    riesgo_critico18 ,
+            comentario_critico18,
+                    riesgo_critico19 ,
+            comentario_critico19,
+                    riesgo_critico20 ,
+            comentario_critico20, 
+                riesgo_manos1,
+                riesgo_manos2,
+                riesgo_manos3,
+                riesgo_covid2,
+                riesgo_covid3,
+                riesgo_covid4,
+                riesgo_covid5,
+                riesgo_covid6,
+                riesgo_covid7 
+                FROM view_iperc_nuevo 
+                WHERE registro >= '$fechaInicio'  AND registro < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  ORDER BY registro DESC ");
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+                $iperc = array(
+
+                    "id" =>       $item["id"],
+                    "idProyecto" =>       $item["idProyecto"],
+                    "nombre_proyecto"    =>       $item["nombre_proyecto"],
+                    "nombre_area"    =>       $item["nombre_area"],
+                    "ubicacion"  =>       $item["ubicacion"],
+                    "area_observada" =>       $item["area_observada"],
+                    "nombre_tarea"   =>       $item["nombre_tarea"],
+                    "fecha"  =>       $item["fecha"],
+                    "nombres_usuario"    =>       $item["nombres_usuario"],
+                    "apellidos_usuario"  =>       $item["apellidos_usuario"],
+                    "empresa"    =>       $item["empresa"],
+                    "idTipoRiesgo"   =>       $item["idTipoRiesgo"],
+                    "tipoRiesgo" =>       $item["tipoRiesgo"],
+                    "registro"   =>       $item["registro"],
+                    "riesgo1"    =>       $item["riesgo1"],
+                    "comentario1"    =>       $item["comentario1"],
+                    "riesgo2"    =>       $item["riesgo2"],
+                    "comentario2"    =>       $item["comentario2"],
+                    "riesgo3"    =>       $item["riesgo3"],
+                    "comentario3"    =>       $item["comentario3"],
+                    "riesgo4"   =>       $item["riesgo4"],
+                    "comentario4"    =>       $item["comentario4"],
+                    "riesgo5"   =>       $item["riesgo5"],
+                    "comentario5"    =>       $item["comentario5"],
+                    "riesgo6"   =>       $item["riesgo6"],
+                    "comentario6"    =>       $item["comentario6"],
+                    "riesgo7"   =>       $item["riesgo7"],
+                    "comentario7"    =>       $item["comentario7"],
+                    "riesgo8"   =>       $item["riesgo8"],
+                    "comentario8"    =>       $item["comentario8"],
+                    "riesgo9"   =>       $item["riesgo9"],
+                    "comentario9"    =>       $item["comentario9"],
+                    "riesgo10"  =>       $item["riesgo10"],
+                    "comentario10"  =>       $item["comentario10"],
+                    "riesgo11"  =>       $item["riesgo11"],
+                    "comentario11"  =>       $item["comentario11"],
+                    "riesgo12"  =>       $item["riesgo12"],
+                    "comentario12"  =>       $item["comentario12"],
+                    "riesgo13"  =>       $item["riesgo13"],
+                    "comentario13"  =>       $item["comentario13"],
+                    "riesgo14"  =>       $item["riesgo14"],
+                    "comentario14"  =>       $item["comentario14"],
+                    "riesgo15"  =>       $item["riesgo15"],
+                    "comentario15"  =>       $item["comentario15"],
+                    "riesgo16"  =>       $item["riesgo16"],
+                    "comentario16"  =>       $item["comentario16"],
+                    "riesgo_critico1"   =>       $item["riesgo_critico1"],
+                    "comentario_critico1"   =>       $item["comentario_critico1"],
+                    "riesgo_critico2"   =>       $item["riesgo_critico2"],
+                    "comentario_critico2"   =>       $item["comentario_critico2"],
+                    "riesgo_critico3"   =>       $item["riesgo_critico3"],
+                    "comentario_critico3"   =>       $item["comentario_critico3"],
+                    "riesgo_critico4"   =>       $item["riesgo_critico4"],
+                    "comentario_critico4"   =>       $item["comentario_critico4"],
+                    "riesgo_critico5"   =>       $item["riesgo_critico5"],
+                    "comentario_critico5"   =>       $item["comentario_critico5"],
+                    "riesgo_critico6"   =>       $item["riesgo_critico6"],
+                    "comentario_critico6"   =>       $item["comentario_critico6"],
+                    "riesgo_critico7"   =>       $item["riesgo_critico7"],
+                    "comentario_critico7"   =>       $item["comentario_critico7"],
+                    "riesgo_critico8"   =>       $item["riesgo_critico8"],
+                    "comentario_critico8"   =>       $item["comentario_critico8"],
+                    "riesgo_critico9"   =>       $item["riesgo_critico9"],
+                    "comentario_critico9"   =>       $item["comentario_critico9"],
+                    "riesgo_critico10" =>       $item["riesgo_critico10"],
+                    "comentario_critico10"   =>       $item["comentario_critico10"],
+                        "riesgo_critico11"  =>       $item["riesgo_critico11"],
+                    "comentario_critico11"   =>       $item["comentario_critico11"],
+                        "riesgo_critico12"  =>       $item["riesgo_critico12"],
+                    "comentario_critico12"   =>       $item["comentario_critico12"],
+                        "riesgo_critico13"  =>       $item["riesgo_critico13"],
+                    "comentario_critico13"   =>       $item["comentario_critico13"],
+                        "riesgo_critico14"  =>       $item["riesgo_critico14"],
+                    "comentario_critico14"   =>       $item["comentario_critico14"],
+                        "riesgo_critico15"  =>       $item["riesgo_critico15"],
+                    "comentario_critico15"   =>       $item["comentario_critico15"],
+                        "riesgo_critico16"  =>       $item["riesgo_critico16"],
+                    "comentario_critico16"   =>       $item["comentario_critico16"],
+                        "riesgo_critico17"  =>       $item["riesgo_critico17"],
+                    "comentario_critico17"   =>       $item["comentario_critico17"],
+                        "riesgo_critico18"  =>       $item["riesgo_critico18"],
+                    "comentario_critico18"   =>       $item["comentario_critico18"],
+                        "riesgo_critico19"  =>       $item["riesgo_critico19"],
+                    "comentario_critico19"   =>       $item["comentario_critico19"],
+                        "riesgo_critico20"  =>       $item["riesgo_critico20"],
+                    "comentario_critico20"   =>       $item["comentario_critico20"],
+                      "riesgo_manos1"  =>       $item["riesgo_manos1"],
+                      "riesgo_manos2"  =>       $item["riesgo_manos2"],
+                      "riesgo_manos3"  =>       $item["riesgo_manos3"],
+                      "riesgo_covid2"  =>       $item["riesgo_covid2"],
+                      "riesgo_covid3"  =>       $item["riesgo_covid3"],
+                      "riesgo_covid4"  =>       $item["riesgo_covid4"],
+                      "riesgo_covid5"  =>       $item["riesgo_covid5"],
+                      "riesgo_covid6"  =>       $item["riesgo_covid6"],
+                      "riesgo_covid7"   =>       $item["riesgo_covid7"],
+            
+                );
+
+                array_push($listReport,$iperc);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    public function iperRiesgoCritico()
+    {
+
+        $listReport = array();
+
+        $query = $this->db->connect()->prepare("SELECT id_riesgo_critico,nombre FROM  riesgo_critico_pregunta");
+        
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+                array_push($listReport,$item);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
     }
 }
 

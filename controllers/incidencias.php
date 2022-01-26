@@ -353,8 +353,10 @@ class Incidencias extends Controller
 
         $generatePdf = new GeneratePDF();
         $urlPdf = $generatePdf->generateIncidenciaPdf($resultado);
+        $urlOficialPdf = $generatePdf->generateIncidenciaOficialPdf($resultado);
 
-        $this->model->actualizarUrlPdf($id, $urlPdf);
+
+        $this->model->actualizarUrlPdf($id, $urlOficialPdf);
 
         if(strlen($dniPropietario) > 0){
         

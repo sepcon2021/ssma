@@ -50,16 +50,13 @@ class Reporte extends Controller{
             $result =  $this->model->seguridadReport($proyecto, $fechaInicio, $fechaFin);
         }
         if($typeDocument == self::INCIDENCIA){
-
-        }
-        if($typeDocument == self::IPERC){
-
+            $result =  $this->model->incidenciaReport($proyecto, $fechaInicio, $fechaFin);
         }
         if($typeDocument == self::OPT){
-
+            $result =  $this->model->optReport($proyecto, $fechaInicio, $fechaFin);
         }
-        if($typeDocument == self::RIESGO){
-
+        if($typeDocument == self::IPERC){
+            $result =  $this->model->ipercReport($proyecto, $fechaInicio, $fechaFin);
         }
 
 
@@ -99,16 +96,18 @@ class Reporte extends Controller{
             $result = $reportExcel->typeFormSeguridad($formatoReporte,$listReport);
         }
         if($typeDocument == self::INCIDENCIA){
-
-        }
-        if($typeDocument == self::IPERC){
-
+            $listReport =  $this->model->incidenciaReport($proyecto, $fechaInicio, $fechaFin);
+            $result = $reportExcel->generateIncidenciaFormato1($listReport);
         }
         if($typeDocument == self::OPT){
-
+            $listReport =  $this->model->optReport($proyecto, $fechaInicio, $fechaFin);
+            $result = $reportExcel->generateOptFormato1($listReport);
         }
-        if($typeDocument == self::RIESGO){
-
+        if($typeDocument == self::IPERC){
+            $listReport =  $this->model->ipercReport($proyecto, $fechaInicio, $fechaFin);
+            $listRiesgoCritico =  $this->model->iperRiesgoCritico();
+            $result = $reportExcel->generateIpercFormato1($listReport,$listRiesgoCritico);
+            
         }
 
         return $result;

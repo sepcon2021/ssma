@@ -208,9 +208,6 @@ $(function () {
             processData: false,
             success: function (data) {
 
-                console.log(data);
-                console.log('ESTOY PUKSANDO UN SUBIMIT ')
-
                 $(".popup_load").hide();
                 $(".popup_content").show();
 

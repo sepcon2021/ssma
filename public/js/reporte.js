@@ -15,6 +15,8 @@ $(function () {
     const TOP = 1;
     const SEGURIDAD = 2;
     const INSPECCION = 3;
+    const OPT = 4;
+    const IPERC = 5;
 
  
 
@@ -87,9 +89,11 @@ $(function () {
         }else if(typeDocument == SEGURIDAD){
             contentHTml = htmlSeguridad(data,proyecto,fecha_inicio,fecha_fin,'Inspección planeada de seguridad');
         }else if(typeDocument == INSPECCION){
-    
-        }else {
-
+            contentHTml = htmlIncidencia(data,proyecto,fecha_inicio,fecha_fin,'Reporte de incidencia');
+        }else if(typeDocument == OPT){
+            contentHTml = htmlOpt(data,proyecto,fecha_inicio,fecha_fin,'Observación planeada de tarea');
+        }else if(typeDocument == IPERC){
+            contentHTml = htmlIperc(data,proyecto,fecha_inicio,fecha_fin,'Inspección de IPERC continuo');
         }
 
         $(".mainpage").html(contentHTml);

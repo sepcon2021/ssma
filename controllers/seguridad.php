@@ -401,6 +401,7 @@ class Seguridad extends Controller
             $idd    = $data[$i]->iddoc;
             $tipo   = $data[$i]->tipo;
             $condicion    = $data[$i]->Condicion;
+            $detalle    = $data[$i]->Detalle;
             $clasificacion    = $data[$i]->Clasificacion;
             $accion_correctiva    = $data[$i]->Correctiva;
             $responsable    = $data[$i]->Responsable;
@@ -408,7 +409,7 @@ class Seguridad extends Controller
             $seguimiento    = $data[$i]->Seguimiento;
             $evidencia    = $data[$i]->Evidencia != "1" ?  $data[$i]->Evidencia : '';
 
-            $datos = compact("sid", "idd", "tipo", "condicion", "clasificacion", "accion_correctiva", "responsable", "fecha_cumplimiento", "seguimiento", "evidencia");
+            $datos = compact("sid", "idd", "tipo", "condicion","detalle", "clasificacion", "accion_correctiva", "responsable", "fecha_cumplimiento", "seguimiento", "evidencia");
 
             $idSeguridad = $idd;
             $dniPropietario = $data[$i]->dni;
