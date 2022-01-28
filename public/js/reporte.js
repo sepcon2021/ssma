@@ -17,6 +17,9 @@ $(function () {
     const INSPECCION = 3;
     const OPT = 4;
     const IPERC = 5;
+    const PTAR = 6;
+    const GERENCIAL = 7;
+    const SUSPENCION = 8;
 
  
 
@@ -94,7 +97,14 @@ $(function () {
             contentHTml = htmlOpt(data,proyecto,fecha_inicio,fecha_fin,'Observación planeada de tarea');
         }else if(typeDocument == IPERC){
             contentHTml = htmlIperc(data,proyecto,fecha_inicio,fecha_fin,'Inspección de IPERC continuo');
+        }else if(typeDocument == PTAR){
+            contentHTml = htmlPtar(data,proyecto,fecha_inicio,fecha_fin,'Inspección de IPERC continuo');
+        }else if(typeDocument == GERENCIAL){
+            contentHTml = htmlGerencial(data,proyecto,fecha_inicio,fecha_fin,'Lista de verificación de visitas gerenciales');
+        }else if(typeDocument == SUSPENCION){
+            contentHTml = htmlSuspencion(data,proyecto,fecha_inicio,fecha_fin,'Suspención de trabajo ');
         }
+
 
         $(".mainpage").html(contentHTml);
 

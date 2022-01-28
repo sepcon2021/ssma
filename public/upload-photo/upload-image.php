@@ -138,5 +138,74 @@ class UploadImage{
 
             return $outputfile;
     }
+
+    function uploadImageGeneral($fileArray){
+
+        $listaEvidencia = '' ;
+
+
+        $uploadDir = 'public/photos/';
+        $allowTypes = array('pdf', 'doc', 'docx', 'xlsx', 'jpg', 'png', 'jpeg');
+
+        $fileNames = array_filter($fileArray['name']);
+
+        if (!empty($fileNames)) {
+            foreach ($fileArray['name'] as $key => $val) {
+                // File upload path  
+                $fecha_image = new DateTime();
+
+                $fileName = basename($fileArray['name'][$key]);
+                $oficialName =$fecha_image->getTimestamp();
+                $fileName =  $oficialName.$this->getExtensionPhoto($fileName);
+
+                $targetFilePath = $uploadDir .  $oficialName.$this->getExtensionPhoto($fileName);
+                
+                // Check whether file type is valid  
+                $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+                if (in_array($fileType, $allowTypes)) {
+                    // Upload file to server  
+                    if (move_uploaded_file($fileArray["tmp_name"][$key], $targetFilePath)) {
+
+                        //Convert PNG to JPG
+                        if($this->isPhotoPng($fileName)){
+                            $image = imagecreatefrompng($targetFilePath);
+                            imagejpeg($image, $uploadDir.$oficialName.'.jpg', 70);
+                            imagedestroy($image);
+                        }
+                        $listaEvidencia .= ($fileName.',');
+                    }
+                } 
+            }
+        }
+        return $listaEvidencia;
+    }
+
+    function getExtensionPhoto($data)
+    {
+        $extension = "";
+
+        // Test if string contains the word 
+        if (strpos($data, ".jpg") !== false) {
+            $extension = ".jpg";
+        } 
+        if (strpos($data, ".png") !== false) {
+            $extension = ".png";
+        } 
+        if (strpos($data, ".jpeg") !== false) {
+            $extension = ".jpeg";
+        }
+        return $extension;
+    }
+
+    function isPhotoPng($data)
+    {
+        $result = false;
+
+        if (strpos($data, ".png") !== false) {
+            $result = true;
+        }
+        return $result;
+    }
+
 }
 ?>

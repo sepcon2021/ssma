@@ -231,38 +231,32 @@ FROM
         $listReport = array();
 
         $TODOS_PROYECTOS = 100;
-        $sedeSQL = "sede <> '$proyecto'";
+        $sedeSQL = "sede <> '0$proyecto'";
 
         if ($proyecto != $TODOS_PROYECTOS) {
-            $sedeSQL = "sede = '$proyecto'";
+            $sedeSQL = "sede = '0$proyecto'";
         }
 
         $statement = "SELECT
-                        detseguridad.idreg,
-                        detseguridad.iddoc,
-                        detseguridad.condicion,
-                        detseguridad.clasificacion,
-                        detseguridad.accion,
-                        detseguridad.fecha as fechaCumplimiento,
-                        detseguridad.seguimiento,
-                        
-                        inspeccion_tipo.nombre AS tipo,
-                        seguridad.sede,
-                        seguridad.lugar,
-                        seguridad.fecha AS fechaInspeccion,
-                        seguridad.inspeccionado,
-                        seguridad.responsable,
-                        seguridad.obser01,
-                        seguridad.obser02,
-                        seguridad.obser03,
-                        seguridad.reg AS registro,
-                        detseguridad.evidencia,
                         proyectos.nombre AS proyecto ,
+                        seguridad.fecha AS fechaInspeccion,
+                        seguridad.inspeccionado AS inspeccionRealizada,
+                        inspeccion_tipo.nombre AS tipoInspeccion,
+                        tipo_observacion.nombre AS  condicionActo,
+                        detseguridad.detalle AS descripcionCondicionActo,
+                        detseguridad.evidencia AS evidenciaEncontrada,
+                        detseguridad.accion AS accionCorrectiva,
+                        detseguridad.clasificacion,
                         TIMESTAMPDIFF(DAY, seguridad.fecha , detseguridad.fecha) AS diasImplementacion ,
-                        seguridad.ubicacion,
-                        area_general.nombre AS area_nombre,
-                        tipo_observacion.nombre AS  tipo_observacion
-
+                        detseguridad.fecha as fechaImplementacion,
+                        seguridad.responsable AS responsableEjecucion,
+                        detseguridad.seguimiento AS comentariosAdicionales,
+                        area_general.nombre AS area,
+                        seguridad.ubicacion AS ubicacion,
+                        detseguridad.condicion AS tipoCondicionActo,
+                        seguridad.responsable AS responsableArea,
+                        seguridad.reg AS registro,
+                        detseguridad.iddoc
 
                     FROM
                         detseguridad
@@ -287,24 +281,28 @@ FROM
 
                 $seguridad = array(
                     "proyecto" => $item["proyecto"],
-                    "areaNombre" => $item["area_nombre"],
-                    "ubicacion" => $item["ubicacion"],
                     "fechaInspeccion" => $item["fechaInspeccion"],
-                    "registro" => $item["registro"],
-                    "inspeccionado" => $item["inspeccionado"],
-                    "tipo" => $item["tipo"],
-                    "tipoObservacion" => $item["tipo_observacion"],
-                    "condicion" => $item["condicion"],
-                    "fotos" => $item["evidencia"],
-                    "accion" => $item["accion"],
+                    "inspeccionRealizada" => $item["inspeccionRealizada"],
+                    "tipoInspeccion" => $item["tipoInspeccion"],
+                    "condicionActo" => $item["condicionActo"],
+                    "descripcionCondicionActo" => $item["descripcionCondicionActo"],
+                    "evidenciaEncontrada" => $item["evidenciaEncontrada"],
+                    "accionCorrectiva" => $item["accionCorrectiva"],
                     "clasificacion" => $this->convertClasificacion($item["clasificacion"]),
                     "diasImplementacion" => $item["diasImplementacion"],
-                    "fechaCumplimiento" => $item["fechaCumplimiento"],
-                    "responsable" => $item["responsable"],
-                    "seguimiento" => $item["seguimiento"]
+                    "fechaImplementacion" => $item["fechaImplementacion"],
+                    "responsableEjecucion" => $item["responsableEjecucion"],
+                    "comentariosAdicionales" => $item["comentariosAdicionales"],
+                    "area" => $item["area"],
+                    "ubicacion" => $item["ubicacion"],
+                    "tipoCondicionActo" => $item["tipoCondicionActo"],
+                    "responsableArea" => $item["responsableArea"],
+                    "registro" => $item["registro"]
+
                 );
                 array_push($listReport, $seguridad);
             }
+
 
             return $listReport;
         } catch (PDOException $e) {
@@ -454,10 +452,10 @@ FROM
         $listReport = array();
 
         $TODOS_PROYECTOS = 100;
-        $sedeSQL = "idProyecto <> '$proyecto'";
+        $sedeSQL = "idProyecto <> '0$proyecto'";
 
         if ($proyecto != $TODOS_PROYECTOS) {
-            $sedeSQL = "idProyecto = '$proyecto'";
+            $sedeSQL = "idProyecto = '0$proyecto'";
         }
 
 
@@ -577,10 +575,10 @@ FROM
         $listReport = array();
 
         $TODOS_PROYECTOS = 100;
-        $sedeSQL = "idProyecto <> '$proyecto'";
+        $sedeSQL = "idProyecto <> '0$proyecto'";
 
         if ($proyecto != $TODOS_PROYECTOS) {
-            $sedeSQL = "idProyecto = '$proyecto'";
+            $sedeSQL = "idProyecto = '0$proyecto'";
         }
 
 
@@ -683,6 +681,8 @@ FROM
                 riesgo_covid7 
                 FROM view_iperc_nuevo 
                 WHERE registro >= '$fechaInicio'  AND registro < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  ORDER BY registro DESC ");
+        
+        
         try {
 
             $query->execute();
@@ -817,5 +817,246 @@ FROM
             return [];
         }
     }
+
+    
+    public function ptarReport($proyecto, $fechaInicio, $fechaFin)
+    {
+
+
+        $listReport = [];
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "idProyecto <> '$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "idProyecto = '$proyecto'";
+        }
+
+        $query = $this->db->connect()->prepare("SELECT 
+                                                fechaelaboracion,
+                                                proyecto,
+                                                cliente,
+                                                semana,
+                                                fase,
+                                                usuario,
+                                                area,
+                                                ubicacion,
+                                                registro,
+
+                                                observacionPt1,
+                                                observacionPt2,
+                                                observacionPt3,
+                                                observacionPt4,
+                                                observacionPt5,
+                                                observacionPt6,
+                                                observacionPt7,
+                                                observacionPt8,
+                                                observacionPt9,
+                                                observacionPt10,
+                                                observacionPt11,
+
+                                                observacionAst1,
+                                                observacionAst2,
+                                                observacionAst3,
+                                                observacionAst4,
+                                                observacionAst5,
+                                                observacionAst6,
+                                                observacionAst7,
+                                                observacionAst8,
+                                                observacionAst9,
+                                                observacionAst10,
+                                                observacionAst11,
+                                                observacionAst12,
+                                                observacionAstDetalle10,
+                                                observacionAstDetalle11,
+                                                observacionAstDetalle12
+
+
+                                                FROM 
+                                                    ptar_report
+                                                WHERE registro >= '$fechaInicio'  AND registro < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  ORDER BY registro DESC 
+
+                                                    ");
+        
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+                array_push($listReport,$item);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+
+    public function gerencialReport($proyecto, $fechaInicio, $fechaFin)
+    {
+
+
+        $listReport = [];
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "idProyecto <> '$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "idProyecto = '$proyecto'";
+        }
+
+        $query = $this->db->connect()->prepare("SELECT 
+                                                idProyecto,
+                                                proyecto , 
+                                                razonsocial , 
+                                                ruc , 
+                                                domicilio , 
+                                                acteconomica , 
+                                                responsable1 , 
+                                                numeroTrabajadores ,
+                                                areasinspeccion , 
+                                                fechainspeccion ,
+                                                responsableInspeccion , 
+                                                tipoInspeccion , 
+                                                otros , 
+                                                notas , 
+                                                visita , 
+
+                                                conclusiones , 
+                                                responsabletrabajo ,
+                                                responsablecargo, 
+                                                fecharegistro ,
+                                                usuario , 
+
+                                                registroSistema , 
+                                                saludOcupacional1 , 
+                                                saludOcupacionalDetalle1 , 
+                                                saludOcupacional2 , 
+                                                saludOcupacionalDetalle2 , 
+                                                saludOcupacional3 , 
+                                                saludOcupacionalDetalle3 , 
+                                                saludOcupacional4 , 
+                                                saludOcupacionalDetalle4 , 
+                                                saludOcupacional5 , 
+                                                saludOcupacionalDetalle5 , 
+                                                saludOcupacional6 , 
+                                                saludOcupacionalDetalle6 , 
+                                                saludOcupacional7 , 
+                                                saludOcupacionalDetalle7 , 
+                                                saludOcupacional8 , 
+                                                saludOcupacionalDetalle8 , 
+                                                seguridad1 , 
+                                                seguridadDetalle1 , 
+                                                seguridad2 , 
+                                                seguridadDetalle2 , 
+                                                seguridad3 , 
+                                                seguridadDetalle3 , 
+                                                seguridad4 , 
+                                                seguridadDetalle4 , 
+                                                seguridad5 , 
+                                                seguridadDetalle5 , 
+                                                seguridad6 , 
+                                                seguridadDetalle6 , 
+                                                seguridad7 , 
+                                                seguridadDetalle7 , 
+                                                seguridad8 , 
+                                                seguridadDetalle8 , 
+                                                seguridad9 , 
+                                                seguridadDetalle9 , 
+                                                seguridad10 , 
+                                                seguridadDetalle10 , 
+                                                seguridad11 , 
+                                                seguridadDetalle11 , 
+                                                medioAmbiente1 , 
+                                                medioAmbienteDetalle1 , 
+                                                medioAmbiente2 , 
+                                                medioAmbienteDetalle2 , 
+                                                medioAmbiente3 , 
+                                                medioAmbienteDetalle3 , 
+                                                medioAmbiente4 , 
+                                                medioAmbienteDetalle4 , 
+                                                medioAmbiente5 , 
+                                                medioAmbienteDetalle5 
+
+                                                FROM gerencial
+                                                WHERE registroSistema >= '$fechaInicio'  AND registroSistema < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  ORDER BY registroSistema DESC 
+
+                                                    ");
+        
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+                array_push($listReport,$item);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+
+    public function suspencionReport($proyecto, $fechaInicio, $fechaFin)
+    {
+
+
+        $listReport = [];
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "idProyecto <> '$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "idProyecto = '$proyecto'";
+        }
+
+        $query = $this->db->connect()->prepare("SELECT 
+                                                idProyecto,
+                                                proyecto, 
+                                                fase , 
+                                                responsable , 
+                                                cargo , 
+                                                fecha , 
+                                                hora ,
+                                                conduccion , 
+                                                ptar , 
+                                                confinados , 
+                                                energias , 
+                                                excavaciones , 
+                                                altura , 
+                                                caliente , 
+                                                izaje , 
+                                                
+                                                otros , 
+                                                descripcion , 
+                                                acciones , 
+                                                riesgo , 
+                                                duracion , 
+                                                jefe , 
+                                                numeroPersonas ,
+                                                observaciones , 
+                                                usuario , 
+                                                registro
+                                                FROM report_suspencion
+                                                WHERE registro >= '$fechaInicio'  AND registro < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  ORDER BY registro DESC 
+
+                                                    ");
+        
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+                array_push($listReport,$item);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
 }
 

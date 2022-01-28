@@ -392,6 +392,7 @@ class SeguimientoModel extends Model
             $query = $conexion_bbdd->prepare('INSERT INTO evidencia (idSeguimiento,nombre)
                                                         VALUES (:idSeguimiento ,:nombre)');
 
+            $listaEvidencia = explode(",",$listaEvidencia);
 
             foreach ($listaEvidencia as $evidencia) {
                 $query->bindParam(':idSeguimiento', $idAccion, PDO::PARAM_INT);

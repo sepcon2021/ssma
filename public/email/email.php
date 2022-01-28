@@ -32,8 +32,6 @@ class Email
 
     public function settingEmail($destino)
     {
-
-
         $origen = "ssma@sepcon.net";
         $remitente = "fichas@sepcon.net";
 
@@ -580,7 +578,7 @@ class Email
     public function enviarMailIncidencia($mensaje, $personaInvolucrada,$idProyecto,$nombreProyecto,$urlPdf)
     {
 
-        $destino = "jcuri@sepcon.net";
+        $destino = "hminaya@sepcon.net";
         $origen = "ssma@sepcon.net";
 
         $remitente = "fichas@sepcon.net";
@@ -606,7 +604,7 @@ class Email
         $mail->addAddress($destino, $destino);
 
         $mail->addCC('jcuri@sepcon.net', 'Reporte de Incidencias');
-       /* $mail->addCC('carroyo@sepcon.net', 'Reporte de Incidencias');
+        $mail->addCC('carroyo@sepcon.net', 'Reporte de Incidencias');
         
         if ($idProyecto == "01") {
 
@@ -765,7 +763,7 @@ class Email
             $mail->addCC('randrade@sepcon.net', 'Tarjetas Top');
             $mail->addCC('jribeiro@sepcon.net', 'Tarjetas Top');
 
-        }*/
+        }
 
 
         $mail->Subject = 'Reporte de Incidencia';

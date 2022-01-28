@@ -41,21 +41,21 @@
         <div id="container_documento_otros_contenido">
 
             <div class="container_documnento_otros_item">
-                <div class="click_documento" >
+                <div class="click_documento" codigo="ptar" >
                     <img class="container_documento_icono" src="public/img/documento.png" alt="">
-                    <p></p>
+                    <p>Auditoria PTAR</p>
                 </div>
             </div>
             <div class="container_documnento_otros_item">
-                <div class="click_documento" >
+                <div class="click_documento" codigo="gerencial" >
                     <img class="container_documento_icono" src="public/img/documento.png" alt="">
-                    <p></p>
+                    <p>Inspección gerencial</p>
                 </div>
             </div>
             <div class="container_documnento_otros_item">
-                <div class="click_documento" >
+                <div class="click_documento"  codigo="suspencion" >
                     <img class="container_documento_icono" src="public/img/documento.png" alt="">
-                    <p></p>
+                    <p>Suspención de trabajo</p>
                 </div>
             </div>
             <div class="container_documnento_otros_item">

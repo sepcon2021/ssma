@@ -211,7 +211,7 @@ $(function () {
                 $(".popup_load").hide();
                 $(".popup_content").show();
 
-                arrayFormulario.push({ "name": "listaArchivo", "value": createArrayPhoto(data) });
+                arrayFormulario.push({ "name": "listaArchivo", "value": JSON.parse(data).lista });
                 arrayFormulario.push({ "name": "nombreResponsable", "value": nombreResponsable });
 
                 console.log(arrayFormulario);
@@ -317,16 +317,6 @@ $(function () {
         return data;
     }
 
-    // 10.Eliminar una row de la tabla 
-
-    /* $(".tablaConBordes").on("click", ".buttonDelete", function (event) {
-         event.preventDefault();
-         $(this).closest('tr').remove();
-         return false;
- 
-     })*/
-
-
     function tipo(id, idTipo) {
 
         var selected = ``;
@@ -338,17 +328,19 @@ $(function () {
     }
 
 
-    function createArrayPhoto(data) {
+    /*function createArrayPhoto(data) {
+
+
+        console.log(JSON.parse(data).lista);
 
         var listaArchivo = '';
         if (data.length > 0) {
-
             JSON.parse(data).lista.forEach(archivo => {
                 listaArchivo += (archivo + ',');
             });
         }
         return listaArchivo;
-    }
+    }*/
 
     function getObservacionDetalle(observacion, observacionDetalle) {
 

@@ -3,6 +3,7 @@
 require_once 'public/upload-photo/upload-image.php';
 require_once 'public/generate-pdf/generatepdf.php';
 require_once 'models/seguimientomodel.php';
+require_once 'public/upload-photo/upload-image.php';
 
 class Seguridad extends Controller
 {
@@ -285,41 +286,8 @@ class Seguridad extends Controller
     function guardarArchivos()
     {
 
-        $filesArr = $_FILES["files"];
-
-        $listaEvidencia = array();
-
-        $uploadDir = 'public/photos/';
-        $allowTypes = array('pdf', 'doc', 'docx', 'xlsx', 'jpg', 'png', 'jpeg','xls');
-
-        $fileNames = array_filter($filesArr['name']);
-
-        // Upload file 
-        $uploadedFile = '';
-        if (!empty($fileNames)) {
-            foreach ($filesArr['name'] as $key => $val) {
-                // File upload path  
-                $fileName =  str_replace(" ","",basename($filesArr['name'][$key]));
-                $targetFilePath = $uploadDir . $fileName;
-
-
-                // Check whether file type is valid  
-                $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-                if (in_array($fileType, $allowTypes)) {
-                    // Upload file to server  
-                    if (move_uploaded_file($filesArr["tmp_name"][$key], $targetFilePath)) {
-                        $uploadedFile .= $fileName . ',';
-
-                        array_push($listaEvidencia, $fileName);
-                    } else {
-                        echo  'Sorry, there was an error uploading your file.';
-                    }
-                } else {
-                    echo 'Sorry, only PDF, DOC, JPG, JPEG, & PNG files are allowed to upload.';
-                }
-            }
-        }
-
+        $uploadImage = new UploadImage;
+        $listaEvidencia = $uploadImage->uploadImageGeneral($_FILES["files"]);
         echo  json_encode(array("lista" => $listaEvidencia));
     }
 
@@ -334,7 +302,7 @@ class Seguridad extends Controller
 
         $reg  = isset($_POST['reg']) ? $_POST['reg'] : uniqid("se_");
 
-        $tipo = isset($_POST['tipo']) ? $_POST['tipo_inspeccion'] : null;
+        $tipo = isset($_POST['tipo_inspeccion']) ? $_POST['tipo_inspeccion'] : null;
         $sede = str_pad($_POST['proyecto'], 2, "0", STR_PAD_LEFT);
         //$luga = $_POST['lugar'];
         $luga = 'place';
@@ -381,7 +349,6 @@ class Seguridad extends Controller
         if ($saveDoc) {
             echo $reg;
         }
-        // $this->model->enviarmail($sede);
     }
 
     

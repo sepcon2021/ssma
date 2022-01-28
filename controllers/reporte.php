@@ -10,7 +10,9 @@ class Reporte extends Controller{
     const INCIDENCIA = 3;
     const OPT = 4;
     const IPERC = 5;
-    const RIESGO = 6;
+    const PTAR = 6;
+    const GERENCIAL = 7;
+    const SUSPENCION = 8;
 
 
 
@@ -58,8 +60,15 @@ class Reporte extends Controller{
         if($typeDocument == self::IPERC){
             $result =  $this->model->ipercReport($proyecto, $fechaInicio, $fechaFin);
         }
-
-
+        if($typeDocument == self::PTAR){
+            $result =  $this->model->ptarReport($proyecto, $fechaInicio, $fechaFin);
+        }
+        if($typeDocument == self::GERENCIAL){
+            $result =  $this->model->gerencialReport($proyecto, $fechaInicio, $fechaFin);
+        }
+        if($typeDocument == self::SUSPENCION){
+            $result =  $this->model->suspencionReport($proyecto, $fechaInicio, $fechaFin);
+        }
         return $result;
 
     }
@@ -77,14 +86,13 @@ class Reporte extends Controller{
         $formatoReporte = $_POST['formato_reporte'];
 
         $listReport = $this->typeDocumentExcel($tipoDocumento,$proyecto, $fechaInicio, $fechaFin,$formatoReporte);
-
         echo $respuesta->enviarRespuestaExcel($listReport);
 
     }
 
     function typeDocumentExcel($typeDocument,$proyecto, $fechaInicio, $fechaFin,$formatoReporte){
         $reportExcel = new GenerateExcel;
-        $result = array();
+        $result = '';
         $listReport = array();
         
         if($typeDocument == self::TOP){
@@ -107,9 +115,19 @@ class Reporte extends Controller{
             $listReport =  $this->model->ipercReport($proyecto, $fechaInicio, $fechaFin);
             $listRiesgoCritico =  $this->model->iperRiesgoCritico();
             $result = $reportExcel->generateIpercFormato1($listReport,$listRiesgoCritico);
-            
         }
-
+        if($typeDocument == self::PTAR){
+            $listReport =  $this->model->ptarReport($proyecto, $fechaInicio, $fechaFin);
+            $result = $reportExcel->generatePtarFormato1($listReport);
+        }
+        if($typeDocument == self::GERENCIAL){
+            $listReport =  $this->model->gerencialReport($proyecto, $fechaInicio, $fechaFin);
+            $result = $reportExcel->generateGerencialFormato1($listReport);
+        }
+        if($typeDocument == self::SUSPENCION){
+            $listReport =  $this->model->suspencionReport($proyecto, $fechaInicio, $fechaFin);
+            $result = $reportExcel->generateSuspencionFormato1($listReport);
+        }
         return $result;
 
     }

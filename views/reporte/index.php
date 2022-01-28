@@ -25,6 +25,10 @@
                         <option value=3>Reporte de Incidencias </option>
                         <option value=4>OPT </option>
                         <option value=5>IPERC</option>
+                        <option value=6>PTAR</option>
+                        <option value=7>Inspección gerencial</option>
+                        <option value=8>Suspención de trabajo</option>
+
                     </select>
                 </div>
                 <!-- ERRROR ELEMENT -->

@@ -4,6 +4,7 @@ require_once 'public/upload-photo/upload-image.php';
 require_once 'public/generate-pdf/generatepdf.php';
 require_once 'models/seguimientomodel.php';
 require_once 'public/email/email.php';
+require_once 'public/upload-photo/upload-image.php';
 
 class Incidencias extends Controller
 {
@@ -389,64 +390,11 @@ class Incidencias extends Controller
     }
 
 
-
-    function guardarArchivos($filesArr)
-    {
-
-        $listaEvidencia = '' ;
-
-
-        $uploadDir = 'public/photos/';
-        $allowTypes = array('pdf', 'doc', 'docx', 'xlsx', 'jpg', 'png', 'jpeg');
-
-        $fileNames = array_filter($filesArr['name']);
-
-        if (!empty($fileNames)) {
-            foreach ($filesArr['name'] as $key => $val) {
-                // File upload path  
-                $fecha_image = new DateTime();
-
-                $fileName = basename($filesArr['name'][$key]);
-                $oficialName =$fecha_image->getTimestamp();
-                $fileName =  $oficialName.$this->getExtensionPhoto($fileName);
-
-                $targetFilePath = $uploadDir .  $oficialName.$this->getExtensionPhoto($fileName);
-                
-                // Check whether file type is valid  
-                $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-                if (in_array($fileType, $allowTypes)) {
-                    // Upload file to server  
-                    if (move_uploaded_file($filesArr["tmp_name"][$key], $targetFilePath)) {
-
-                        //Convert PNG to JPG
-                        if($this->isPhotoPng($fileName)){
-                            $image = imagecreatefrompng($targetFilePath);
-                            imagejpeg($image, $uploadDir.$oficialName.'.jpg', 70);
-                            imagedestroy($image);
-                        }
-
-
-                        $listaEvidencia .= ($fileName.',');
-                    }
-                } 
-            }
-        }
-
-        
-
-
-        
-
-        return $listaEvidencia;
-    }
-
-
     public function grabarDocumentoNew()
     {
-        session_start();
 
-        $listaEvidencia = $this->guardarArchivos($_FILES["files"]);
-
+        $uploadImage = new UploadImage;
+        $listaEvidencia = $uploadImage->uploadImageGeneral($_FILES["files"]);
 
         $iddoc = uniqid("pc_");
         $proyecto = str_pad($_POST['proyecto'], 2, "0", STR_PAD_LEFT);
@@ -539,32 +487,5 @@ class Incidencias extends Controller
         $this->elaborarCorreo($iddoc,$proyecto,$persona,$descripcion,$responsable);
     }
 
-
-    function getExtensionPhoto($data)
-    {
-        $extension = "";
-
-        // Test if string contains the word 
-        if (strpos($data, ".jpg") !== false) {
-            $extension = ".jpg";
-        } 
-        if (strpos($data, ".png") !== false) {
-            $extension = ".png";
-        } 
-        if (strpos($data, ".jpeg") !== false) {
-            $extension = ".jpeg";
-        }
-        return $extension;
-    }
-
-    function isPhotoPng($data)
-    {
-        $result = false;
-
-        if (strpos($data, ".png") !== false) {
-            $result = true;
-        }
-        return $result;
-    }
 
 }

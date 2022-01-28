@@ -5,6 +5,9 @@ $(function () {
     const INCIDENCIA = 'incidencia';
     const OPT = 'opt';
     const IPERC = 'iperc';
+    const PTAR = 'ptar';
+    const GERENCIAL = 'gerencial';
+    const SUSPENCION = "suspencion";
 
     $(".click_documento").on("click", function () {
 
@@ -49,8 +52,28 @@ $(function () {
 
 
         }
+        if ($(this).attr("codigo") == PTAR) {
+
+            $.post(RUTA + 'ptar/render', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
 
 
+        }
+        if ($(this).attr("codigo") == GERENCIAL) {
+
+            $.post(RUTA + 'gerencial/render', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
+
+
+        }
+        if ($(this).attr("codigo") == SUSPENCION) {
+
+            $.post(RUTA + 'suspencion/render', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
+        }
 
 
     });

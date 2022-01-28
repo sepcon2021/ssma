@@ -5,6 +5,7 @@ require_once 'public/generate-pdf/generatepdf.php';
 require_once 'models/seguimientomodel.php';
 require_once 'public/email/email.php';
 require_once 'controllers/respuesta.php';
+require_once 'public/upload-photo/upload-image.php';
 
 class Top extends Controller
 {
@@ -363,15 +364,13 @@ class Top extends Controller
     {
 
         $respuesta = new Respuesta;
+        $uploadImage = new UploadImage;
 
-        session_start();
-
-        $listaEvidencia = $this->guardarArchivos($_FILES["files"]);
+        $listaEvidencia = $uploadImage->uploadImageGeneral($_FILES["files"]);
 
         $topid = uniqid('mo_');
         $reportado = $_POST['nombre'];
         $user = $_POST['usuario'];
-
         $proyecto = str_pad($_POST['proyecto'], 2, "0", STR_PAD_LEFT);
         $area = $_POST['area'] != null ? $_POST['area'] : 1000;
         $ubicacion = $_POST['ubicacion'];
@@ -379,12 +378,9 @@ class Top extends Controller
         $horario = $_POST['horario'] != null ? $_POST['horario'] : 1000;
         $fechaRegistro = $_POST['fecha_registro'];
         $observacion = $_POST['observacion'] != null ? $_POST['observacion'] : '00';
-                
         $acsues = ($observacion == '01' ? $_POST['observacion_detalle'] : '00');
         $cosues = ($observacion == '02' ? $_POST['observacion_detalle'] : '00');
-        $actseg = ($observacion == '03' ? $_POST['observacion_detalle'] : '00');
-
-        
+        $actseg = ($observacion == '03' ? $_POST['observacion_detalle'] : '00');        
         $otros = $_POST['otros'];
         $relacionado = isset($_POST['relacionado'] ) ? $_POST['relacionado'] : '00';
         $tipoEpp = isset($_POST['tipo_epp']) ? $_POST['tipo_epp'] : '00';
@@ -445,85 +441,6 @@ class Top extends Controller
         echo $respuesta->enviarRespuesta($respuestaInsert);
 
 
-    }
-
-
-
-    function guardarArchivos($filesArr)
-    {
-
-        $listaEvidencia = '' ;
-
-
-        $uploadDir = 'public/photos/';
-        $allowTypes = array('pdf', 'doc', 'docx', 'xlsx', 'jpg', 'png', 'jpeg');
-
-        $fileNames = array_filter($filesArr['name']);
-
-        if (!empty($fileNames)) {
-            foreach ($filesArr['name'] as $key => $val) {
-                // File upload path  
-                $fecha_image = new DateTime();
-
-                $fileName = basename($filesArr['name'][$key]);
-                $oficialName =$fecha_image->getTimestamp();
-                $fileName =  $oficialName.$this->getExtensionPhoto($fileName);
-
-                $targetFilePath = $uploadDir .  $oficialName.$this->getExtensionPhoto($fileName);
-                
-                // Check whether file type is valid  
-                $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
-                if (in_array($fileType, $allowTypes)) {
-                    // Upload file to server  
-                    if (move_uploaded_file($filesArr["tmp_name"][$key], $targetFilePath)) {
-
-                        //Convert PNG to JPG
-                        if($this->isPhotoPng($fileName)){
-                            $image = imagecreatefrompng($targetFilePath);
-                            imagejpeg($image, $uploadDir.$oficialName.'.jpg', 70);
-                            imagedestroy($image);
-                        }
-
-
-                        $listaEvidencia .= ($fileName.',');
-                    }
-                } 
-            }
-        }
-
-        
-
-
-        
-
-        return $listaEvidencia;
-    }
-
-    function getExtensionPhoto($data)
-    {
-        $extension = "";
-
-        // Test if string contains the word 
-        if (strpos($data, ".jpg") !== false) {
-            $extension = ".jpg";
-        } 
-        if (strpos($data, ".png") !== false) {
-            $extension = ".png";
-        } 
-        if (strpos($data, ".jpeg") !== false) {
-            $extension = ".jpeg";
-        }
-        return $extension;
-    }
-
-    function isPhotoPng($data)
-    {
-        $result = false;
-
-        if (strpos($data, ".png") !== false) {
-            $result = true;
-        }
-        return $result;
     }
 
 
