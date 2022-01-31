@@ -5,7 +5,7 @@ $(function () {
     var SEGUIMIENTODASHBOARD = 2;
     var REPORTES = 3;
     var ESTADISTICA = 4;
-    var HISTORIAL = 5;
+    var CAPACITACIONES = 5;
 
 
     var data = JSON.parse(sessionStorage.getItem("dataTrabajador"));
@@ -71,8 +71,10 @@ $(function () {
             $(".mainpage").load("views/dashboard/estadistica.html");
             removeClass()
         }
-        if(indexPage == HISTORIAL){
-            $(".mainpage").load("views/dashboard/historial.html");
+        if(indexPage == CAPACITACIONES){
+            $.post(RUTA + 'capacitacion/render', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });            
             removeClass()
         }
 

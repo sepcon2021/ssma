@@ -12,7 +12,7 @@
 <body>
     <div id="contenedor">
         <div id="slide">
-            <img id="slide_imagen" src="public/img/seguridad-salud3.jpg" alt="">
+            <img id="slide_imagen" src="public/img/seguridad-salud4.jpg" alt="">
         </div>
         <div id="inicio_sesion">
 

@@ -67,7 +67,8 @@
                 <div>Panel seguimiento</div>
                 <div>Reportes</div>
                 <div>Estadística</div>
-                <div>Historial</div>
+                <div>Capacitaciones</div>
+                <div></div>
             </div>
 
 
