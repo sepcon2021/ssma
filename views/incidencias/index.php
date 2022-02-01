@@ -292,7 +292,7 @@
 
                     <div class="item_format">
                         <input class="item_format_input" type="text" name="dni" id="dni">
-                        <button id="find_dni">Buscar</button>
+                        <button class="find_dni">Buscar</button>
                     </div>
 
                     <!-- ERRROR ELEMENT -->

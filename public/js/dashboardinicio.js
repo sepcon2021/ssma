@@ -71,7 +71,7 @@ $(function () {
 
         $(".wrap_load").show();
 
-        $.post(RUTA + 'administradorExamen/render', function (data, textStatus, xhr) {
+        $.post(RUTA + 'administradorExamen/renderDashboardFormulario', function (data, textStatus, xhr) {
             $(".mainpage").html(data);
         });
         

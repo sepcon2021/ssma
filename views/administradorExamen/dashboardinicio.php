@@ -2,7 +2,7 @@
 
     <div class="wrap_document_detail">
         <div class="item_format">
-            <h1>Admin formulario</h1>
+            <h1>Formulario</h1>
         </div>
     </div>
 
@@ -74,4 +74,4 @@
 <div class="wrap_sucess">
 
 </div>
-<script src="<?php echo constant('URL'); ?>public/js/capacitacion_new.js?<?php echo constant('VERSION'); ?>"></script>
+<script src="<?php echo constant('URL'); ?>public/js/dashboardinicio.js?<?php echo constant('VERSION'); ?>"></script>

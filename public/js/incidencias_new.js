@@ -62,7 +62,7 @@ $(function () {
     */
 
 
-    $("#find_dni").on('click', function (e) {
+    $(".find_dni").on('click', function (e) {
         e.preventDefault()
 
 

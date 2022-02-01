@@ -1,34 +1,5 @@
 <?php
 
-class Area
-{
-    public $id;
-    public $nombre;
-
-
-    function __construct($id, $nombre)
-    {
-        $this->id = $id;
-        $this->nombre = $nombre;
-    }
-}
-
-class Ubicacion
-{
-    public $id;
-    public $idArea;
-    public $nombre;
-
-
-    function __construct($id, $idArea, $nombre)
-    {
-        $this->id = $id;
-        $this->idArea = $idArea;
-        $this->nombre = $nombre;
-    }
-}
-
-
 class SeguridadModel extends Model
 {
     public function __construct()

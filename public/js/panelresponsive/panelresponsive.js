@@ -5,7 +5,8 @@ $(function () {
     var SEGUIMIENTODASHBOARD = 2;
     var REPORTES = 3;
     var ESTADISTICA = 4;
-    var CAPACITACIONES = 5;
+    var FORMULARIO = 5;
+    var ADMINFORMULARIO = 6;
 
 
     var data = JSON.parse(sessionStorage.getItem("dataTrabajador"));
@@ -71,7 +72,13 @@ $(function () {
             $(".mainpage").load("views/dashboard/estadistica.html");
             removeClass()
         }
-        if(indexPage == CAPACITACIONES){
+        if(indexPage == FORMULARIO){
+            $.post(RUTA + 'administradorExamen/renderDashboardInicio', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
+            removeClass()
+        }
+        if(indexPage == ADMINFORMULARIO){
             $.post(RUTA + 'capacitacion/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });            

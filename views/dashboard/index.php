@@ -64,10 +64,11 @@
             <div class="sidebar__menu">
                 <div class="active"> Documentos</div>
                 <div>Seguimiento</div>
-                <div>Panel seguimiento</div>
+                <div>Admin seguimiento</div>
                 <div>Reportes</div>
                 <div>Estadística</div>
-                <div>Capacitaciones</div>
+                <div>Formulario</div>
+                <div>Admin formulario</div>
                 <div></div>
             </div>
 

@@ -456,7 +456,7 @@ a{
     height: 100px;
 }
 
-#find_dni{
+.find_dni{
     background: #123859;
     border-radius: 5px;
     width: 100px;
