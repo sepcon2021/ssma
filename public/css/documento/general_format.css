@@ -492,7 +492,20 @@ a{
     padding: 3px 0;
 }
 
+.firmaBordes {
+    border: 1px dotted #12203E;
+}
 
+.error_message {
+    color: red;
+    visibility: hidden;
+}
+
+
+#firmaMessage {
+    color: red;
+    size: 14px;
+}
 
 .w5p {
     width: 5%;

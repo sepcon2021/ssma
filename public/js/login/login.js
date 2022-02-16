@@ -16,7 +16,8 @@ $(function(){
             }else{
 
                 console.log(data.result);
-                $("#inicio_sesion_box_error").append("DNI incorrecto , vuelva a intentarlo");
+                //$("#inicio_sesion_box_error").append("DNI incorrecto , vuelva a intentarlo");
+                document.getElementById("inicio_sesion_box_error").innerHTML = "DNI incorrecto , vuelva a intentarlo";
 
             }
 

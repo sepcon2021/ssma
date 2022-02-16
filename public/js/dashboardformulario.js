@@ -35,18 +35,30 @@ $(function() {
 
     function vistaPrevia() {
 
-
         $("#listaExamen tr").on("click", function (event) {
             event.preventDefault();
 
             sessionStorage.setItem("idExamen", $(this).find('td').eq(0).text());
-            window.location.href = RUTA + "registro";
+            
+            $.post(RUTA + 'administradorExamen/renderRegistro', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
 
         });
     }
 
 
+    $(".home_document").on("click", function () {
 
+        var result = confirm("¿Quieres volver al inicio?");
+
+        if (result) {
+            $.post(RUTA + 'administradorExamen/renderDashboardInicio', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
+        }
+
+    });
 
 
 

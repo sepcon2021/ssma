@@ -81,16 +81,7 @@
 }
 
 
-select {
-    width: 30%;
-    height: 30px;
-    size: 16px;
-    border-radius: 8px;
-    padding: 5px;
-    margin: 5px;
-    border-color: #f3f3f3;
-    background: #f3f3f3;
-}
+
 
 .content-move{
     margin: 32px;

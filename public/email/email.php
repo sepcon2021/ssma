@@ -294,7 +294,6 @@ class Email
         return $message;
     }
 
-
     public function customizeHeaderEmail($mail, $contenido)
     {
 

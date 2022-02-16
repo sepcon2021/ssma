@@ -12,7 +12,8 @@ class DashboardFormulario extends Controller
         $this->view->render('dashboardFormulario/index');
     }
 
-    
+
+  
     //LISTA EXAMEN BY FECHA
     public function listaExamenByFecha()
     {

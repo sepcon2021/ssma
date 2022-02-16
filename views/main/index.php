@@ -24,8 +24,7 @@
                 <div id="inicio_sesion_dos_bottom">
 
                     <div class="inicio_sesion_box_top">
-                        <h1 id="inicio_sesion_titulo">Bienvenido a Seguridad y Salud
-                            Medio Ambiental </h1>
+                        <h1 id="inicio_sesion_titulo">Bienvenido a la plataforma de SSMA</h1>
                     </div>
                     <div class="inicio_sesion_box_top">
                         <p id="inicio_sesion_subtitulo">Documento Nacional de Identificación(DNI)</p>

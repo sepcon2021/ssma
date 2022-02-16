@@ -226,6 +226,9 @@ class Top extends Controller
         $this->elaborarCorreo($id,$dniPropietario,$perdida,$sede,$preventiva);
     }
 
+    public function pruebaGetTop(){
+        echo json_encode($this->model->getTopById("mo_6206c0fb02b1f"));
+    }
 
     
     public function elaborarCorreo($id,$dniPropietario,$perdida,$sede,$preventiva)

@@ -23,5 +23,11 @@ class AdministradorExamen extends Controller{
             $this->view->render('administradorExamen/dashboardformulario');
         }
 
+            
+        public function renderRegistro()
+        {
+            $this->view->render('administradorExamen/registro');
+        }
+
     }
 ?>

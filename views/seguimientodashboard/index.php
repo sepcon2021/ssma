@@ -1,183 +1,81 @@
-<link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/seguimiento.css?v1.0.3">
-<link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/prueba.css?v1.0.3">
-<link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/popup.css?v1.0.5">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
 
+<div class="wrap_document scroll1">
 
-
-<div class="container_documento scroll1">
-
-	<div id="container_documento_titulo">
-		<h3>Panel seguimiento</h3>
-
-	</div>
-	<div class="wrap center">
-
-		<!--
-<ul class="tabs">
-	<li><a href="#tab4">Actualizar</span></a></li>
-</ul>
--->
-
-		<div class="secciones">
-
-			<article id="tab4">
-
-			</article>
+	<div class="wrap_document_detail">
+		<div class="item_format">
+			<h1>Administrador seguimiento</h1>
 		</div>
-
-
 	</div>
 
-
-	<!-- ESTE ES EL POPUP  -->
-	<div class="popup" id="popup-1">
-		<div class="overlay"></div>
-		<div class="content scroll1">
-			<div class="popup_content">
-				<div class="contenidoRepuesta">
-					<img class="clickPopup-close" src="public/img/cancel.png">
+	<div class="wrap_document_format">
+		<form class="general_form" action="" id="formDigital">
+			<div class="box_format">
+				<!--TITLE ELEMENT-->
+				<div class="item_format">
+					<label for="">Documento</label>
 				</div>
-				<div class="boxPopup" id="title">
-					<h1 id="item"></h1>
-					<div id="estado"></div>
+				<!--CONTENT ELEMENT-->
+				<div class="item_format">
+
+					<select class="item_format_select" name="tipo_documento" id="tipo_documento">
+						<option value="" disabled="" selected="" hidden=""> Seleccionar</option>
+
+						<option value=1>Tarjetas Top </option>
+						<option value=2>Inspección Planeada de Seguridad </option>
+
+					</select>
 				</div>
-
-
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Hallazgo</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-						<img id="hallazgo" src="public/img/pdf.png">
-					</div>
-
-				</div>
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Peligro riesgo</label>
-						<label for="">Evidencia</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-						<div id="foto"></div>
-					</div>
-
-				</div>
-
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Acción propuesta</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<p id="accion_propuesta"></p>
-					</div>
-
-				</div>
-
-
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Fecha inicio</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<p id="fecha_inicio"></p>
-					</div>
-
-				</div>
-
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Fecha cumplimiento</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<p id="fecha_cumplimiento"></p>
-					</div>
-
-				</div>
-
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Plazo</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<p id="plazo"></p>
-					</div>
-
-				</div>
-
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Frente de trabajo</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<p id="frente_trabajo"></p>
-					</div>
-
-				</div>
-
-
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Comentarios</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<p id="comentario"></p>
-					</div>
-
-				</div>
-
-				
-				<div class="box_format">
-					<!--TITLE ELEMENT-->
-					<div class="item_format">
-						<label for="">Avance / evidencia</label>
-					</div>
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<div id="evidencia"></div>
-					</div>
-
-				</div>
-
-				<div class="box_format">
-
-					<!--CONTENT ELEMENT-->
-					<div class="item_format">
-					<table id="tablaSeguimiento" class="styled-table"></table>
-					</div>
-
+				<!-- ERRROR ELEMENT -->
+				<div class="item_format">
+					<p class="error_message" id="proyecto_error"></p>
 				</div>
 			</div>
-		</div>
+
+
+			<div class="box_format">
+				<!--TITLE ELEMENT-->
+				<div class="item_format">
+					<label for="">Proyecto</label>
+				</div>
+				<!--CONTENT ELEMENT-->
+				<div class="item_format">
+					<select class="item_format_select" name="proyecto" id="proyecto">
+						<option value="" disabled="" selected="" hidden=""> Seleccionar</option>
+						<option value="100"> Todos los proyectos </option>
+						<option value="1">WHCP 21</option>
+						<option value="3">Pucallpa</option>
+						<option value="4">Lurin</option>
+						<option value="5">Lima</option>
+						<option value="6">20PP03 L. Relaves Este / 00679</option>
+						<option value="7">Full Flow flare - Shut dow</option>
+						<option value="8">Sistema contra incendios</option>
+						<option value="9">Obras Electromecánicas Varias</option>
+					</select>
+				</div>
+				<!-- ERRROR ELEMENT -->
+				<div class="item_format">
+					<p class="error_message" id="proyecto_error"></p>
+				</div>
+			</div>
+
+
+			<div class="box_format item_format_rigth">
+				<button type="submit" class="button_find_report" id="button_send_form">Buscar</button>
+			</div>
+
+
+
+		</form>
+
+
 	</div>
 
 </div>
 
+<div class="wrap_load"></div>
+
+<div class="wrap_sucess"></div>
 
 
-<script src="<?php echo constant('URL'); ?>public/js/seguimientodashboard.js?v1.0.53"></script>
+<script src="<?php echo constant('URL'); ?>public/js/adminseguimientodetalle.js?<?php echo constant('VERSION'); ?>"></script>
+<script src="<?php echo constant('URL'); ?>public/js/adminseguimiento.js?<?php echo constant('VERSION'); ?>"></script>

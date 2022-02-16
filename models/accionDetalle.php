@@ -8,6 +8,7 @@ class AccionDetalle{
     public $accionPropuesta;
     public $responsable;
     public $fechaInicio;
+    public $fechaCompromiso;
     public $fechaCumplimiento;
     public $plazo;
     public $frenteTrabajo;

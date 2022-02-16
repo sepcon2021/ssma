@@ -180,17 +180,6 @@ $(document).ready(function () {
         });
     }
 
-    /*function evidenciaClick(index,nombre) {
-        $("#"+index).on("click", function (event) {
-            event.preventDefault();
-            window.open(RUTA + '/public/file/' + nombre)
-            return false;
-        });
-     }*/
-
-
-
-
 
     // 1. CLICK SOBRE agregar observacion
     function detalle() {
@@ -230,7 +219,7 @@ $(document).ready(function () {
             $("#peligro_riesgo").text(jsonSeguimientoDetalle.peligroRiesgo);
             //$("#foto").text(jsonSeguimientoDetalle.foto);
             
-            document.getElementById("foto").innerHTML = verificarFotoEvidencia(jsonSeguimientoDetalle.foto);
+            //document.getElementById("foto").innerHTML = verificarFotoEvidencia(jsonSeguimientoDetalle.foto);
             $("#accion_propuesta").text(jsonSeguimientoDetalle.accionPropuesta);
             $("#responsable").text(jsonSeguimientoDetalle.responsable);
             $("#fecha_inicio").text(jsonSeguimientoDetalle.fechaInicio);

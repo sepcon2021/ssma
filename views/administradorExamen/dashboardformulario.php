@@ -1,10 +1,15 @@
 <div class="wrap_document scroll1">
 
+
     <div class="wrap_document_detail">
         <div class="item_format">
-            <h1>Formulario</h1>
+            <h3>Examenes</h3>
+        </div>
+        <div class="item_format">
+            <a class="home_document" href="#">Inicio</a> <a href="#">/ lista </a>
         </div>
     </div>
+
 
     <div class="wrap_document_format">
         <table class="styled-table">
@@ -14,7 +19,6 @@
                     <td>Área</td>
                     <td>Nombre</td>
                     <td>Fecha</td>
-                    <td></td>
                 </tr>
             </thead>
             <tbody id="listaExamen">

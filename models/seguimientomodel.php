@@ -562,30 +562,39 @@ class SeguimientoModel extends Model
         }
     }
 
-    public function dashboardAcciones()
+    public function dashboardAccionesTop($proyecto)
     {
 
         $listaAccionesDetalle = array();
 
+
         $query = $this->db->connect()->prepare("SELECT 
         seguimiento.id,
 		tops.foto AS foto ,
-        '' AS peligroRiesgo ,
+        '-' AS peligroRiesgo ,
         tops.url_pdf AS hallazgo,
-        seguimiento.accion_propuesta AS accionPropuesta ,
+        IF(seguimiento.accion_propuesta IS NULL, '-', seguimiento.accion_propuesta ) AS accionPropuesta ,
         CONCAT(rrhh.tabla_aquarius.nombres,' ',rrhh.tabla_aquarius.apellidos) AS responsable,
+
         CAST(seguimiento.fecha AS DATE) AS fechaInicio,
-        seguimiento.fecha_cumplimiento AS fechaCumplimiento,
-        CONCAT( DATEDIFF(seguimiento.fecha_cumplimiento,CAST(seguimiento.fecha AS DATE)) , ' días') AS plazo,
-		area_general.nombre  AS frenteTrabajo,
+        seguimiento.fecha_cumplimiento AS fechaCompromiso,
+        (SELECT seguimiento_detalle.fecha 
+        FROM seguimiento_detalle 
+        WHERE seguimiento_detalle.idestado = 4 AND seguimiento_detalle.idseguimiento = seguimiento.id ) AS fechaCumplimiento,
+
+        IF (CONCAT( DATEDIFF(seguimiento.fecha_cumplimiento,CAST(seguimiento.fecha AS DATE)) , ' días') IS NULL , '-', CONCAT( DATEDIFF(seguimiento.fecha_cumplimiento,CAST(seguimiento.fecha AS DATE)) , ' días') ) AS plazo,
+		
+        area_general.nombre  AS frenteTrabajo,
         estado.nombre AS estado,
         seguimiento.comentario
-FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop 
+        FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop 
 				 INNER JOIN area_general ON tops.idproyectodetalle = area_general.id
 				 INNER JOIN rrhh.tabla_aquarius ON seguimiento.dni_propietario = rrhh.tabla_aquarius.dni
                  INNER JOIN estado ON seguimiento.idestado = estado.id 
-                 ORDER BY seguimiento.fecha DESC 
                  
+                 ".$this->sqlProyecto($proyecto)."
+
+                 ORDER BY seguimiento.fecha DESC       
                  ");
 
 
@@ -627,6 +636,7 @@ FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop
     public function dashboardAccionesByIdSeguimiento($idSeguimiento)
     {
 
+
         $listaAccionesDetalle = array();
 
         $query = $this->db->connect()->prepare("SELECT 
@@ -636,8 +646,14 @@ FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop
         tops.url_pdf AS hallazgo,
         seguimiento.accion_propuesta AS accionPropuesta ,
         CONCAT(rrhh.tabla_aquarius.nombres,' ',rrhh.tabla_aquarius.apellidos) AS responsable,
+
         CAST(seguimiento.fecha AS DATE) AS fechaInicio,
-        seguimiento.fecha_cumplimiento AS fechaCumplimiento,
+        IF (seguimiento.fecha_cumplimiento IS NULL , '-' , seguimiento.fecha_cumplimiento)AS fechaCompromiso,
+        (SELECT seguimiento_detalle.fecha 
+        FROM seguimiento_detalle 
+        WHERE seguimiento_detalle.idestado = 4 AND seguimiento_detalle.idseguimiento = seguimiento.id ) AS fechaCumplimiento,
+
+
         CONCAT( DATEDIFF(seguimiento.fecha_cumplimiento,CAST(seguimiento.fecha AS DATE)) , ' días') AS plazo,
 		area_general.nombre  AS frenteTrabajo,
         estado.nombre AS estado,
@@ -664,6 +680,7 @@ FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop
                 $accionDetalle->accionPropuesta = $row['accionPropuesta'];
                 $accionDetalle->responsable = $row['responsable'];
                 $accionDetalle->fechaInicio = $row['fechaInicio'];
+                $accionDetalle->fechaCompromiso = $row['fechaCompromiso'];
                 $accionDetalle->fechaCumplimiento = $row['fechaCumplimiento'];
                 $accionDetalle->plazo = $row['plazo'];
                 $accionDetalle->frenteTrabajo = $row['frenteTrabajo'];
@@ -682,7 +699,6 @@ FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop
             return [];
         }
     }
-
 
     public function listaEvidenciaDetalle($idSeguimiento)
     {
@@ -709,8 +725,6 @@ FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop
             return [];
         }
     }
-
-
     
     public function listaEstadosDetalle($idSeguimiento)
     {
@@ -742,4 +756,88 @@ FROM seguimiento INNER JOIN tops ON seguimiento.iddocumento = tops.idtop
         }
     }
     
+
+    public function dashboardAccionesSeguridad($proyecto)
+    {
+
+        $listaAccionesDetalle = array();
+
+        $query = $this->db->connect()->prepare("SELECT 
+        seguimiento.id,
+		seguridadDetalle.evidenciaencontrada AS foto ,
+        '' AS peligroRiesgo ,
+        seguridaddetalle.url_pdf AS hallazgo,
+        IF(seguimiento.accion_propuesta IS NULL, '-', seguimiento.accion_propuesta ) AS accionPropuesta ,
+        CONCAT(rrhh.tabla_aquarius.nombres,' ',rrhh.tabla_aquarius.apellidos) AS responsable,
+
+        CAST(seguimiento.fecha AS DATE) AS fechaInicio,
+        IF (seguimiento.fecha_cumplimiento IS NULL , '-' , seguimiento.fecha_cumplimiento)AS fechaCompromiso,
+        (SELECT seguimiento_detalle.fecha 
+        FROM seguimiento_detalle 
+        WHERE seguimiento_detalle.idestado = 4 AND seguimiento_detalle.idseguimiento = seguimiento.id ) AS fechaCumplimiento,
+
+        IF (CONCAT( DATEDIFF(seguimiento.fecha_cumplimiento,CAST(seguimiento.fecha AS DATE)) , ' días') IS NULL , '-', CONCAT( DATEDIFF(seguimiento.fecha_cumplimiento,CAST(seguimiento.fecha AS DATE)) , ' días') ) AS plazo,
+		
+        seguridadDetalle.area  AS frenteTrabajo,
+        estado.nombre AS estado,
+        seguimiento.comentario
+
+
+
+        FROM seguimiento INNER JOIN seguridadDetalle ON seguimiento.iddocumento = seguridadDetalle.id
+				 INNER JOIN rrhh.tabla_aquarius ON seguimiento.dni_propietario = rrhh.tabla_aquarius.dni
+                 INNER JOIN estado ON seguimiento.idestado = estado.id 
+                 
+                 ".$this->sqlProyecto($proyecto)."
+                 
+                 ORDER BY seguimiento.fecha DESC 
+                 
+                 ");
+
+
+
+        try {
+
+            $query->execute();
+
+
+            while ($row = $query->fetch()) {
+
+                $accionDetalle = new AccionDetalle;
+                $accionDetalle->id = $row['id'];
+                $accionDetalle->foto = $row['foto'];
+                $accionDetalle->peligroRiesgo = $row['peligroRiesgo'];
+                $accionDetalle->hallazgo = $row['hallazgo'];
+                $accionDetalle->accionPropuesta = $row['accionPropuesta'];
+                $accionDetalle->responsable = $row['responsable'];
+                $accionDetalle->fechaInicio = $row['fechaInicio'];
+                $accionDetalle->fechaCompromiso = $row['fechaCompromiso'];
+                $accionDetalle->fechaCumplimiento = $row['fechaCumplimiento'];
+                $accionDetalle->plazo = $row['plazo'];
+                $accionDetalle->frenteTrabajo = $row['frenteTrabajo'];
+                $accionDetalle->estado = $row['estado'];
+                $accionDetalle->comentario = $row['comentario'];
+                $accionDetalle->evidencia = $this->listaEvidenciaDetalle($row['id']);
+                $accionDetalle->listaEstados = $this->listaEstadosDetalle($row['id']);
+
+
+                array_push($listaAccionesDetalle, $accionDetalle);
+            }
+
+            return $listaAccionesDetalle;
+
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
+    function sqlProyecto($proyecto){
+        $sqlProyecto = "";
+        
+        if($proyecto != 100){
+            $sqlProyecto = " WHERE ssma.tops.sede LIKE '%$proyecto%' ";
+        }
+        return $sqlProyecto;
+    }
+
 }

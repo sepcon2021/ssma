@@ -147,52 +147,6 @@
 					</div>
 				</div>
 
-
-
-				<!--<div>
-                    <table class="tablaConBordes w100p">
-                        <tbody>
-                            <tr>
-                                <td class="secction w20p center">
-                                    <p>Instalación en general</p>
-                                </td>
-
-                                <td class="secction   w6p center">
-                                    <p>Si/No</p>
-                                </td>
-
-
-
-                                <td class="secction   w20p center">
-                                    <p>Condición</p>
-                                </td>
-
-                                <td class="secction   w6p center">
-                                    <p>Clasificación</p>
-                                </td>
-
-                                <td class="secction   w20p center">
-                                    <p>Acción correctiva</p>
-                                </td>
-
-                                <td class="secction   w10p center">
-                                    <p>Responsable</p>
-                                </td>
-
-
-                                <td class="secction   w5p center">
-                                    <p>Fecha de cumplimiento</p>
-                                </td>
-
-                                <td class="secction   w20p center">
-                                    <p>Seguimiento</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>-->
-
-
 				<table class="tablaConBordes w100p" id="tablaClasificacion">
 
 					<thead>

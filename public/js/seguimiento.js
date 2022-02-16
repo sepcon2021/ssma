@@ -430,7 +430,7 @@ $(document).ready(function () {
                     <form id="formularioFecha" enctype="multipart/form-data">
                         <div class="contenidoRepuestaStart"><h2>Acción propuesta</h2></div>
                         <div class="contenidoRepuestaStart"> <textarea  class="item_format_textarea" name="accion_propuesta"placeholder="Escribir un comentario aquí..."> </textarea></div>
-                        <div class="contenidoRepuestaStart"><h2>Ingresar fecha de cumplimiento</h2></div>
+                        <div class="contenidoRepuestaStart"><h2>Ingresar fecha de compromiso</h2></div>
                         <input type="hidden" name="idaccion" id="idaccion" value="${jsonDetalleAccion.contenido.detalleSeguimiento.id}" />
                         <div class="contenidoRepuestaStart"><input type="date" name="fecha" id="fecha" value="${jsonDetalleAccion.contenido.detalleSeguimiento.fecha_cumplimiento}" /></div>
                         <br><br>
@@ -471,7 +471,7 @@ $(document).ready(function () {
                                     <input type="date" value="${(jsonDetalleAccion.contenido.detalleSeguimiento.fecha).split(" ")[0]}" readonly>
                                 </div>
                                 <div class="contenidoRepuestaStart">
-                                    <h4>Fecha de cumplimiento</h4>
+                                    <h4>Fecha de compromiso</h4>
                                 </div>
                                 <div class="contenidoRepuestaStart"> 
                                     <input type="date" value="${jsonDetalleAccion.contenido.detalleSeguimiento.fecha_cumplimiento}" readonly>
@@ -807,7 +807,7 @@ $(document).ready(function () {
                                     <input type="date" value="${(jsonDetalleAccion.contenido.detalleSeguimiento.fecha).split(" ")[0]}" readonly>
                                 </div>
                                 <div class="contenidoRepuestaStart">
-                                    <h4>Fecha de cumplimiento</h4>
+                                    <h4>Fecha de compromiso</h4>
                                 </div>
                                 <div class="contenidoRepuestaStart"> 
                                     <input type="date" value="${jsonDetalleAccion.contenido.detalleSeguimiento.fecha_cumplimiento}" readonly>

@@ -133,7 +133,7 @@ class UploadImage{
                 // clean up the file resource
                 fclose($filehandler); 
 
-                $outputfile =$fecha_image->getTimestamp().$image_name;
+                $outputfile =$fecha_image->getTimestamp().$image_name.",";
             }
 
             return $outputfile;

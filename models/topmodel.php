@@ -277,6 +277,7 @@ class Topmodel extends Model
 
                     WHERE idtop = :idtop ');
 
+
         $query->execute(['idtop' => $idtop]);
 
         try {

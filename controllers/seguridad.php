@@ -100,9 +100,10 @@ class Seguridad extends Controller
             $responsable    = $data[$i]->Responsable;
             $fecha_cumplimiento    = $data[$i]->Cumplimiento;
             $seguimiento    = $data[$i]->Seguimiento;
+            $detalle    = $data[$i]->detalle;
             $evidencia    = $data[$i]->Evidencia != "1" ?  $data[$i]->Evidencia : '';
 
-            $datos = compact("sid", "idd", "tipo", "condicion", "clasificacion", "accion_correctiva", "responsable", "fecha_cumplimiento", "seguimiento", "evidencia");
+            $datos = compact("sid", "idd", "tipo", "condicion", "clasificacion", "accion_correctiva", "responsable", "fecha_cumplimiento", "seguimiento", "evidencia","detalle");
 
             $idSeguridad = $idd;
             $dniPropietario = $data[$i]->dni;
@@ -206,8 +207,9 @@ class Seguridad extends Controller
             $seguimiento    = $data[$i]->Seguimiento;
             $evidencia    = $outputfile;
             $dniPropietario    = $data[$i]->dniResponsable;
+            $detalle = $data[$i]->detalle;
 
-            $datos = compact("sid", "idd", "tipo", "condicion", "clasificacion", "accion_correctiva", "responsable", "fecha_cumplimiento", "seguimiento", "evidencia");
+            $datos = compact("sid", "idd", "tipo", "condicion", "clasificacion", "accion_correctiva", "responsable", "fecha_cumplimiento", "seguimiento", "evidencia","detalle");
 
             $this->model->insertDetails($datos);
 

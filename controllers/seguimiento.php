@@ -9,7 +9,9 @@ require_once 'models/optmodel.php';
 require_once 'models/ipercNuevomodel.php';
 require_once 'models/riesgosmodel.php';
 require_once 'public/upload-photo/upload-image.php';
+require_once 'public/generarExcel/reporteSeguimiento.php';
 
+require_once 'controllers/respuesta.php';
 
 class Seguimiento extends Controller
 {
@@ -207,8 +209,41 @@ class Seguimiento extends Controller
 
     function listaAccionDetalle()
     {
-        $listaEvidencia = $this->model->dashboardAcciones();
+
+        $tipoDocumento  = $_POST['tipo_documento'];
+        $proyecto = $_POST['proyecto'];
+        $listaEvidencia = array();
+
+        if($tipoDocumento == self::TOP){
+            $listaEvidencia = $this->model->dashboardAccionesTop($proyecto);
+
+        }else if ($tipoDocumento == self::SEGURIDAD){
+            $listaEvidencia = $this->model->dashboardAccionesSeguridad($proyecto);
+
+        }
+
         echo $this->exception->responseMessageContenido($listaEvidencia);
+    }
+
+    function downloadReport(){
+        $respuesta = new Respuesta;
+        $reporteSeguimiento = new  ReporteSeguimiento;
+
+        $tipoDocumento  = $_POST['tipo_documento'];
+        $proyecto = $_POST['proyecto'];
+
+        if($tipoDocumento == self::TOP){
+
+            $listEvidencia = $this->model->dashboardAccionesTop($proyecto);
+            $result = $reporteSeguimiento->generateReporteNotas($listEvidencia);
+
+        }else if ($tipoDocumento == self::SEGURIDAD){
+
+            $listEvidencia = $this->model->dashboardAccionesTop($proyecto);
+            $result = $reporteSeguimiento->generateReporteNotas($listEvidencia);
+        }
+
+        echo $respuesta->enviarRespuestaExcel($result);
     }
 
     function listaAccionDetalleById()
@@ -216,5 +251,9 @@ class Seguimiento extends Controller
         $idSeguimiento = $_POST['idseguimiento'];
         $listaEvidencia = $this->model->dashboardAccionesByIdSeguimiento($idSeguimiento);
         echo $this->exception->responseMessageContenido($listaEvidencia);
+    }
+
+    function pruebaListSeguimiento(){
+        echo json_encode( $this->model->dashboardAccionesTop(5));
     }
 }
