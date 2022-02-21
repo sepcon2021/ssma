@@ -43,7 +43,12 @@
                     <div>
                         <p id="header_usuario_cargo">Cargo de trabajo</p>
                     </div>
+                    
+                <div>
+                    <button class="cerrar_sesion">Cerrar sesión</button>
                 </div>
+                </div>
+
             </div>
         </div>
 
@@ -62,15 +67,6 @@
             </div>
 
             <div class="sidebar__menu">
-                <div class="active"> Documentos</div>
-                <div>Seguimiento</div>
-                <div>Admin seguimiento</div>
-                <div>Reportes</div>
-                <div>Estadística</div>
-                <div>Formulario</div>
-                <div>Admin formulario</div>
-                <div>Admin de lecciones</div>
-                <div>Lecciones aprendidas</div>
             </div>
 
 

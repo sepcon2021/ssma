@@ -688,6 +688,16 @@ a{
     overflow-y: hidden;
 }
 
+.cerrar_sesion{
+    border-color: #F24822;
+    background: white;
+    border-radius: 5px;
+    color: #F24822;
+    padding: 2px;
+    margin: 2px;
+    background-color: white;
+}
+
 @media only screen and (max-width: 620px) {
 
     .wrap_document_format_head_icon img{

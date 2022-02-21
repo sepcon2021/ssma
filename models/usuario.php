@@ -14,6 +14,8 @@
         public $ccargo;    
         public $dcargo;    
         public $perfil; 
+
+        public $permiso;
         
     }
 ?>

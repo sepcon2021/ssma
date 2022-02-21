@@ -156,6 +156,8 @@
                     $item->ccargo = $row['ccargo'];
                     $item->dcargo = $row['dcargo'];
                     $item->perfil = $row['perfil'];
+
+                    $item->permiso = $this->getPermiso($item->dni);
                 }
 
                 if ( !$item->internal )
@@ -169,6 +171,30 @@
                 return [];
             }
         }
+
+
+        public function getPermiso($dni) {
+            $item = array();
+
+            $query = $this->db->connectrrhh()->prepare('SELECT idTypeRole ,dni
+                                                        FROM ssma.role
+                                                        WHERE DNI = :dni');
+
+            try {
+                $query->execute(['dni'  => $dni]);
+
+
+                while ($row = $query->fetch()) {
+                    array_push($item,$row);
+                }
+
+                return $item;
+
+            } catch (PDOException $e) {
+                return [];
+            }
+        }
+
 
         public function getValuesTops()
         {

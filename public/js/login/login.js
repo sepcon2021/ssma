@@ -11,7 +11,8 @@ $(function(){
             if (data.status == "ok") {
 
                 saveLogin(data);
-                window.location.href = "dashboard"
+                //window.location.href = "dashboard"
+                window.location.replace(RUTA+"dashboard")
 
             }else{
 
