@@ -443,6 +443,8 @@ $(function () {
             popUp();
 
             listenContenidoCabecera();
+             
+            downloadFile();
 
 
         }
@@ -1371,88 +1373,88 @@ $(function () {
 
 
 
+    function downloadFile() {
+
+
+        $(".buttonPdf").on("click", function (event) {
+            event.preventDefault();
+
+            $.post(RUTA + "evaluaciones/generatePDFByIdExamen", { idExamen: IDEXAMENEDITAR },
+                function (data, textStatus, jqXHR) {
+
+
+                    console.log(data.contenido);
+
+                    if (data.status == 200) {
+
+                        event.preventDefault();
+                        window.open(data.contenido)
+
+                    }
+
+                },
+                "json"
+
+            )
+
+            return false;
+
+        });
 
 
 
+        $(".descargarNotasExcel").on("click", function (event) {
+            event.preventDefault();
 
-    $(".buttonPdf").on("click", function (event) {
-        event.preventDefault();
-
-        $.post(RUTA + "evaluaciones/generatePDFByIdExamen", { idExamen: IDEXAMENEDITAR },
-            function (data, textStatus, jqXHR) {
-
-
-                console.log(data.contenido);
-
-                if (data.status == 200) {
-
-                    event.preventDefault();
-                    window.open(data.contenido)
-
-                }
-
-            },
-            "json"
-
-        )
-
-        return false;
-
-    });
-
-    
-
-    $(".descargarNotasExcel").on("click", function (event) {
-        event.preventDefault();
-
-        $.post(RUTA + "evaluaciones/listaNotas", { idExamen: IDEXAMENEDITAR ,codigoProyecto : CODIGO_PROYECTO},
-            function (data, textStatus, jqXHR) {
+            $.post(RUTA + "evaluaciones/listaNotas", { idExamen: IDEXAMENEDITAR, codigoProyecto: CODIGO_PROYECTO },
+                function (data, textStatus, jqXHR) {
 
 
-                console.log(data.contenido);
+                    console.log(data.contenido);
 
-                if (data.status == 200) {
+                    if (data.status == 200) {
 
-                    event.preventDefault();
-                    window.open(data.contenido)
+                        event.preventDefault();
+                        window.open(data.contenido)
 
-                }
+                    }
 
-            },
-            "json"
+                },
+                "json"
 
-        )
+            )
 
-        return false;
+            return false;
 
-    });
+        });
 
 
 
-    $(".buttonEliminar").on("click", function (event) {
-        event.preventDefault();
+        $(".buttonEliminar").on("click", function (event) {
+            event.preventDefault();
 
-        $.post(RUTA + "formulario/eliminarExamen", { idExamen: IDEXAMENEDITAR },
-            function (data, textStatus, jqXHR) {
+            $.post(RUTA + "formulario/eliminarExamen", { idExamen: IDEXAMENEDITAR },
+                function (data, textStatus, jqXHR) {
 
-                console.log(data.contenido);
+                    console.log(data.contenido);
 
-                if (data.status == 200) {
+                    if (data.status == 200) {
 
-                    event.preventDefault();
-                    window.location.href = RUTA + "administrador";
+                        event.preventDefault();
+                        window.location.href = RUTA + "administrador";
 
-                }
+                    }
 
-            },
-            "json"
+                },
+                "json"
 
-        )
+            )
 
-        return false;
+            return false;
 
-    });
+        });
 
+    }
 
     function listaFirmaFacilitador(examen) {
 

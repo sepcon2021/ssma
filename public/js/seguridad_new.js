@@ -328,20 +328,6 @@ $(function () {
     }
 
 
-    /*function createArrayPhoto(data) {
-
-
-        console.log(JSON.parse(data).lista);
-
-        var listaArchivo = '';
-        if (data.length > 0) {
-            JSON.parse(data).lista.forEach(archivo => {
-                listaArchivo += (archivo + ',');
-            });
-        }
-        return listaArchivo;
-    }*/
-
     function getObservacionDetalle(observacion, observacionDetalle) {
 
         let result = '';

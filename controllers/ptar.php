@@ -6,9 +6,7 @@
         }
 
         function render(){
-            session_start();
 
-            $this->view->nombres = $_SESSION['nombres'];
             $this->view->render('ptar/index');
         }
 

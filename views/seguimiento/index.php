@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/seguimiento.css?v1.0.2">
 <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/accion.css?v1.0.3">
 <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/prueba.css?v1.0.4">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <div class="container_documento scroll1">
 	<div id="container_documento_titulo">

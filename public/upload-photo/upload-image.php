@@ -207,5 +207,45 @@ class UploadImage{
         return $result;
     }
 
+
+    function guardarArchivosGeneral($filesArr)
+    {
+
+        $listaEvidencia = '';
+
+        $uploadDir = 'public/file/';
+        $allowTypes = array('pdf', 'doc', 'docx', 'xlsx', 'jpg', 'png', 'jpeg');
+
+        $fileNames = array_filter($filesArr['name']);
+
+        // Upload file 
+        if (!empty($fileNames)) {
+            foreach ($filesArr['name'] as $key => $val) {
+                // File upload path  
+                
+                $fileName = basename($filesArr['name'][$key]);
+                $targetFilePath = $uploadDir . $fileName;
+
+
+                // Check whether file type is valid  
+                $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+                if (in_array($fileType, $allowTypes)) {
+                    // Upload file to server  
+                    if (move_uploaded_file($filesArr["tmp_name"][$key], $targetFilePath)) {
+
+                        $listaEvidencia .= $fileName. ',';
+                        //array_push($listaEvidencia, $fileName);
+                    } else {
+                        echo  'Sorry, there was an error uploading your file.';
+                    }
+                } else {
+                    echo 'Sorry, only PDF, DOC, JPG, JPEG, & PNG files are allowed to upload.';
+                }
+            }
+        }
+
+        return $listaEvidencia;
+    }
+
 }
 ?>

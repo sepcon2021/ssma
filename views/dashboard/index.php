@@ -69,7 +69,8 @@
                 <div>Estadística</div>
                 <div>Formulario</div>
                 <div>Admin formulario</div>
-                <div></div>
+                <div>Admin de lecciones</div>
+                <div>Lecciones aprendidas</div>
             </div>
 
 

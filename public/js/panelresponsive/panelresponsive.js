@@ -7,6 +7,8 @@ $(function () {
     var ESTADISTICA = 4;
     var FORMULARIO = 5;
     var ADMINFORMULARIO = 6;
+    var LECCIONES_APRENDIDAS = 7;
+    var LECCIONES_GENERAL = 8;
 
 
     var data = JSON.parse(sessionStorage.getItem("dataTrabajador"));
@@ -84,6 +86,21 @@ $(function () {
             });            
             removeClass()
         }
+
+        if(indexPage == LECCIONES_APRENDIDAS){
+            $.post(RUTA + 'leccionesAprendidas/render', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });            
+            removeClass()
+        }
+
+        if(indexPage == LECCIONES_GENERAL){
+            $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });            
+            removeClass()
+        }
+
 
     }
 

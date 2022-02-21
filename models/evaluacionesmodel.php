@@ -376,7 +376,7 @@ class EvaluacionesModel extends Model
             
             FROM  rrhh.tabla_aquarius LEFT JOIN (SELECT * FROM form.registro WHERE form.registro.idExamen = $idExamen) AS formFiltrado ON rrhh.tabla_aquarius.dni = formFiltrado.dni 
           
-          WHERE   rrhh.tabla_aquarius.estado = 'AC' ORDER BY rrhh.tabla_aquarius.dni DESC ");
+         ORDER BY rrhh.tabla_aquarius.dni DESC ");
 
             while ($row = $query->fetch()) {
                 $nota = new Nota();
