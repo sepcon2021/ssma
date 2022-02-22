@@ -1,0 +1,14 @@
+select{
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+}
+button{
+    background-color: #1989FF;
+    border-color: #1989FF;
+    height: 35px;
+    border-radius: 5px;
+    width: 100px;
+    color: white;
+    cursor: pointer;
+}
