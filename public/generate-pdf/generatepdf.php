@@ -158,7 +158,7 @@ class GeneratePDF
                 $convert = $this->getExtensionPhoto($item);
                 $image = 'public/photos/' . $convert;
                 if ($this->isfile($image)) {
-                    $pdf->Image($image, 50, 180, 100);
+                    $pdf->Image($image, 50, 180, 150);
                 }
             }
         }

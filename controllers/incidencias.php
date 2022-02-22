@@ -390,6 +390,16 @@ class Incidencias extends Controller
     }
 
 
+    function generatePDF(){
+        
+        $resultado = $this->model->getIncidenciaById("pc_621569d5c6aa2");
+        $generatePdf = new GeneratePDF();
+        $urlPdf = $generatePdf->generateIncidenciaPdf($resultado);
+
+        echo json_encode(array("data" => $urlPdf));
+
+    }
+
     public function grabarDocumentoNew()
     {
 
