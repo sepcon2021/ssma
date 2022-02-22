@@ -332,7 +332,7 @@ class GenerateExcel
                             $objDrawing = new PHPExcel_Worksheet_Drawing();
                             $objDrawing->setOffsetX(1);
                             $objDrawing->setOffsetY($cantidad);
-                            $objDrawing->setCoordinates('I' . $fila);
+                            $objDrawing->setCoordinates('V' . $fila);
                             $objDrawing->setName($elemento);
                             $objDrawing->setDescription(constant("URL") . "photos/" . $elemento);
                             $objDrawing->setPath("public/photos/" . $elemento);

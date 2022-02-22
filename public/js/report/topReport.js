@@ -813,7 +813,12 @@ function convertListPhotoToHtml(list) {
     let htmlPhoto = ``;
 
     listPhoto.forEach(element => {
-        htmlPhoto += `<img class="img_report" src="${RUTA}public/photos/${element}">`
+
+        console.log("size");
+        console.log(element.length);
+        if(element.length != 0){
+            htmlPhoto += `<img class="img_report" src="${RUTA}public/photos/${element}">`
+        }
     });
 
     return htmlPhoto;

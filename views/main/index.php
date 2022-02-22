@@ -7,6 +7,8 @@
     <title>Control Documentario SSMA</title>
 
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/login/login.css?<?php echo constant('VERSION'); ?>">
+
+    <link rel="shortcut icon" type="image/png" href="<?php echo constant('URL') ?>public/img/logo.png" />
 </head>
 
 <body>

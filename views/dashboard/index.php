@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/documento/general_format.css?<?php echo constant('VERSION'); ?>">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/prueba.css?<?php echo constant('VERSION'); ?>">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/seguimiento.css?<?php echo constant('VERSION'); ?>">
+    <link rel="shortcut icon" type="image/png" href="<?php echo constant('URL') ?>public/img/logo.png" />
 
     <title>Control Documentario SSMA</title>
 </head>
