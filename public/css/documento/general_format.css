@@ -698,6 +698,11 @@ a{
     background-color: white;
 }
 
+form#examen {
+    padding: 10px;
+}
+
+
 @media only screen and (max-width: 620px) {
 
     .wrap_document_format_head_icon img{

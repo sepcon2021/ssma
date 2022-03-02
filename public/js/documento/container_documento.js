@@ -8,6 +8,8 @@ $(function () {
     const PTAR = 'ptar';
     const GERENCIAL = 'gerencial';
     const SUSPENCION = "suspencion";
+    const INSPECCION_BOTIQUIN = "inspeccion_botiquin";
+
 
     $(".click_documento").on("click", function () {
 
@@ -74,6 +76,13 @@ $(function () {
                 $(".mainpage").html(data);
             });
         }
+        if ($(this).attr("codigo") == INSPECCION_BOTIQUIN) {
+
+            $.post(RUTA + 'inspeccionBotiquin/render', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+            });
+        }
+
 
 
     });

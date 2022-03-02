@@ -24,8 +24,7 @@
                         <option value="3">20PP03 L. Relaves Este / 00679</option>
                         <option value="4">Pucallpa</option>
                         <option value="5">Lurin</option>
-                        <option value="6">Full flow flare - Shut down</option>
-                        <option value="7">Sistema contra incendios</option>
+                        <option value="6">km 13 - LBV - Reemplazo de 04 válvulas</option>
                         <option value="8">Lima</option>
                     </select>
 

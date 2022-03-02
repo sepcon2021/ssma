@@ -816,7 +816,7 @@ function convertListPhotoToHtml(list) {
 
         console.log("size");
         console.log(element.length);
-        if(element.length != 0){
+        if(element.length != 1){
             htmlPhoto += `<img class="img_report" src="${RUTA}public/photos/${element}">`
         }
     });

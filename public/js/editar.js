@@ -561,7 +561,7 @@ $(function () {
 
 <!--CONTENT ELEMENT-->
 <div class="item_format">
-    <input class="item_format_input" name="fecha" value="`+ examen.fecha + `" id="fechaExamen">
+    <input type="date" class="item_format_input" name="fecha" value="`+ examen.fecha + `" id="fechaExamen">
 
 </div>
 </div>
@@ -1441,7 +1441,9 @@ $(function () {
                     if (data.status == 200) {
 
                         event.preventDefault();
-                        window.location.href = RUTA + "administrador";
+                        $.post(RUTA + 'administradorExamen/render', function (data, textStatus, xhr) {
+                            $(".mainpage").html(data);
+                        });
 
                     }
 
@@ -1535,8 +1537,15 @@ $(function () {
 
             event.preventDefault();
 
-            $("#examen").hide();
-            $("#boxLoad").append('<div class="loader"></div>')
+            /*$("#examen").hide();
+            $("#boxLoad").append('<div class="loader"></div>')*/
+
+            $(".popup_content").hide();
+            $(".popup_load").show();
+            $(".popup_load").html(`
+            <div class="wrap_load_container"><div class="loader"></div></div>
+            <div class="wrap_load_message"><p>Espere unos segundos estamos enviando el documento</p></div>`);
+
 
             var firmaTrabajador = document.getElementById("firma");
 
@@ -1560,21 +1569,30 @@ $(function () {
             $.post(RUTA + 'formulario/insertFirmaFacilitador', formulario, function (data) {
 
                 var htmlOpcion = 0;
-                $("#boxLoad").hide();
+                //$("#boxLoad").hide();
+                
+                $(".popup_load").hide();
+                $(".popup_content").show();
 
 
-                if (data.status == 200) {
+                
+                $("#formpopup").trigger("reset");
+                $("#popup-1").removeClass("active");
+
+                htmlOpcion = `<option value=" ` + data.contenido.id + `"  selected="selected" >` + data.contenido.nombreFacilitador + `</option> `;
+
+
+                /*if (data.status == 200) {
 
 
                     $("#respuesta").append('<div> <h2>La firma fue subido con éxito</h2> <br>  <button class="buttonFirmar button-upload"> Volver a firmar </button>  <button class="buttonDeletePopup clickPopup-close" type="submit" id="btnUpdateDocumento">Cerrar</button>  </div>');
 
-                    htmlOpcion = `<option value=" ` + data.contenido.id + `">` + data.contenido.nombreFacilitador + `</option> `;
 
                 } else {
 
                     $("#respuesta").append('<div> <h2>Volver a intentarlo</h2> <br> <button class="buttonFirmar button-upload"> Volver a firmar </button>  <button class="buttonDeletePopup clickPopup-close" type="submit" id="btnUpdateDocumento">Cerrar</button> </div>');
 
-                }
+                }*/
 
                 $('#idFirmaFacilitador').append(htmlOpcion);
                 buttonFirmar();

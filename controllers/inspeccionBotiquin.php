@@ -9,13 +9,7 @@ class InspeccionBotiquin extends Controller{
 
     function render(){
         
-        session_start();
 
-        $this->view->nombres = $_SESSION['nombres'];
-        $this->view->usuario = $_SESSION['usuario'];
-        $this->view->dni =  $_SESSION['dni'];
-        
-        
         $this->view->render('inspeccionBotiquin/index');
     
     }
@@ -29,11 +23,11 @@ class InspeccionBotiquin extends Controller{
         $sede = $_POST['sede'];
         $id_area = $_POST['id_area'];
         $lugar_inspeccion = $_POST['lugar_inspeccion'];
-        $dni_inspeccionado =  $_SESSION['dni'];
-        $dni_responsable = $_POST['dni_responsable'];
-        $observacion_uno = $_POST['observacion_uno'];
-        $observacion_dos = $_POST['observacion_dos'];
-        $observacion_tres = $_POST['observacion_tres'];
+        $dni_inspeccionado =  $_POST['dni_inspeccionado'];
+        $dni_responsable = $_POST['responsable_area'];
+        $observacion_uno = '';
+        $observacion_dos = '';
+        $observacion_tres = '';
         $fecha = $_POST['fecha'];
         $listaInspecciones = $_POST['listaInspecciones'];
 

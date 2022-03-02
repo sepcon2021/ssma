@@ -59,9 +59,9 @@
                 </div>
             </div>
             <div class="container_documnento_otros_item">
-                <div class="click_documento" >
+                <div class="click_documento" codigo="inspeccion_botiquin">
                     <img class="container_documento_icono" src="public/img/documento.png" alt="">
-                    <p></p>
+                    <p>Inspección de botiquin</p>
                 </div>
             </div>
             <div class="container_documnento_otros_item">

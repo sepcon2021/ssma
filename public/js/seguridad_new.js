@@ -276,7 +276,7 @@ $(function () {
 
         <td>
         <select  class="clasificacion w80p" id="clasificacion" class="w75p"> 
-        <option value="-1" class="oculto">Seleccione Opción</option>
+        <option value="-1" class="oculto">Seleccione Opción </option>
         <option value="1"  ${tipo(1, clasificacion)} >A</option>
         <option value="2"  ${tipo(2, clasificacion)} >B</option>
         <option value="3"  ${tipo(3, clasificacion)} >C</option>
