@@ -1058,5 +1058,78 @@ FROM
         }
     }
 
+
+    
+    public function inspeccionBotiquinReport($proyecto, $fechaInicio, $fechaFin)
+    {
+
+
+        $listReport = [];
+
+        $TODOS_PROYECTOS = 100;
+        $sedeSQL = "idProyecto <> '$proyecto'";
+
+        if ($proyecto != $TODOS_PROYECTOS) {
+            $sedeSQL = "idProyecto = '$proyecto'";
+        }
+
+        $query = $this->db->connect()->prepare("SELECT     
+        tipo_inspeccion,
+        idProyecto,
+        sede, 
+        area,
+        lugar_inspeccion,
+        usuario,
+        responsable_area,
+        fecha,
+        registro,
+        ubicacion,
+        condicion,
+        clasificacion,
+        accion_correctiva,
+        usuario_responsable_detalle,
+        fecha_cumplimiento,
+        seguimiento,
+        evidencia
+        FROM view_inspeccion_botiquin
+        WHERE registro >= '$fechaInicio'  AND registro < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  ORDER BY registro DESC 
+
+                                                    ");
+        
+        try {
+
+            $query->execute();
+
+            while ($item = $query->fetch()) {
+
+
+                $data = array(
+                    "tipo_inspeccion" => $item["tipo_inspeccion"],
+                    "sede" => $item["sede"],
+                    "area" => $item["area"],
+                    "lugar_inspeccion" => $item["lugar_inspeccion"],
+                    "usuario" => $item["usuario"],
+                    "responsable_area" => $item["responsable_area"],
+                    
+                    "fecha" => $item["fecha"],
+                    "registro" => $item["registro"],
+                    "ubicacion" => $item["ubicacion"],
+                    "condicion" => $item["condicion"],
+                    "clasificacion" => $item["clasificacion"],
+                    "accion_correctiva" => $item["accion_correctiva"],
+                    "usuario_responsable_detalle" => $item["usuario_responsable_detalle"],
+                    "fecha_cumplimiento" => $item["fecha_cumplimiento"],
+                    "seguimiento" => $item["seguimiento"],
+                    "evidencia" => $item["evidencia"]
+                );
+                array_push($listReport, $data);
+            }
+
+            return $listReport;
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
 }
 

@@ -711,6 +711,69 @@ function htmlSuspencion(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento)
 }
 
 
+function htmlInspeccionBotiquin(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) {
+
+    let list = ``;
+    let amount = 1;
+
+    json.result.forEach(element => {
+
+        list += `<tr class="active-row">
+        <td>${amount}</td>
+        <td>${element.tipo_inspeccion}</td>
+        <td>${element.sede}</td>
+        <td>${element.area}</td>
+        <td>${element.lugar_inspeccion}</td>
+        <td>${element.usuario}</td>
+        <td>${element.responsable_area}</td>
+        <td>${element.fecha}</td>
+        <td>${element.ubicacion}</td>
+        <td>${element.condicion}</td>
+        <td>${element.clasificacion}</td>   
+        <td>${element.accion_correctiva}</td> 
+        <td>${element.usuario_responsable_detalle}</td>
+        <td>${element.fecha_cumplimiento}</td>
+        <td>${element.seguimiento}</td>
+        <td>${convertListPhotoToHtml(element.evidencia)}</td>
+    </tr>`;
+
+        amount++;
+
+    });
+
+    htmlTable = `
+                <table id="topsTableNuevo" class="styled-table">
+                <thead>
+                    <tr>
+                        <th width="20px">item</th>
+                        <th width="140px">Tipo de inspección</th>
+                        <th width="140px">Sede</th>
+                        <th width="140px">Área</th>
+                        <th width="90px">Lugar de inspección </th>
+                        <th width="90px">Elaborado por </th>
+                        <th width="20px">Responsable del área</th>
+                        <th width="20px">Fecha</th>
+                        <th width="140px">Ubicación</th>
+                        <th width="20px">Condición</th>
+                        <th width="250px">Clasificación</th>
+                        <th width="250px">Acción correctiva</th>
+                        <th width="20px">Responsable de la acción</th>
+                        <th width="150px">Fecha de cumplimiento</th>
+                        <th width="150px">comentarios adicionales</th>
+                        <th width="150px">Seguimiento</th>
+                        <th width="150px">Evidencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${list}
+                </tbody>
+            </table>
+    `;
+
+    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable)
+}
+
+
 function answerRiesgo(data){
     let answer = ""
     if(data == 1){
@@ -808,18 +871,21 @@ function contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTabl
 }
 
 function convertListPhotoToHtml(list) {
-
-    let listPhoto = list.split(",")
     let htmlPhoto = ``;
 
-    listPhoto.forEach(element => {
+    if (list != null) {
+        let listPhoto = list.split(",")
 
-        console.log("size");
-        console.log(element.length);
-        if(element.length != 1){
-            htmlPhoto += `<img class="img_report" src="${RUTA}public/photos/${element}">`
-        }
-    });
+        listPhoto.forEach(element => {
+
+            console.log("size");
+            console.log(element.length);
+            if (element.length != 1) {
+                htmlPhoto += `<img class="img_report" src="${RUTA}public/photos/${element}">`
+            }
+        });
+    }
+
 
     return htmlPhoto;
 

@@ -13,6 +13,7 @@ class Reporte extends Controller{
     const PTAR = 6;
     const GERENCIAL = 7;
     const SUSPENCION = 8;
+    const INSPECCION_BOTIQUIN = 9;
 
 
 
@@ -68,6 +69,9 @@ class Reporte extends Controller{
         }
         if($typeDocument == self::SUSPENCION){
             $result =  $this->model->suspencionReport($proyecto, $fechaInicio, $fechaFin);
+        }
+        if($typeDocument == self::INSPECCION_BOTIQUIN){
+            $result =  $this->model->inspeccionBotiquinReport($proyecto, $fechaInicio, $fechaFin);
         }
         return $result;
 
@@ -127,6 +131,10 @@ class Reporte extends Controller{
         if($typeDocument == self::SUSPENCION){
             $listReport =  $this->model->suspencionReport($proyecto, $fechaInicio, $fechaFin);
             $result = $reportExcel->generateSuspencionFormato1($listReport);
+        }
+        if($typeDocument == self::INSPECCION_BOTIQUIN){
+            $listReport =  $this->model->inspeccionBotiquinReport($proyecto, $fechaInicio, $fechaFin);
+            $result = $reportExcel->generateBotiquinFormato1($listReport);
         }
         return $result;
 

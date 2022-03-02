@@ -20,6 +20,7 @@ $(function () {
     const PTAR = 6;
     const GERENCIAL = 7;
     const SUSPENCION = 8;
+    const INSPECCION_BOTIQUIN = 9;
 
  
 
@@ -103,6 +104,8 @@ $(function () {
             contentHTml = htmlGerencial(data,proyecto,fecha_inicio,fecha_fin,'Lista de verificación de visitas gerenciales');
         }else if(typeDocument == SUSPENCION){
             contentHTml = htmlSuspencion(data,proyecto,fecha_inicio,fecha_fin,'Suspención de trabajo ');
+        }else if(typeDocument == INSPECCION_BOTIQUIN){
+            contentHTml = htmlInspeccionBotiquin(data,proyecto,fecha_inicio,fecha_fin,'Inspección de botiquines');
         }
 
 

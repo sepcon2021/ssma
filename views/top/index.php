@@ -383,6 +383,7 @@
                             <option value="10">Pie</option>
                             <option value="11">Oído</option>
                             <option value="12">Sistema respiratorio</option>
+                            <option value="14">Cabeza</option>
                             <option value="13">Cuerpo completo</option>
                         </select>
 

@@ -28,6 +28,7 @@
                         <option value=6>PTAR</option>
                         <option value=7>Inspección gerencial</option>
                         <option value=8>Suspención de trabajo</option>
+                        <option value=9>Inspección de botiquines</option>
 
                     </select>
                 </div>
