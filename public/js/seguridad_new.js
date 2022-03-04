@@ -156,17 +156,12 @@ $(function () {
 
     */
 
-
     $('#addRowObs').on('click', function (event) {
         event.preventDefault();
         $("#popup-1").addClass("active");
         return false;
 
     })
-
-
-    // 5. LUEGO DE LLENAR TODOS LOS CAMPOS VAMOS A AGREGAR LA OBSERVACION REALIZADA Y VA SER AÑADIDO A LA TABLA PRINCIPAL
-
 
     $("#popup_send_form").click(function (event) {
         event.preventDefault();
@@ -177,10 +172,6 @@ $(function () {
 
         return false;
     });
-
-
-
-    // 7. Enviamos el formulario con la imagen en memoria para que sea almacenado en un directorio de imagenes
 
     $("#formpopup").on('submit', function (event) {
 

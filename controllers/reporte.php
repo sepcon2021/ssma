@@ -16,7 +16,6 @@ class Reporte extends Controller{
     const INSPECCION_BOTIQUIN = 9;
 
 
-
     function __construct()
     {
         parent::__construct();
@@ -139,6 +138,20 @@ class Reporte extends Controller{
         return $result;
 
     }
+
+
+    function pruebaFetch()
+    {
+
+        $data = json_decode(file_get_contents('php://input'), true);
+        $decoded['bar'] = "Hello World AGAIN!";    // Add some data to be returned.
+        $reply = json_encode(array("data" => 200 , "result" => "<html> </html>"));
+        header("Content-Type: application/json; charset=UTF-8");
+        echo $reply;
+
+    }
+
+
 
 }
 

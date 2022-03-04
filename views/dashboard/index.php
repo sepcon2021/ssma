@@ -44,10 +44,10 @@
                     <div>
                         <p id="header_usuario_cargo">Cargo de trabajo</p>
                     </div>
-                    
-                <div>
-                    <button class="cerrar_sesion">Cerrar sesión</button>
-                </div>
+
+                    <div>
+                        <button class="cerrar_sesion">Cerrar sesión</button>
+                    </div>
                 </div>
 
             </div>
@@ -56,13 +56,13 @@
         <div class="sidebar">
 
             <div class="sidebar__title">
-                
+
                 <div class="sidebar__img">
                     <img id="sidebar_logo_empresa" src="public/img/logo.png" alt="logo" />
                 </div>
 
                 <div class="sidebar_box_close">
-                   <img id="sidebar_close" src="public/img/cerrar.png" alt="">
+                    <img id="sidebar_close" src="public/img/cerrar.png" alt="">
                 </div>
 
             </div>
@@ -75,6 +75,28 @@
         <div class="mainpage item">
         </div>
     </div>
+
+
+    <!-- POPUP  -->
+    <div class="popup_notificacion" id="popup-2">
+        <div class="overlay"></div>
+        <div class="content scroll1">
+            <div class="align_center">
+                <h3>Notificación</h3>
+            </div>
+            <div class="align_center">
+                <img class="notificacion_icon" src="public/img/notificacion.svg" alt="">
+            </div>
+            <br>
+            <div class="align_center">
+                <p>Nuevas lecciones aprendidas fueron publicadas</p>
+            </div>
+            <div class="align_center">
+                <button class="notificacion_button">Ver</button>
+            </div>
+        </div>
+    </div>
+
 
 
     <script src="<?php echo constant('URL'); ?>public/js/jquery.js"></script>

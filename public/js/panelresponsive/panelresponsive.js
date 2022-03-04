@@ -62,6 +62,10 @@ $(function () {
             var nombres = dataJson.result[0].nombres;
             var apellidos = dataJson.result[0].apellidos;
 
+            var notificacion = dataJson.result[0].notificacion;
+            showNotificacion(notificacion);
+
+
             $("#header_usuario_inicial").text(getFirstWordName(nombres, apellidos));
             $("#header_usuario_apellido").text(nombres.split(" ")[0] + " " + apellidos.split(" ")[0])
             $("#header_usuario_cargo").text(dataJson.result[0].dcargo)
@@ -71,6 +75,40 @@ $(function () {
 
         }
     }
+
+
+    function showNotificacion(notificacion){
+        if(notificacion){
+            $("#popup-2").addClass("active");
+        }
+    
+    }
+
+    $(".notificacion_button").on('click',function(){
+        let dni = dataJson.result[0].dni;
+
+        $.post(RUTA + 'main/insertNotificacion', {dni : dni } ,function (data, textStatus, xhr) {
+
+
+            dataJson.result[0].notificacion = false;
+
+            sessionStorage.removeItem("dataTrabajador");
+
+            sessionStorage.setItem("dataTrabajador", JSON.stringify(dataJson));
+
+
+
+            $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
+                $(".mainpage").html(data);
+                $("#popup-2").removeClass("active");
+            });  
+        });  
+        
+ 
+
+        removeClass();
+    });
+
 
     $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
         $(".mainpage").html(data);

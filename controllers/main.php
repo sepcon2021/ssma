@@ -129,5 +129,15 @@ class Main extends Controller{
             echo json_encode($respuesta);
 
         }
+
+        function insertNotificacion(){
+
+            $dni = $_POST["dni"];
+
+            $this->model->updateNotification($dni);
+
+            echo json_encode(array("result" => "200"));
+        }
+
     }
 ?>

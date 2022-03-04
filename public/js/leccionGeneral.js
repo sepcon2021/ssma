@@ -13,10 +13,10 @@ $(function(){
             success: function (list) {
                 list.contenido.forEach((lecciones)=>{
                     htmlContent+= `
-                    <div>
-                        <div class="item_format"><h2>${lecciones.nombre}</h2></div>
-                        <br>
+                    <div class="item_format">
                         <div class="item_format">${manyPDFs(lecciones.url_pdf)}</div>
+                        <div class="item_format"> ${lecciones.nombre} </div>
+
                     </div>
                     <br><br><br><br>
                     `;

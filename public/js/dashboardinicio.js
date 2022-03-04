@@ -7,6 +7,10 @@ $(function () {
     var nombres = data.result[0].nombres;
     var apellidos = data.result[0].apellidos;
     var usuario = data.result[0].usuario;
+    var notificacion = data.result[0].notificacion;
+
+    console.log('Notificacion');
+    console.log(notificacion);
 
     $("#nombres").val(`${nombres} ${apellidos}`);
     $("#usuario").val(usuario);
@@ -41,25 +45,25 @@ $(function () {
         e.preventDefault();
 
 
-        var nombreProyecto ='';
+        var nombreProyecto = '';
         var nombreAreaEmpresa = '';
 
         var codigoProyecto = $('#proyecto').val();
 
-        $( "#proyecto option:selected" ).each(function() {
-            nombreProyecto += $( this ).text() + " ";
-          });
+        $("#proyecto option:selected").each(function () {
+            nombreProyecto += $(this).text() + " ";
+        });
 
         var idAreaEmpresa = $('#area_empresa').val();
 
-        $( "#area_empresa option:selected" ).each(function() {
-            nombreAreaEmpresa += $( this ).text() + " ";
-          });
+        $("#area_empresa option:selected").each(function () {
+            nombreAreaEmpresa += $(this).text() + " ";
+        });
 
         sessionStorage.setItem("codigoProyecto", codigoProyecto);
-        sessionStorage.setItem("nombreProyecto",nombreProyecto);
-        sessionStorage.setItem("idAreaEmpresa",idAreaEmpresa);
-        sessionStorage.setItem("nombreAreaEmpresa",nombreAreaEmpresa);
+        sessionStorage.setItem("nombreProyecto", nombreProyecto);
+        sessionStorage.setItem("idAreaEmpresa", idAreaEmpresa);
+        sessionStorage.setItem("nombreAreaEmpresa", nombreAreaEmpresa);
 
 
 
@@ -74,27 +78,45 @@ $(function () {
         $.post(RUTA + 'administradorExamen/renderDashboardFormulario', function (data, textStatus, xhr) {
             $(".mainpage").html(data);
         });
-        
-        goHome(); 
+
+        goHome();
 
     });
 
 
 
-    function goHome(){
-        
-        $(".home_document").on("click",function(){
-    
+    function goHome() {
+
+        $(".home_document").on("click", function () {
+
             var result = confirm("¿Quieres volver al inicio?");
-    
-            if(result)  {
+
+            if (result) {
                 $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
                     $(".mainpage").html(data);
                 });
-            } 
-    
+            }
+
         });
-        }
+    }
+
+
+
+    
+    /*
+    __________________________________________________
+    |                                                 |
+    |                   POP UP                        |
+    |                                                 |
+    |_________________________________________________|         
+
+    */
+
+    if(notificacion){
+        $("#popup-1").addClass("active");
+    }
+
+
 
     /*
     __________________________________________________

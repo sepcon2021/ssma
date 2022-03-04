@@ -48,6 +48,8 @@
 
         </div>
     </div>
+
+    <script src="<?php echo constant('URL'); ?>public/js/pruebsfetch.js"></script>
     <script src="<?php echo constant('URL'); ?>public/js/jquery.js"></script>
     <script src="<?php echo constant('URL'); ?>public/js/funciones.js?<?php echo constant('VERSION'); ?>"></script>
     <script src="<?php echo constant('URL'); ?>public/js/login/login.js?<?php echo constant('VERSION'); ?>"></script>
