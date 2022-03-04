@@ -15,7 +15,7 @@ $(function(){
                     htmlContent+= `
                     <div class="item_format">
                         <div class="item_format">${manyPDFs(lecciones.url_pdf)}</div>
-                        <div class="item_format"> ${lecciones.nombre} </div>
+                        <div class="item_format justify_text"> ${lecciones.nombre} </div>
 
                     </div>
                     <br><br><br><br>

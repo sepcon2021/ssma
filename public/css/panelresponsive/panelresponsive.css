@@ -175,6 +175,8 @@
 }
 
 
+
+
 .notificacion_icon {
   width: 45%;
   height: 45%;
@@ -197,6 +199,10 @@
   color: #F24822;
   border-style: solid;
   cursor: pointer;
+}
+
+.justify_text{
+  text-align: justify;
 }
 
    @media only screen and (max-width: 620px) {
@@ -242,7 +248,12 @@
       }
       #sidebar_close{
         visibility: visible;
-      }  
+      }
+      
+      .popup_notificacion .content{
+        width: 80%;
+        text-align: center;
+      }
     }
   
   
