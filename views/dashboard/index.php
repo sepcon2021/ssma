@@ -81,19 +81,32 @@
     <div class="popup_notificacion" id="popup-2">
         <div class="overlay"></div>
         <div class="content scroll1">
-            <div class="align_center">
-                <h3>Notificación</h3>
+
+            <div class="popup_content">
+                <div class="align_center">
+                    <h3>Notificación</h3>
+                </div>
+                <div class="align_center">
+                    <img class="notificacion_icon" src="public/img/notificacion.svg" alt="">
+                </div>
+                <br>
+                <div class="align_center">
+                    <p>Nuevas lecciones aprendidas fueron publicadas</p>
+                </div>
+                <div class="align_center">
+                    <button class="notificacion_button">Ver</button>
+                </div>
             </div>
-            <div class="align_center">
-                <img class="notificacion_icon" src="public/img/notificacion.svg" alt="">
+
+
+            <div class="popup_load">
+
             </div>
-            <br>
-            <div class="align_center">
-                <p>Nuevas lecciones aprendidas fueron publicadas</p>
+
+            <div class="popup_sucess">
+
             </div>
-            <div class="align_center">
-                <button class="notificacion_button">Ver</button>
-            </div>
+
         </div>
     </div>
 

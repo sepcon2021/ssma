@@ -85,15 +85,22 @@ $(function () {
     }
 
     $(".notificacion_button").on('click',function(){
+
+        $(".notificacion_button").prop("disabled", true);
+
         let dni = dataJson.result[0].dni;
+
+                    
+        $(".popup_content").hide();
+        $(".popup_load").show();
+        $(".popup_load").html(`
+        <div class="wrap_load_container"><div class="loader"></div></div>
+        <div class="wrap_load_message"><p>Espere unos segundos estamos enviando el documento</p></div>`);
 
         $.post(RUTA + 'main/insertNotificacion', {dni : dni } ,function (data, textStatus, xhr) {
 
-
             dataJson.result[0].notificacion = false;
-
             sessionStorage.removeItem("dataTrabajador");
-
             sessionStorage.setItem("dataTrabajador", JSON.stringify(dataJson));
 
 
@@ -101,6 +108,7 @@ $(function () {
             $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
                 $("#popup-2").removeClass("active");
+
             });  
         });  
         
