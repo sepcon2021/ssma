@@ -1,5 +1,6 @@
 <?php
     require_once 'models/usuario.php';
+    require_once 'models/seguimientomodel.php';
 
     class MainModel extends Model{
 
@@ -131,6 +132,7 @@
 
         public function getUserByDni($dni) {
             $item = new Usuario;
+            $seguimientoModel = new SeguimientoModel;
 
             $query = $this->db->connectrrhh()->prepare('SELECT internal,dni,apellidos,nombres,dcostos,ccostos,dsede,usuario,correo,ccargo,dcargo,perfil,ssma
                                                         FROM tabla_aquarius
@@ -160,6 +162,7 @@
 
                     $item->permiso = $this->getPermiso($item->dni);
                     $item->notificacion = $this->triggerNotification($row['dni']);
+                    $item->amountSeguimiento = count($seguimientoModel->listaAccionesPorEstado('1', $dni));
                 }
 
                 if ( !$item->internal )

@@ -25,9 +25,9 @@
     grid-area: header;
     background: white;
     display: grid;
-    grid-template-areas: "header_buscador header_logo header_usuario";
+    grid-template-areas: "header_logo header_usuario";
    grid-template-rows: 80px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   #header_buscador{
@@ -203,6 +203,37 @@
 
 .justify_text{
   text-align: justify;
+}
+
+.notification {
+  color: #F24822;
+  text-decoration: none;
+  padding: 15px 50px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification .amount_notification {
+  position: absolute;
+  top: -5px;
+  right: 30px;
+  padding: 5px 10px;
+  border-radius: 80%;
+  background-color: #F24822;
+  color: white;
+}
+
+.notification-desactive{
+  color: #707070;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+.notification-desactive .amount_notification {
+  display: none;
 }
 
    @media only screen and (max-width: 620px) {

@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/documento/general_format.css?<?php echo constant('VERSION'); ?>">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/prueba.css?<?php echo constant('VERSION'); ?>">
     <link rel="stylesheet" href="<?php echo constant('URL') ?>public/css/seguimiento.css?<?php echo constant('VERSION'); ?>">
+    <link rel="stylesheet" href="<?php echo constant('URL') ?>font-awesome-4.7.0/css/font-awesome.min.css">
+
     <link rel="shortcut icon" type="image/png" href="<?php echo constant('URL') ?>public/img/logo.png" />
 
     <title>Control Documentario SSMA</title>
@@ -23,9 +25,9 @@
     <div class="contenedor">
 
         <div class="header">
-            <div id="header_buscador">
+            <!--<div id="header_buscador">
                 <img id="header_buscador_menu" src="public/img/menu.png" alt="">
-            </div>
+            </div>-->
 
             <div id="header_logo">
                 <!--<img id="header_logo_empresa" src="public/img/logo.png" alt="logo" />-->
@@ -33,6 +35,13 @@
             </div>
 
             <div id="header_usuario">
+
+
+                <div id="notification" class="notification-desactive">
+                    <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
+                    <span class="amount_notification">3</span>
+                </div>
+
                 <div class="circle">
                     <p id="header_usuario_inicial"> J</p>
                 </div>

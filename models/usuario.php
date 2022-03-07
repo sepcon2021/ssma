@@ -16,6 +16,8 @@
         public $perfil; 
 
         public $permiso;
+        public $notificacion;
+        public $amountSeguimiento;
         
     }
 ?>

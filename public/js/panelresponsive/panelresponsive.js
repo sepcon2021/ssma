@@ -15,13 +15,14 @@ $(function () {
     var dataJson = "";
 
     emptySession();
+    //$(".notification").hide();
 
 
-    function showSideBar(){
+    function showSideBar() {
         let contentHTML = ``;
         let permiso = dataJson.result[0].permiso;
 
-        if(permiso.length > 0){
+        if (permiso.length > 0) {
 
             contentHTML = `
             <div class="active"> Documentos</div>
@@ -34,8 +35,8 @@ $(function () {
             <div>Lecciones aprendidas</div>
             <div>Admin de lecciones</div>`
 
-        }else{
-    
+        } else {
+
             contentHTML = `
             <div class="active"> Documentos</div>
             <div>Seguimiento</div>
@@ -61,8 +62,8 @@ $(function () {
 
             var nombres = dataJson.result[0].nombres;
             var apellidos = dataJson.result[0].apellidos;
-
             var notificacion = dataJson.result[0].notificacion;
+            var amountSeguimiento = dataJson.result[0].amountSeguimiento;
             showNotificacion(notificacion);
 
 
@@ -72,32 +73,51 @@ $(function () {
 
             showSideBar();
 
+            if (amountSeguimiento > 0) {
+                console.log(amountSeguimiento);
+                $("#notification").addClass("notification");
+                $("#notification").removeClass("notification-desactive");
+                $(".amount_notification").text(amountSeguimiento);
+            }
+
+
 
         }
     }
 
+    $("#notification").on('click', function () {
 
-    function showNotificacion(notificacion){
-        if(notificacion){
+        
+        tabHeader.querySelector(".active").classList.remove("active");
+        tabHeaders[1].classList.add("active");
+
+        $.post(RUTA + 'seguimiento/render', function (data, textStatus, xhr) {
+            $(".mainpage").html(data);
+        });
+        removeClass()
+    });
+
+    function showNotificacion(notificacion) {
+        if (notificacion) {
             $("#popup-2").addClass("active");
         }
-    
+
     }
 
-    $(".notificacion_button").on('click',function(){
+    $(".notificacion_button").on('click', function () {
 
         $(".notificacion_button").prop("disabled", true);
 
         let dni = dataJson.result[0].dni;
 
-                    
+
         $(".popup_content").hide();
         $(".popup_load").show();
         $(".popup_load").html(`
         <div class="wrap_load_container"><div class="loader"></div></div>
         <div class="wrap_load_message"><p>Espere unos segundos estamos enviando el documento</p></div>`);
 
-        $.post(RUTA + 'main/insertNotificacion', {dni : dni } ,function (data, textStatus, xhr) {
+        $.post(RUTA + 'main/insertNotificacion', { dni: dni }, function (data, textStatus, xhr) {
 
             dataJson.result[0].notificacion = false;
             sessionStorage.removeItem("dataTrabajador");
@@ -109,10 +129,10 @@ $(function () {
                 $(".mainpage").html(data);
                 $("#popup-2").removeClass("active");
 
-            });  
-        });  
-        
- 
+            });
+        });
+
+
 
         removeClass();
     });
@@ -121,7 +141,7 @@ $(function () {
     $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
         $(".mainpage").html(data);
     });
-    
+
     let tabs = document.querySelector(".sidebar");
     let tabHeader = tabs.querySelector(".sidebar__menu");
     let tabHeaders = tabHeader.querySelectorAll("div");
@@ -132,12 +152,10 @@ $(function () {
 
             tabHeader.querySelector(".active").classList.remove("active");
             tabHeaders[i].classList.add("active");
-            console.log("data");
-            console.log(dataJson.result[0].permiso.length);
 
-            if(dataJson.result[0].permiso.length > 0){
+            if (dataJson.result[0].permiso.length > 0) {
                 getContentHtmlAdministrador(i);
-            }else{
+            } else {
                 getContentHtmlUser(i);
             }
 
@@ -145,16 +163,16 @@ $(function () {
     }
 
 
-    $("#header_buscador_menu").on('click',function(){
-        
+    $("#header_buscador_menu").on('click', function () {
+
         //var sidebar = document.getElementById("sidebar");
         var sidebar = document.getElementsByClassName("sidebar")[0];
         sidebar.classList.add("sidebar_responsive");
 
     });
 
-    $("#sidebar_close").on('click',function(){
-        
+    $("#sidebar_close").on('click', function () {
+
         //var sidebar = document.getElementById("sidebar");
         var sidebar = document.getElementsByClassName("sidebar")[0];
         sidebar.classList.remove("sidebar_responsive");
@@ -164,60 +182,60 @@ $(function () {
     function getContentHtmlAdministrador(indexPage) {
 
 
-        if(indexPage == DOCUMENTOS){
+        if (indexPage == DOCUMENTOS) {
             $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
             removeClass();
         }
-        if(indexPage == SEGUIMIENTO){
+        if (indexPage == SEGUIMIENTO) {
             $.post(RUTA + 'seguimiento/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
-            removeClass()       
+            removeClass()
         }
-        if(indexPage == SEGUIMIENTODASHBOARD){
+        if (indexPage == SEGUIMIENTODASHBOARD) {
             $.post(RUTA + 'seguimientodashboard/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
-            removeClass()       
+            removeClass()
         }
 
-        if(indexPage == REPORTES){
+        if (indexPage == REPORTES) {
             $.post(RUTA + 'reporte/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
             removeClass()
 
         }
-        if(indexPage == ESTADISTICA){
+        if (indexPage == ESTADISTICA) {
             $(".mainpage").load("views/dashboard/estadistica.html");
             removeClass()
         }
-        if(indexPage == FORMULARIO){
+        if (indexPage == FORMULARIO) {
             $.post(RUTA + 'administradorExamen/renderDashboardInicio', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
             removeClass()
         }
-        if(indexPage == ADMINFORMULARIO){
+        if (indexPage == ADMINFORMULARIO) {
             $.post(RUTA + 'capacitacion/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
-            });            
+            });
             removeClass()
         }
 
-        if(indexPage == LECCIONES_APRENDIDAS){
+        if (indexPage == LECCIONES_APRENDIDAS) {
             $.post(RUTA + 'leccionesAprendidas/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
-            });            
+            });
             removeClass()
         }
 
-        if(indexPage == LECCIONES_GENERAL){
+        if (indexPage == LECCIONES_GENERAL) {
             $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
-            });            
+            });
             removeClass()
         }
 
@@ -228,60 +246,60 @@ $(function () {
     function getContentHtmlUser(indexPage) {
 
 
-        if(indexPage == 0){
+        if (indexPage == 0) {
             $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
             removeClass();
         }
-        if(indexPage == 1){
+        if (indexPage == 1) {
             $.post(RUTA + 'seguimiento/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
-            removeClass()       
+            removeClass()
         }
 
-        if(indexPage == 2){
+        if (indexPage == 2) {
             $.post(RUTA + 'reporte/render', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
             removeClass()
 
         }
-        if(indexPage == 3){
+        if (indexPage == 3) {
             $(".mainpage").load("views/dashboard/estadistica.html");
             removeClass()
         }
-        if(indexPage == 4){
+        if (indexPage == 4) {
             $.post(RUTA + 'administradorExamen/renderDashboardInicio', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
             });
             removeClass()
         }
-        if(indexPage == 5){
+        if (indexPage == 5) {
             $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
                 $(".mainpage").html(data);
-            });            
+            });
             removeClass()
         }
 
 
     }
-    function getFirstWordName(name,apellido){
+    function getFirstWordName(name, apellido) {
         var wordName = name.charAt(0);
         var wordAddress = apellido.charAt(0);
-        return wordName+wordAddress;
+        return wordName + wordAddress;
     }
 
-    function removeClass(){
+    function removeClass() {
         var sidebar = document.getElementsByClassName("sidebar")[0];
         sidebar.classList.remove("sidebar_responsive");
     }
-    
 
-    $(".cerrar_sesion").on('click',function(){
-        
-        if(sessionStorage.removeItem("dataTrabajador") == null){
+
+    $(".cerrar_sesion").on('click', function () {
+
+        if (sessionStorage.removeItem("dataTrabajador") == null) {
             window.location.replace(RUTA);
         }
 

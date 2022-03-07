@@ -696,6 +696,8 @@ a{
     padding: 2px;
     margin: 2px;
     background-color: white;
+    width: auto;
+    height: auto;
 }
 
 form#examen {
