@@ -25,9 +25,9 @@
     grid-area: header;
     background: white;
     display: grid;
-    grid-template-areas: "header_logo header_usuario";
+    grid-template-areas: "header_buscador header_logo header_usuario";
    grid-template-rows: 80px;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.5fr 1fr 1.5fr;
   }
 
   #header_buscador{

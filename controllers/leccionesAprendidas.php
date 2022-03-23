@@ -54,4 +54,3 @@ class LeccionesAprendidas extends Controller{
         }
 
     }
-?>

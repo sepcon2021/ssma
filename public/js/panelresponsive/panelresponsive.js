@@ -1,30 +1,23 @@
+import COMPONENT from "../constants/constants.js";
+import EvaluacionAdmin, {
+  createGroup,
+  initEvaluacionAdmin,
+} from "../evaluacion/evaluacionAdmin.js";
+import EvaluacionUsuario, {
+  initEvaluacionUsuario,
+} from "../evaluacionUsuario/evaluacionUsuario.js";
+
 $(function () {
+  var dataJson = "";
 
-    var DOCUMENTOS = 0;
-    var SEGUIMIENTO = 1;
-    var SEGUIMIENTODASHBOARD = 2;
-    var REPORTES = 3;
-    var ESTADISTICA = 4;
-    var FORMULARIO = 5;
-    var ADMINFORMULARIO = 6;
-    var LECCIONES_GENERAL = 7;
-    var LECCIONES_APRENDIDAS = 8;
+  emptySession();
 
+  function showSideBar() {
+    let contentHTML = ``;
+    let permiso = dataJson.result[0].permiso;
 
-
-    var dataJson = "";
-
-    emptySession();
-    //$(".notification").hide();
-
-
-    function showSideBar() {
-        let contentHTML = ``;
-        let permiso = dataJson.result[0].permiso;
-
-        if (permiso.length > 0) {
-
-            contentHTML = `
+    if (permiso.length > 0) {
+      contentHTML = `
             <div class="active"> Documentos</div>
             <div>Seguimiento</div>
             <div>Admin seguimiento</div>
@@ -33,278 +26,276 @@ $(function () {
             <div>Formulario</div>
             <div>Admin formulario</div>
             <div>Lecciones aprendidas</div>
-            <div>Admin de lecciones</div>`
-
-        } else {
-
-            contentHTML = `
+            <div>Admin de lecciones</div>
+            <div>Evaluaciones por competencia </div>
+            <div>Admin evaluaciones </div>
+            `;
+    } else {
+      contentHTML = `
             <div class="active"> Documentos</div>
             <div>Seguimiento</div>
             <div>Reportes</div>
             <div>Estadística</div>
             <div>Formulario</div>
-            <div>Lecciones aprendidas</div>`
-        }
-
-        $(".sidebar__menu").html(contentHTML);
-
+            <div>Lecciones aprendidas</div>
+            <div>Evaluaciones por competencia </div>
+            `;
     }
 
+    $(".sidebar__menu").html(contentHTML);
+  }
 
-    function emptySession() {
+  function emptySession() {
+    if (sessionStorage.getItem("dataTrabajador") == null) {
+      window.location.replace(RUTA);
+    } else {
+      dataJson = JSON.parse(sessionStorage.getItem("dataTrabajador"));
 
+      var nombres = dataJson.result[0].nombres;
+      var apellidos = dataJson.result[0].apellidos;
+      var notificacion = dataJson.result[0].notificacion;
+      var amountSeguimiento = dataJson.result[0].amountSeguimiento;
+      showNotificacion(notificacion);
 
-        if (sessionStorage.getItem("dataTrabajador") == null) {
-            window.location.replace(RUTA);
-        } else {
+      $("#header_usuario_inicial").text(getFirstWordName(nombres, apellidos));
+      $("#header_usuario_apellido").text(
+        nombres.split(" ")[0] + " " + apellidos.split(" ")[0]
+      );
+      $("#header_usuario_cargo").text(dataJson.result[0].dcargo);
 
-            dataJson = JSON.parse(sessionStorage.getItem("dataTrabajador"));
+      showSideBar();
 
-            var nombres = dataJson.result[0].nombres;
-            var apellidos = dataJson.result[0].apellidos;
-            var notificacion = dataJson.result[0].notificacion;
-            var amountSeguimiento = dataJson.result[0].amountSeguimiento;
-            showNotificacion(notificacion);
-
-
-            $("#header_usuario_inicial").text(getFirstWordName(nombres, apellidos));
-            $("#header_usuario_apellido").text(nombres.split(" ")[0] + " " + apellidos.split(" ")[0])
-            $("#header_usuario_cargo").text(dataJson.result[0].dcargo)
-
-            showSideBar();
-
-            if (amountSeguimiento > 0) {
-                console.log(amountSeguimiento);
-                $("#notification").addClass("notification");
-                $("#notification").removeClass("notification-desactive");
-                $(".amount_notification").text(amountSeguimiento);
-            }
-
-
-
-        }
+      if (amountSeguimiento > 0) {
+        console.log(amountSeguimiento);
+        $("#notification").addClass("notification");
+        $("#notification").removeClass("notification-desactive");
+        $(".amount_notification").text(amountSeguimiento);
+      }
     }
+  }
 
-    $("#notification").on('click', function () {
+  $("#notification").on("click", function () {
+    tabHeader.querySelector(".active").classList.remove("active");
+    tabHeaders[1].classList.add("active");
 
-        
-        tabHeader.querySelector(".active").classList.remove("active");
-        tabHeaders[1].classList.add("active");
-
-        $.post(RUTA + 'seguimiento/render', function (data, textStatus, xhr) {
-            $(".mainpage").html(data);
-        });
-        removeClass()
+    $.post(RUTA + "seguimiento/render", function (data, textStatus, xhr) {
+      $(".mainpage").html(data);
     });
+    removeClass();
+  });
 
-    function showNotificacion(notificacion) {
-        if (notificacion) {
-            $("#popup-2").addClass("active");
-        }
-
+  function showNotificacion(notificacion) {
+    if (notificacion) {
+      $("#popup-2").addClass("active");
     }
+  }
 
-    $(".notificacion_button").on('click', function () {
+  $(".notificacion_button").on("click", function () {
+    $(".notificacion_button").prop("disabled", true);
 
-        $(".notificacion_button").prop("disabled", true);
+    let dni = dataJson.result[0].dni;
 
-        let dni = dataJson.result[0].dni;
-
-
-        $(".popup_content").hide();
-        $(".popup_load").show();
-        $(".popup_load").html(`
+    $(".popup_content").hide();
+    $(".popup_load").show();
+    $(".popup_load").html(`
         <div class="wrap_load_container"><div class="loader"></div></div>
         <div class="wrap_load_message"><p>Espere unos segundos estamos enviando el documento</p></div>`);
 
-        $.post(RUTA + 'main/insertNotificacion', { dni: dni }, function (data, textStatus, xhr) {
+    $.post(
+      RUTA + "main/insertNotificacion",
+      { dni: dni },
+      function (data, textStatus, xhr) {
+        dataJson.result[0].notificacion = false;
+        sessionStorage.removeItem("dataTrabajador");
+        sessionStorage.setItem("dataTrabajador", JSON.stringify(dataJson));
 
-            dataJson.result[0].notificacion = false;
-            sessionStorage.removeItem("dataTrabajador");
-            sessionStorage.setItem("dataTrabajador", JSON.stringify(dataJson));
+        $.post(
+          RUTA + "leccionesAprendidas/renderGeneral",
+          function (data, textStatus, xhr) {
+            $(".mainpage").html(data);
+            $("#popup-2").removeClass("active");
+          }
+        );
+      }
+    );
 
+    removeClass();
+  });
 
+  $.post(RUTA + "documento/render", function (data, textStatus, xhr) {
+    $(".mainpage").html(data);
+  });
 
-            $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-                $("#popup-2").removeClass("active");
+  let tabs = document.querySelector(".sidebar");
+  let tabHeader = tabs.querySelector(".sidebar__menu");
+  let tabHeaders = tabHeader.querySelectorAll("div");
 
-            });
-        });
+  for (let i = 0; i < tabHeaders.length; i++) {
+    tabHeaders[i].addEventListener("click", function () {
+      tabHeader.querySelector(".active").classList.remove("active");
+      tabHeaders[i].classList.add("active");
 
-
-
-        removeClass();
+      if (dataJson.result[0].permiso.length > 0) {
+        getContentHtmlAdministrador(i);
+      } else {
+        getContentHtmlUser(i);
+      }
     });
+  }
 
+  $("#header_buscador_menu").on("click", function () {
+    //var sidebar = document.getElementById("sidebar");
+    var sidebar = document.getElementsByClassName("sidebar")[0];
+    sidebar.classList.add("sidebar_responsive");
+  });
 
-    $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
+  $("#sidebar_close").on("click", function () {
+    //var sidebar = document.getElementById("sidebar");
+    var sidebar = document.getElementsByClassName("sidebar")[0];
+    sidebar.classList.remove("sidebar_responsive");
+  });
+
+  function getContentHtmlAdministrador(indexPage) {
+    if (indexPage == COMPONENT.DOCUMENTOS) {
+      $.post(RUTA + "documento/render", function (data, textStatus, xhr) {
+        console.log(data);
         $(".mainpage").html(data);
-    });
-
-    let tabs = document.querySelector(".sidebar");
-    let tabHeader = tabs.querySelector(".sidebar__menu");
-    let tabHeaders = tabHeader.querySelectorAll("div");
-
-
-    for (let i = 0; i < tabHeaders.length; i++) {
-        tabHeaders[i].addEventListener("click", function () {
-
-            tabHeader.querySelector(".active").classList.remove("active");
-            tabHeaders[i].classList.add("active");
-
-            if (dataJson.result[0].permiso.length > 0) {
-                getContentHtmlAdministrador(i);
-            } else {
-                getContentHtmlUser(i);
-            }
-
-        });
+      });
+      removeClass();
+    }
+    if (indexPage == COMPONENT.SEGUIMIENTO) {
+      $.post(RUTA + "seguimiento/render", function (data, textStatus, xhr) {
+        $(".mainpage").html(data);
+      });
+      removeClass();
+    }
+    if (indexPage == COMPONENT.SEGUIMIENTODASHBOARD) {
+      $.post(
+        RUTA + "seguimientodashboard/render",
+        function (data, textStatus, xhr) {
+          $(".mainpage").html(data);
+        }
+      );
+      removeClass();
     }
 
-
-    $("#header_buscador_menu").on('click', function () {
-
-        //var sidebar = document.getElementById("sidebar");
-        var sidebar = document.getElementsByClassName("sidebar")[0];
-        sidebar.classList.add("sidebar_responsive");
-
-    });
-
-    $("#sidebar_close").on('click', function () {
-
-        //var sidebar = document.getElementById("sidebar");
-        var sidebar = document.getElementsByClassName("sidebar")[0];
-        sidebar.classList.remove("sidebar_responsive");
-
-    });
-
-    function getContentHtmlAdministrador(indexPage) {
-
-
-        if (indexPage == DOCUMENTOS) {
-            $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass();
+    if (indexPage == COMPONENT.REPORTES) {
+      $.post(RUTA + "reporte/render", function (data, textStatus, xhr) {
+        $(".mainpage").html(data);
+      });
+      removeClass();
+    }
+    if (indexPage == COMPONENT.ESTADISTICA) {
+      $(".mainpage").load("views/dashboard/estadistica.html");
+      removeClass();
+    }
+    if (indexPage == COMPONENT.FORMULARIO) {
+      $.post(
+        RUTA + "administradorExamen/renderDashboardInicio",
+        function (data, textStatus, xhr) {
+          $(".mainpage").html(data);
         }
-        if (indexPage == SEGUIMIENTO) {
-            $.post(RUTA + 'seguimiento/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-        if (indexPage == SEGUIMIENTODASHBOARD) {
-            $.post(RUTA + 'seguimientodashboard/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-
-        if (indexPage == REPORTES) {
-            $.post(RUTA + 'reporte/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-
-        }
-        if (indexPage == ESTADISTICA) {
-            $(".mainpage").load("views/dashboard/estadistica.html");
-            removeClass()
-        }
-        if (indexPage == FORMULARIO) {
-            $.post(RUTA + 'administradorExamen/renderDashboardInicio', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-        if (indexPage == ADMINFORMULARIO) {
-            $.post(RUTA + 'capacitacion/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-
-        if (indexPage == LECCIONES_APRENDIDAS) {
-            $.post(RUTA + 'leccionesAprendidas/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-
-        if (indexPage == LECCIONES_GENERAL) {
-            $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-
-
+      );
+      removeClass();
+    }
+    if (indexPage == COMPONENT.ADMINFORMULARIO) {
+      $.post(RUTA + "capacitacion/render", function (data, textStatus, xhr) {
+        $(".mainpage").html(data);
+      });
+      removeClass();
     }
 
-
-    function getContentHtmlUser(indexPage) {
-
-
-        if (indexPage == 0) {
-            $.post(RUTA + 'documento/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass();
+    if (indexPage == COMPONENT.LECCIONES_APRENDIDAS) {
+      $.post(
+        RUTA + "leccionesAprendidas/render",
+        function (data, textStatus, xhr) {
+          $(".mainpage").html(data);
         }
-        if (indexPage == 1) {
-            $.post(RUTA + 'seguimiento/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-
-        if (indexPage == 2) {
-            $.post(RUTA + 'reporte/render', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-
-        }
-        if (indexPage == 3) {
-            $(".mainpage").load("views/dashboard/estadistica.html");
-            removeClass()
-        }
-        if (indexPage == 4) {
-            $.post(RUTA + 'administradorExamen/renderDashboardInicio', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-        if (indexPage == 5) {
-            $.post(RUTA + 'leccionesAprendidas/renderGeneral', function (data, textStatus, xhr) {
-                $(".mainpage").html(data);
-            });
-            removeClass()
-        }
-
-
-    }
-    function getFirstWordName(name, apellido) {
-        var wordName = name.charAt(0);
-        var wordAddress = apellido.charAt(0);
-        return wordName + wordAddress;
+      );
+      removeClass();
     }
 
-    function removeClass() {
-        var sidebar = document.getElementsByClassName("sidebar")[0];
-        sidebar.classList.remove("sidebar_responsive");
+    if (indexPage == COMPONENT.LECCIONES_GENERAL) {
+      $.post(
+        RUTA + "leccionesAprendidas/renderGeneral",
+        function (data, textStatus, xhr) {
+          $(".mainpage").html(data);
+        }
+      );
+      removeClass();
     }
 
+    if (indexPage == COMPONENT.EVALUACION_COMPETENCIA) {
+      document.querySelector(".mainpage").innerHTML = EvaluacionUsuario();
+      initEvaluacionUsuario();
+      removeClass();
+    }
+    if (indexPage == COMPONENT.ADMIN_EVALUACION_COMPETENCIA) {
+      document.querySelector(".mainpage").innerHTML = EvaluacionAdmin();
+      initEvaluacionAdmin();
+      createGroup();
+      removeClass();
+    }
+  }
 
-    $(".cerrar_sesion").on('click', function () {
+  function getContentHtmlUser(indexPage) {
+    if (indexPage == 0) {
+      $.post(RUTA + "documento/render", function (data, textStatus, xhr) {
+        $(".mainpage").html(data);
+      });
+      removeClass();
+    }
+    if (indexPage == 1) {
+      $.post(RUTA + "seguimiento/render", function (data, textStatus, xhr) {
+        $(".mainpage").html(data);
+      });
+      removeClass();
+    }
 
-        if (sessionStorage.removeItem("dataTrabajador") == null) {
-            window.location.replace(RUTA);
+    if (indexPage == 2) {
+      $.post(RUTA + "reporte/render", function (data, textStatus, xhr) {
+        $(".mainpage").html(data);
+      });
+      removeClass();
+    }
+    if (indexPage == 3) {
+      $(".mainpage").load("views/dashboard/estadistica.html");
+      removeClass();
+    }
+    if (indexPage == 4) {
+      $.post(
+        RUTA + "administradorExamen/renderDashboardInicio",
+        function (data, textStatus, xhr) {
+          $(".mainpage").html(data);
         }
+      );
+      removeClass();
+    }
+    if (indexPage == 5) {
+      $.post(
+        RUTA + "leccionesAprendidas/renderGeneral",
+        function (data, textStatus, xhr) {
+          $(".mainpage").html(data);
+        }
+      );
+      removeClass();
+    }
+  }
 
-    });
+  function getFirstWordName(name, apellido) {
+    var wordName = name.charAt(0);
+    var wordAddress = apellido.charAt(0);
+    return wordName + wordAddress;
+  }
 
+  function removeClass() {
+    var sidebar = document.getElementsByClassName("sidebar")[0];
+    sidebar.classList.remove("sidebar_responsive");
+  }
 
-
+  $(".cerrar_sesion").on("click", function () {
+    if (sessionStorage.removeItem("dataTrabajador") == null) {
+      window.location.replace(RUTA);
+    }
+  });
 });

@@ -1,28 +1,28 @@
     <?php
 
-require_once 'public/upload-photo/upload-image.php';
-require_once 'public/generate-pdf/generatepdf.php';
-require_once 'models/seguimientomodel.php';
-require_once 'public/email/email.php';
-require_once 'controllers/respuesta.php';
-require_once 'public/upload-photo/upload-image.php';
+    require_once 'public/upload-photo/upload-image.php';
+    require_once 'public/generate-pdf/generatepdf.php';
+    require_once 'models/seguimientomodel.php';
+    require_once 'public/email/email.php';
+    require_once 'controllers/respuesta.php';
+    require_once 'public/upload-photo/upload-image.php';
 
-class Top extends Controller
-{
-    public function __construct()
+    class Top extends Controller
     {
+      public function __construct()
+      {
         parent::__construct();
-    }
+      }
 
-    public function render()
-    {
+      public function render()
+      {
 
         $this->view->render('top/index');
-    }
+      }
 
 
-    public function guardarMovil()
-    {
+      public function guardarMovil()
+      {
 
         $respuesta = new Respuesta;
 
@@ -43,7 +43,7 @@ class Top extends Controller
         $conepp = $_POST['conepp'] ?: '00';
         $preventiva = $_POST['preventiva'];
         $correctiva = $_POST['correctiva'];
-        $perdida = isset($_POST['perdida']) ?  $_POST['perdida']: '00';
+        $perdida = isset($_POST['perdida']) ?  $_POST['perdida'] : '00';
         $area = $_POST['sltArea'];
         $image = $_POST['image'];
         $image_name = $_POST['image_name'];
@@ -60,7 +60,7 @@ class Top extends Controller
         $observado_reincidente = $_POST['observado_reincidente'];
         $observado_comentario = isset($_POST['observado_comentario']) ? $_POST['observado_comentario'] : '';
         $idproyectodetalle = $_POST['idproyectodetalle'];
-        $idpuestoobservado = $_POST['idcargo'] ?  $_POST['idcargo'] : 151 ;
+        $idpuestoobservado = $_POST['idcargo'] ?  $_POST['idcargo'] : 151;
         $dniPropietario =  strlen($_POST['dni_propietario']) != 0 ? $_POST['dni_propietario'] : null;
 
         $relacion = $this->relacionado($relacion);
@@ -68,63 +68,64 @@ class Top extends Controller
         $photo_upload = new UploadImage();
         $outputfile = $photo_upload->uploadImageApp($image, $image_name);
 
-        
+
         $respuestaInsert = $this->model->insertMovil(
-            ['idtop' => $topid,
-                'sede' => $sede,
-                'areaGeneral' => $areaGeneral,
-                'ubicacionGeneral' => $ubicacionGeneral,
-                'lugar' => $lugar,
-                'reportado' => $reportado,
-                'fecha' => $fecha,
-                'observacion' => $observacion,
-                'acsues' => $acsues,
-                'cosues' => $cosues,
-                'actseg' => $actseg,
-                'otros' => $otros,
-                'relacion' => $relacion,
-                'tipepp' => $tipepp,
-                'conepp' => $conepp,
-                'preventiva' => $preventiva,
-                'correctiva' => $correctiva,
-                'perdida' => $perdida,
-                'area' => $area,
-                'foto' => $outputfile,
-                'user' => $user,
-                'observado_lugar' => $observado_lugar,
-                'observado_puesto' => $observado_puesto,
-                'idobservado_tiempo' => $idobservado_tiempo,
-                'idobservado_hora' => $idobservado_hora,
-                'idobservado_edad' => $idobservado_edad,
-                'idobservado_lesion' => $idobservado_lesion,
-                'idobservado_obstaculo' => $idobservado_obstaculo,
-                'observado_cambio' => $observado_cambio,
-                'observado_retroalimentacion' => $observado_retroalimentacion,
-                'observado_reincidente' => $observado_reincidente,
-                'observado_comentario' => $observado_comentario,
-                'idproyectodetalle' => $idproyectodetalle,
-                'idpuestoobservado' => $idpuestoobservado,
+          [
+            'idtop' => $topid,
+            'sede' => $sede,
+            'areaGeneral' => $areaGeneral,
+            'ubicacionGeneral' => $ubicacionGeneral,
+            'lugar' => $lugar,
+            'reportado' => $reportado,
+            'fecha' => $fecha,
+            'observacion' => $observacion,
+            'acsues' => $acsues,
+            'cosues' => $cosues,
+            'actseg' => $actseg,
+            'otros' => $otros,
+            'relacion' => $relacion,
+            'tipepp' => $tipepp,
+            'conepp' => $conepp,
+            'preventiva' => $preventiva,
+            'correctiva' => $correctiva,
+            'perdida' => $perdida,
+            'area' => $area,
+            'foto' => $outputfile,
+            'user' => $user,
+            'observado_lugar' => $observado_lugar,
+            'observado_puesto' => $observado_puesto,
+            'idobservado_tiempo' => $idobservado_tiempo,
+            'idobservado_hora' => $idobservado_hora,
+            'idobservado_edad' => $idobservado_edad,
+            'idobservado_lesion' => $idobservado_lesion,
+            'idobservado_obstaculo' => $idobservado_obstaculo,
+            'observado_cambio' => $observado_cambio,
+            'observado_retroalimentacion' => $observado_retroalimentacion,
+            'observado_reincidente' => $observado_reincidente,
+            'observado_comentario' => $observado_comentario,
+            'idproyectodetalle' => $idproyectodetalle,
+            'idpuestoobservado' => $idpuestoobservado,
 
-            ]);
+          ]
+        );
 
 
-      $this->elaborarCorreo($topid,$dniPropietario,$perdida,$sede,$preventiva);
-       echo $respuesta->enviarRespuesta($respuestaInsert);
+        $this->elaborarCorreo($topid, $dniPropietario, $perdida, $sede, $preventiva);
+        echo $respuesta->enviarRespuesta($respuestaInsert);
+      }
 
-    }
-
-    function relacionado($idRelacionado)
-    {
+      function relacionado($idRelacionado)
+      {
 
         $relacionadoNumber = intval($idRelacionado) + 1;
 
         return $relacionadoNumber;
-    }
+      }
 
 
 
-    public function guardarWeb()
-    {
+      public function guardarWeb()
+      {
 
         $respuesta = new Respuesta;
 
@@ -147,7 +148,7 @@ class Top extends Controller
         $conepp = isset($_POST['rbconepp']) ? $_POST['rbconepp'] : '00';
         $preventiva = $_POST['txtPreve'];
         $correctiva = $_POST['txtCorre'];
-        $perdida = isset($_POST['rbPerdi']) ? $_POST['rbPerdi']: '00';
+        $perdida = isset($_POST['rbPerdi']) ? $_POST['rbPerdi'] : '00';
         $area = $_POST['idAreaObservada'];
         $foto = isset($_POST['ruta_foto']) ? $_POST['ruta_foto'] : '';
         $user = $_SESSION['usuario'];
@@ -167,73 +168,76 @@ class Top extends Controller
         $dniPropietario =  isset($_POST['dni_propietario']) ? $_POST['dni_propietario'] : null;
 
         $respuestaInsert = $this->model->insertMovil(
-            ['idtop' => $topid,
-                'sede' => $sede,
-                'areaGeneral' => $areaGeneral,
-                'ubicacionGeneral' => $ubicacionGeneral,
-                'lugar' => $lugar,
-                'reportado' => $reportado,
-                'fecha' => $fecha,
-                'observacion' => $observacion,
-                'acsues' => $acsues,
-                'cosues' => $cosues,
-                'actseg' => $actseg,
-                'otros' => $otros,
-                'relacion' => $relacion,
-                'tipepp' => $tipepp,
-                'conepp' => $conepp,
-                'preventiva' => $preventiva,
-                'correctiva' => $correctiva,
-                'perdida' => $perdida,
-                'area' => $area,
-                'foto' => $foto,
-                'user' => $user,
-                'observado_lugar' => $observado_lugar,
-                'observado_puesto' => $observado_puesto,
-                'idobservado_tiempo' => $idobservado_tiempo,
-                'idobservado_hora' => $idobservado_hora,
-                'idobservado_edad' => $idobservado_edad,
-                'idobservado_lesion' => $idobservado_lesion,
-                'idobservado_obstaculo' => $idobservado_obstaculo,
-                'observado_cambio' => $observado_cambio,
-                'observado_retroalimentacion' => $observado_retroalimentacion,
-                'observado_reincidente' => $observado_reincidente,
-                'observado_comentario' => $observado_comentario,
-                'idproyectodetalle' => $idproyectodetalle,
-                'idpuestoobservado' => $idpuestoobservado,
+          [
+            'idtop' => $topid,
+            'sede' => $sede,
+            'areaGeneral' => $areaGeneral,
+            'ubicacionGeneral' => $ubicacionGeneral,
+            'lugar' => $lugar,
+            'reportado' => $reportado,
+            'fecha' => $fecha,
+            'observacion' => $observacion,
+            'acsues' => $acsues,
+            'cosues' => $cosues,
+            'actseg' => $actseg,
+            'otros' => $otros,
+            'relacion' => $relacion,
+            'tipepp' => $tipepp,
+            'conepp' => $conepp,
+            'preventiva' => $preventiva,
+            'correctiva' => $correctiva,
+            'perdida' => $perdida,
+            'area' => $area,
+            'foto' => $foto,
+            'user' => $user,
+            'observado_lugar' => $observado_lugar,
+            'observado_puesto' => $observado_puesto,
+            'idobservado_tiempo' => $idobservado_tiempo,
+            'idobservado_hora' => $idobservado_hora,
+            'idobservado_edad' => $idobservado_edad,
+            'idobservado_lesion' => $idobservado_lesion,
+            'idobservado_obstaculo' => $idobservado_obstaculo,
+            'observado_cambio' => $observado_cambio,
+            'observado_retroalimentacion' => $observado_retroalimentacion,
+            'observado_reincidente' => $observado_reincidente,
+            'observado_comentario' => $observado_comentario,
+            'idproyectodetalle' => $idproyectodetalle,
+            'idpuestoobservado' => $idpuestoobservado,
 
-            ]);
+          ]
+        );
 
-        $this->elaborarCorreo($topid,$dniPropietario,$perdida,$sede,$preventiva);
+        $this->elaborarCorreo($topid, $dniPropietario, $perdida, $sede, $preventiva);
         echo $respuesta->enviarRespuesta($respuestaInsert);
+      }
 
 
-    }
+      function listaTopByDni($dni, $periodo)
+      {
 
+        return $this->model->listaTopByDni($dni, $periodo);
+      }
 
-    function listaTopByDni($dni,$periodo ){
-
-        return $this->model->listaTopByDni($dni,$periodo);
-    }
-
-    public function enviarCorreoTop(){
+      public function enviarCorreoTop()
+      {
         $id = 'mo_61ba5125aad37';
         $dniPropietario = '40273456';
         $perdida = '01';
         $sede = '06';
         $preventiva = 'el operador de la retro excavadora sr. jimmy Alcazar realizaba la activudad de excavacion de zanja de lenecesarioeo y sele solicito sus documentos operacionales y no contaba con iperc continuo, petar de xcavacion para la actividad';
 
-        $this->elaborarCorreo($id,$dniPropietario,$perdida,$sede,$preventiva);
-    }
+        $this->elaborarCorreo($id, $dniPropietario, $perdida, $sede, $preventiva);
+      }
 
-    public function pruebaGetTop(){
+      public function pruebaGetTop()
+      {
         echo json_encode($this->model->getTopById("mo_6206c0fb02b1f"));
-    }
+      }
 
-    
-    public function elaborarCorreo($id,$dniPropietario,$perdida,$sede,$preventiva)
-    {
-        $idTipoDocumento = 1 ;
+
+      public function elaborarCorreo($id, $dniPropietario, $perdida, $sede, $preventiva)
+      {
+        $idTipoDocumento = 1;
         $nombreDocumento = 'Tops';
         $resultado = $this->model->getTopById($id);
 
@@ -242,129 +246,129 @@ class Top extends Controller
 
         $this->model->actualizarUrlPdf($id, $urlPdf);
 
-        if($dniPropietario != null){
+        if ($dniPropietario != null) {
 
-            $seguimientoModel = new SeguimientoModel;
-            $seguimientoModel->insertarSeguimientoGeneral($id, $dniPropietario, $urlPdf, $idTipoDocumento, $nombreDocumento);    
+          $seguimientoModel = new SeguimientoModel;
+          $seguimientoModel->insertarSeguimientoGeneral($id, $dniPropietario, $urlPdf, $idTipoDocumento, $nombreDocumento);
         }
 
-        $this->enviarEmailAlterta($perdida,$preventiva,$sede,$urlPdf);
-    }
+        $this->enviarEmailAlterta($perdida, $preventiva, $sede, $urlPdf);
+      }
 
-    public function enviarEmailAlterta($perdida,$preventiva, $sede, $urlPDF){
+      public function enviarEmailAlterta($perdida, $preventiva, $sede, $urlPDF)
+      {
 
         $email = new Email;
 
         if ($perdida == '01') {
 
-            $email->enviarCorreoTop($preventiva, $sede, $urlPDF);
-            
+          $email->enviarCorreoTop($preventiva, $sede, $urlPDF);
         }
-    }
+      }
 
 
-    public function subirImagen()
-    {
+      public function subirImagen()
+      {
         $photo_upload = new UploadImage();
         echo $photo_upload->uploadImageWeb($_FILES);
-    }
+      }
 
 
 
-    public function convertObservacionDetalle($data)
-    {
+      public function convertObservacionDetalle($data)
+      {
 
         if ($data == "19") {
-            $data = "01";
+          $data = "01";
         }
         if ($data == "20") {
-            $data = "02";
+          $data = "02";
         }
 
         if ($data == "21") {
-            $data = "03";
+          $data = "03";
         }
         if ($data == "22") {
-            $data = "04";
+          $data = "04";
         }
 
         if ($data == "23") {
-            $data = "05";
+          $data = "05";
         }
         if ($data == "24") {
-            $data = "06";
+          $data = "06";
         }
 
         if ($data == "25") {
-            $data = "07";
+          $data = "07";
         }
         if ($data == "26") {
-            $data = "08";
+          $data = "08";
         }
 
         if ($data == "27") {
-            $data = "09";
+          $data = "09";
         }
         if ($data == "28") {
-            $data = "10";
+          $data = "10";
         }
 
         if ($data == "29") {
-            $data = "11";
+          $data = "11";
         }
         if ($data == "30") {
-            $data = "12";
+          $data = "12";
         }
 
         if ($data == "31") {
-            $data = "13";
+          $data = "13";
         }
 
         if ($data == "32") {
-            $data = "14";
+          $data = "14";
         }
         if ($data == "33") {
-            $data = "15";
+          $data = "15";
         }
         if ($data == "34") {
-            $data = "16";
+          $data = "16";
         }
         if ($data == "35") {
-            $data = "17";
+          $data = "17";
         }
         if ($data == "36") {
-            $data = "01";
+          $data = "01";
         }
 
         if ($data == "37") {
-            $data = "02";
+          $data = "02";
         }
         if ($data == "38") {
-            $data = "03";
+          $data = "03";
         }
         if ($data == "39") {
-            $data = "04";
+          $data = "04";
         }
         if ($data == "40") {
-            $data = "05";
+          $data = "05";
         }
         if ($data == "41") {
-            $data = "06";
+          $data = "06";
         }
         if ($data == "42") {
-            $data = "07";
+          $data = "07";
         }
         if ($data == "43") {
-            $data = "08";
+          $data = "08";
         }
 
         return $data;
-    }
+      }
 
 
 
-    public function guardarWebNew()
-    {
+      public function guardarWebNew()
+      {
 
         $respuesta = new Respuesta;
         $uploadImage = new UploadImage;
@@ -383,9 +387,9 @@ class Top extends Controller
         $observacion = $_POST['observacion'] != null ? $_POST['observacion'] : '00';
         $acsues = ($observacion == '01' ? $_POST['observacion_detalle'] : '00');
         $cosues = ($observacion == '02' ? $_POST['observacion_detalle'] : '00');
-        $actseg = ($observacion == '03' ? $_POST['observacion_detalle'] : '00');        
+        $actseg = ($observacion == '03' ? $_POST['observacion_detalle'] : '00');
         $otros = $_POST['otros'];
-        $relacionado = isset($_POST['relacionado'] ) ? $_POST['relacionado'] : '00';
+        $relacionado = isset($_POST['relacionado']) ? $_POST['relacionado'] : '00';
         $tipoEpp = isset($_POST['tipo_epp']) ? $_POST['tipo_epp'] : '00';
         $condicionEpp = isset($_POST['condicion_epp']) ? $_POST['condicion_epp'] : '00';
         $puestoObservado = $_POST['puesto_observado'];
@@ -398,53 +402,215 @@ class Top extends Controller
         $reincidente = isset($_POST['reincidente']) ? $_POST['reincidente'] : 3;
         $breveDescripcion = $_POST['breve_descripcion'];
         $medidaCorrectiva = $_POST['medida_correctiva'];
-        $perdida = isset($_POST['potencial'] ) ? $_POST['potencial'] : '00';
+        $perdida = isset($_POST['potencial']) ? $_POST['potencial'] : '00';
         $responsable = isset($_POST['responsable_accion']) ? $_POST['responsable_accion'] : '77100151';
 
 
         $respuestaInsert = $this->model->insertMovil(
-            ['idtop' => $topid,
-                'sede' => $proyecto,
-                'areaGeneral' => 1,
-                'ubicacionGeneral' => '',
-                'lugar' => '',
-                'reportado' => $reportado,
-                'fecha' => $fechaRegistro,
-                'observacion' => $observacion,
-                'acsues' => $acsues,
-                'cosues' => $cosues,
-                'actseg' => $actseg,
-                'otros' => $otros,
-                'relacion' => $relacionado,
-                'tipepp' => $tipoEpp,
-                'conepp' => $condicionEpp,
-                'preventiva' => $breveDescripcion,
-                'correctiva' => $medidaCorrectiva,
-                'perdida' => $perdida,
-                'area' => $fase,
-                'foto' => $listaEvidencia,
-                'user' => $user,
-                'observado_lugar' => $ubicacion,
-                'observado_puesto' => $puestoObservado,
-                'idobservado_tiempo' => $tiempoTrabajo,
-                'idobservado_hora' => $horario,
-                'idobservado_edad' => $edadObservada,
-                'idobservado_lesion' => $lesion,
-                'idobservado_obstaculo' => $obstaculo,
-                'observado_cambio' => $cambio,
-                'observado_retroalimentacion' => $retroalimentacion,
-                'observado_reincidente' => $reincidente,
-                'observado_comentario' => '',
-                'idproyectodetalle' => $area,
-                'idpuestoobservado' => 150,
+          [
+            'idtop' => $topid,
+            'sede' => $proyecto,
+            'areaGeneral' => 1,
+            'ubicacionGeneral' => '',
+            'lugar' => '',
+            'reportado' => $reportado,
+            'fecha' => $fechaRegistro,
+            'observacion' => $observacion,
+            'acsues' => $acsues,
+            'cosues' => $cosues,
+            'actseg' => $actseg,
+            'otros' => $otros,
+            'relacion' => $relacionado,
+            'tipepp' => $tipoEpp,
+            'conepp' => $condicionEpp,
+            'preventiva' => $breveDescripcion,
+            'correctiva' => $medidaCorrectiva,
+            'perdida' => $perdida,
+            'area' => $fase,
+            'foto' => $listaEvidencia,
+            'user' => $user,
+            'observado_lugar' => $ubicacion,
+            'observado_puesto' => $puestoObservado,
+            'idobservado_tiempo' => $tiempoTrabajo,
+            'idobservado_hora' => $horario,
+            'idobservado_edad' => $edadObservada,
+            'idobservado_lesion' => $lesion,
+            'idobservado_obstaculo' => $obstaculo,
+            'observado_cambio' => $cambio,
+            'observado_retroalimentacion' => $retroalimentacion,
+            'observado_reincidente' => $reincidente,
+            'observado_comentario' => '',
+            'idproyectodetalle' => $area,
+            'idpuestoobservado' => 150,
 
-            ]);
+          ]
+        );
 
-        $this->elaborarCorreo($topid,$responsable,$perdida,$proyecto,$breveDescripcion);
+        $this->elaborarCorreo($topid, $responsable, $perdida, $proyecto, $breveDescripcion);
         echo $respuesta->enviarRespuesta($respuestaInsert);
+      }
 
 
+      public function pruebaBulk()
+      {
+
+        echo "prueba";
+        $listEvaluador = [
+          '45547517',
+          '42072498',
+          '03366061',
+          '44554704',
+          '25691454',
+          '41143499',
+          '47226995',
+          '41553726',
+          '15287994',
+          '10550231',
+          '21134464',
+          '00514355',
+          '44124202',
+          '44767390',
+          '05314713',
+          '40221577',
+          '10313207',
+          '06813229',
+          '43234485',
+          '41637011',
+          '80354270',
+          '29640134',
+          '40000610',
+          '43209086',
+          '45231910',
+          '43720065',
+          '000555943',
+          '08157302',
+          '42115170',
+          '47227660',
+          '20112544',
+          '40395801',
+          '001558247',
+          '45400500',
+          '09848133',
+          '20036250',
+          '42276579',
+          '23099122',
+          '44670272',
+          '44359375',
+          '46418699',
+          '08948559',
+          '06708203',
+          '42081195',
+          '41102493',
+          '05413044',
+          '73203477',
+          '45326242',
+          '08951442',
+          '46423557',
+          '001186807',
+          '80834972',
+          '44532036',
+          '45931012',
+          '44628400',
+          '41545418',
+          '42742780',
+          '70307058',
+          '44093447',
+          '70220099',
+          '40567847',
+          '09666953',
+          '32731105',
+          '77534760',
+          '06839771',
+          '40984220',
+          '41424859',
+          '44745273',
+          '27430116',
+          '40207959',
+          '41667405',
+          '25827529',
+          '40524093',
+          '42575014',
+          '71831394',
+          '40479785',
+          '41180289',
+          '44581285',
+          '43428297',
+          '16765020',
+          '43114017',
+          '08907611',
+          '43670430',
+          '43907188',
+          '10183545',
+          '16567517',
+          '42912170',
+          '42327047',
+          '07071429',
+          '10630730',
+          '80084839',
+          '43421034',
+          '10604544',
+          '47250872',
+          '05379279',
+          '43623487',
+          '40170605',
+          '75376771',
+          '002123117',
+          '42132408'
+        ];
+        $listEvaluado = [
+          '001186807',
+          '80834972',
+          '44532036',
+          '45931012',
+          '44628400',
+          '41545418',
+          '42742780',
+          '70307058',
+          '44093447',
+          '70220099',
+          '40567847',
+          '09666953',
+          '32731105',
+          '77534760',
+          '06839771',
+          '40984220',
+          '41424859',
+          '44745273',
+          '27430116',
+          '40207959',
+          '41667405',
+          '25827529',
+          '40524093',
+          '42575014',
+          '71831394',
+          '40479785',
+          '41180289',
+          '44581285',
+          '43428297',
+          '16765020',
+          '43114017',
+          '08907611',
+          '43670430',
+          '43907188',
+          '10183545',
+          '16567517',
+          '42912170',
+          '42327047',
+          '07071429',
+          '10630730',
+          '80084839',
+          '43421034',
+          '10604544',
+          '47250872',
+          '05379279',
+          '43623487',
+          '40170605',
+          '75376771',
+          '002123117',
+          '42132408'
+        ];
+
+
+        $this->model->pruebaBulkBucle($listEvaluado, $listEvaluador);
+      }
     }
-
-
-}

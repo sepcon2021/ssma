@@ -1,0 +1,259 @@
+<?php
+
+require_once 'entity/evaluacionEntity.php';
+require_once 'status/repuestas.php';
+require_once 'public/PHPExcel/PHPExcel.php';
+require_once 'public/upload-photo/upload-image.php';
+
+
+class Evaluacion extends Controller
+{
+
+  const EVALUADOR = 1;
+  const EVALUADO = 2;
+
+  public function __construct()
+  {
+    parent::__construct();
+  }
+
+  public function renderAdminDetail()
+  {
+    $this->view->render("evaluacion/AdminDetail");
+  }
+
+  public function renderUsuarioDetail()
+  {
+    $this->view->render("evaluacion/UsuarioDetail");
+  }
+
+  public function createGroup()
+  {
+
+    $respuesta =  new respuestas();
+
+    $idUsuario = $_POST["idUsuario"];
+    $nombre = $_POST["nombre"];
+    $descripcion = isset($_POST["descripcion"]) ?  $_POST["descripcion"] : '';
+    $puestoObservado = isset($_POST["puestoObservado"]) ? $_POST["puestoObservado"] :
+      '';
+    $puestoEvaluado = isset($_POST["puestoEvaluado"]) ? $_POST["puestoEvaluado"] :
+      '';
+
+    $evaluacionEntity =  new EvaluacionEntity(0, $idUsuario, $nombre, $descripcion, $puestoObservado, $puestoEvaluado);
+    $result = $this->model->createGroup($evaluacionEntity);
+    echo json_encode($respuesta->success_200($result));
+  }
+
+  public function getListGroup()
+  {
+    $respuesta =  new respuestas();
+    $result = $this->model->getListGroup();
+    echo json_encode($respuesta->success_200($result));
+  }
+
+  public function updateGroup()
+  {
+    $respuesta =  new respuestas();
+
+    $idGroup = $_POST["idGroup"];
+    $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
+    $descripcion = isset($_POST["descripcion"]) ?  $_POST["descripcion"] : '';
+    $puestoObservado = isset($_POST["puestoObservado"]) ? $_POST["puestoObservado"] :
+      '';
+    $puestoEvaluado = isset($_POST["puestoEvaluado"]) ? $_POST["puestoEvaluado"] :
+      '';
+
+
+    $evaluacionEntity =  new EvaluacionEntity($idGroup, '', $nombre, $descripcion, $puestoObservado, $puestoEvaluado);
+
+    $result = $this->model->updateGroup($evaluacionEntity);
+
+    echo json_encode($respuesta->success_200($result));
+  }
+
+
+
+  public function insertBulkUsuario()
+  {
+
+    $respuesta =  new respuestas();
+
+    $idGroup = $_POST["idGroup"];
+    $uploadImage = new UploadImage;
+
+    $listaEvidencia = $uploadImage->saveFileExcel($_FILES["files"]);
+
+    $resultExcel = $this->loadExcelUsuario($listaEvidencia[0], $idGroup);
+
+    $this->model->insertBulkUsuario($resultExcel["evaluador"], $resultExcel["evaluado"], $idGroup);
+
+    $listUsuario = $this->model->getListEvaluadoAndEvaluador($idGroup);
+
+
+    echo json_encode($respuesta->success_200($listUsuario));
+  }
+
+  public function loadExcelUsuario($path)
+  {
+
+    $listEvaluador = array();
+    $listEvaluado = array();
+
+    $path = "public/file/$path";
+    $reader = PHPExcel_IOFactory::createReaderForFile($path);
+    //echo json_encode($reader);
+    $excel_Obj = $reader->load($path);
+
+    //Get the first sheet in excel
+    $worksheet = $excel_Obj->getSheet('0');
+
+    $lastRow = $worksheet->getHighestRow();
+    $colomncount = $worksheet->getHighestDataColumn();
+    $colomncount_number = PHPExcel_Cell::columnIndexFromString($colomncount);
+
+
+    for ($row = 2; $row <= $lastRow; $row++) {
+      for ($col = 0; $col < $colomncount_number; $col++) {
+        $dni = $worksheet->getCell(PHPExcel_Cell::stringFromColumnIndex($col) . $row)->getValue();
+        if ($col == 0 && $dni != null) {
+
+          array_push($listEvaluador, $dni);
+        }
+        if ($col == 1 && $dni != null) {
+          array_push($listEvaluado, $dni);
+        }
+      }
+    }
+
+    return array("evaluador" => $listEvaluador, "evaluado" => $listEvaluado);
+  }
+
+  public function listCargaUsuario()
+  {
+
+    $respuesta =  new respuestas();
+    $idGroup = $_POST["idGroup"];
+
+    $listUsuario = $this->model->getListEvaluadoAndEvaluador($idGroup);
+
+    echo json_encode($respuesta->success_200($listUsuario));
+  }
+
+  public function getListSeguimientoEvaluacion()
+  {
+
+    $respuesta =  new respuestas();
+    $idGroup = $_POST["idGroup"];
+
+    $listUsuario = $this->model->getListSeguimientoEvaluacion($idGroup);
+
+    echo json_encode($respuesta->success_200($listUsuario));
+  }
+
+  public function createSeguimiento()
+  {
+
+    $respuesta =  new respuestas();
+    $idGroup = $_POST["idGroup"];
+
+    $listEvaluador = $this->model->getListUsuario(self::EVALUADOR, $idGroup);
+    $listEvaluado = $this->model->getListUsuario(self::EVALUADO, $idGroup);
+
+    // Update estado competencia_evaluado
+    $this->model->updateListUsuario($idGroup);
+    $this->model->insertBulkSeguimiento($idGroup, $listEvaluado, $listEvaluador);
+
+    $listUsuario = $this->model->getListSeguimientoEvaluacion($idGroup);
+
+    echo json_encode($respuesta->success_200($listUsuario));
+  }
+
+
+  public function getListSeguimientoByEvaluador()
+  {
+
+    $respuesta =  new respuestas();
+    $dniEvaluador = $_POST["dni"];
+    $estado = $_POST["estado"];
+
+    $listUsuario = $this->model->getListSeguimientoByEvaluador($dniEvaluador, $estado);
+
+    echo json_encode($respuesta->success_200($listUsuario));
+  }
+
+  public function getListSeguimientoByEvaluado()
+  {
+
+    $respuesta =  new respuestas();
+    $dniEvaluado = $_POST["dni"];
+    $estado = $_POST["estado"];
+
+    $listUsuario = $this->model->getListSeguimientoByEvaluado($dniEvaluado, $estado);
+
+    echo json_encode($respuesta->success_200($listUsuario));
+  }
+
+  public function updateEvaluador()
+  {
+
+    $respuesta =  new respuestas();
+
+    $firmaEvaluador = $_POST["firmaEvaluador"];
+
+    $idCompetenciaEvaluacion = $_POST["idCompetenciaEvaluacion"];
+    $dniEvaluador = $_POST["dniEvaluador"];
+
+
+    $compromiso1 = isset($_POST["compromiso_1"]) ?  $_POST["compromiso_1"] : null;
+    $compromiso2 = isset($_POST["compromiso_2"]) ?  $_POST["compromiso_2"] : null;
+    $compromiso3 = isset($_POST["compromiso_3"]) ?  $_POST["compromiso_3"] : null;
+    $compromiso4 = isset($_POST["compromiso_4"]) ?  $_POST["compromiso_4"] : null;
+    $compromiso5 = isset($_POST["compromiso_5"]) ?  $_POST["compromiso_5"] : null;
+
+    $seguridad1 = isset($_POST["seguridad_1"]) ?  $_POST["seguridad_1"] : null;
+    $seguridad2 = isset($_POST["seguridad_2"]) ?  $_POST["seguridad_2"] : null;
+    $seguridad3 = isset($_POST["seguridad_3"]) ?  $_POST["seguridad_3"] : null;
+    $seguridad4 = isset($_POST["seguridad_4"]) ?  $_POST["seguridad_4"] : null;
+    $seguridad5 = isset($_POST["seguridad_5"]) ?  $_POST["seguridad_5"] : null;
+
+    $estres1 = isset($_POST["estres_1"]) ?  $_POST["estres_1"] : null;
+    $estres2 = isset($_POST["estres_2"]) ?  $_POST["estres_1"] : null;
+    $estres3 = isset($_POST["estres_3"]) ?  $_POST["estres_1"] : null;
+    $estres4 = isset($_POST["estres_4"]) ?  $_POST["estres_1"] : null;
+    $estres5 = isset($_POST["estres_5"]) ?  $_POST["estres_1"] : null;
+
+    $oportunidadMejora = isset($_POST["oportunidadMejora"]) ? $_POST["oportunidadMejora"] : null;
+
+    $data = compact(
+      "firmaEvaluador",
+      "idCompetenciaEvaluacion",
+      "dniEvaluador",
+      "compromiso1",
+      "compromiso2",
+      "compromiso3",
+      "compromiso4",
+      "compromiso5",
+
+      "seguridad1",
+      "seguridad2",
+      "seguridad3",
+      "seguridad4",
+      "seguridad5",
+
+      "estres1",
+      "estres2",
+      "estres3",
+      "estres4",
+      "estres5",
+
+      "oportunidadMejora"
+
+
+    );
+
+    $result = $this->model->updateEvaluador($data);
+
+    echo json_encode($respuesta->success_200($result));
+  }
+}

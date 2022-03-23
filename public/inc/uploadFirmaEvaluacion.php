@@ -41,5 +41,5 @@ if (array_key_exists('img', $_REQUEST)) {
 
 
 
-  echo  $url_bbdd;
+  echo  json_encode(array("url" => $url_bbdd));
 }
