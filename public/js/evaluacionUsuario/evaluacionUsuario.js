@@ -5,7 +5,7 @@ export default function EvaluacionUsuario() {
   return `<div id="competenciaDetalle"  class="container_documento scroll1">
 
   <div id="compteneciaDetalle_title" class="item_format">
-    <p class="subTitle">Evaluaciones por competencia</p>
+    <h3 class="title_content">Evaluaciones por competencia</h3>
   </div>
 
   <br><br>

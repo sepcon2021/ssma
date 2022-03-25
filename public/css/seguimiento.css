@@ -1,231 +1,229 @@
 * {
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-
 .wrap {
-    width: 100%;
-    font-size: 18px;
+  width: 100%;
+  font-size: 18px;
 }
 
 ul.tabs {
-    width: 100%;
-    list-style: none;
-    display: flex;
-    color: #1989FF;
-    text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+  width: 100%;
+  list-style: none;
+  display: flex;
+  color: #1989ff;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 ul.tabs li {
-    width: 18%;
+  width: 18%;
 }
 
 ul.tabs li a {
-    color: #353839;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    display: block;
-    padding: 20px 0px;
-    border-radius: 10px;
+  color: #353839;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  padding: 20px 0px;
+  border-radius: 10px;
 }
 
 .active {
-    background: #C5C7C4;
+  background: #c5c7c4;
 }
 
 ul.tabs li a .tab-text {
-    margin-left: 8px;
+  margin-left: 8px;
 }
 
 .secciones {
-    width: 100%;
-    background: #fff;
-
+  width: 100%;
+  background: #fff;
 }
 
-
-
 .secciones article {
-    padding-right: 5%;
+  padding-right: 5%;
 }
 
 .secciones article p {
-    text-align: justify;
+  text-align: justify;
 }
 
-
 .styled-table {
-    border-collapse: collapse;
-    font-size: 16px;
-    font-family: sans-serif;
-    width: 100%;
-    top: 50px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-collapse: collapse;
+  font-size: 16px;
+  font-family: sans-serif;
+  width: 100%;
+  top: 50px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .styled-table thead tr {
-    background-color: #123859;
-    color: #ffffff;
-    text-align: left;
+  color: white;
+  text-align: center;
+  background: rgba(66, 123, 255, 1);
 }
 
 .styled-table th,
 .styled-table td {
-    padding: 12px 15px;
+  padding: 6px 6px;
+  font-size: 12px;
 }
 
 .styled-table tbody tr {
-    border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid rgba(66, 123, 255, 0.1);
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+  /*background-color: rgba(66, 123, 255, 0.1);*/
 }
 
 .styled-table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+  border-bottom: 2px solid transparent;
 }
 
 .styled-table tbody tr.active-row {
-    /*/font-weight: bold;*/
-    color: #353839;
+  /*/font-weight: bold;*/
+  color: #353839;
 }
 
 .url {
-    color: #353839;
+  color: #353839;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-    height: 80px;
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 80px;
 }
 
 .reload {
-    background: white;
-    border-color: white;
-    border-radius: 10px;
-    height: 30px;
-    width: 30px;
+  background: white;
+  border-color: white;
+  border-radius: 10px;
+  height: 30px;
+  width: 30px;
 }
 
 .imagen-reload {
-    height: 15px;
-    width: 15px;
+  height: 15px;
+  width: 15px;
 }
 
 .bandeja {
-    /*   background: #CFEEFA;*/
-    color: #1989FF;
-    padding: 0px;
-    border-radius: 10px;
-    width: 70%;
-    padding: 5px;
-    right: 50px;
+  /*   background: #CFEEFA;*/
+  color: #1989ff;
+  padding: 0px;
+  border-radius: 10px;
+  width: 70%;
+  padding: 5px;
+  right: 50px;
 }
 
 .ver-pdf {
-    text-decoration: none;
-    padding: 5px;
-    background: #16d45f;
-    color: white;
-    border-radius: 10px;
+  text-decoration: none;
+  padding: 5px;
+  background: #16d45f;
+  color: white;
+  border-radius: 10px;
 }
 
-.exito{
-    
-    background-color: #b5f7bd;
-    color: #16d45f;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    size: 20px;
-
+.exito {
+  background-color: #b5f7bd;
+  color: #16d45f;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  size: 20px;
 }
 
 .customizeTable {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
-  .custometable {
-    width: 100%;
-    border-collapse: collapse;
-  }
+.custometable {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  .archivosCargados{
-      padding-top: 20px;
-      padding-bottom: 20px;
-  }
+.archivosCargados {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
-
-  /*.evidencia{
+/*.evidencia{
       width: 400px;
       height: 300px;
   }*/
 
-  .font_title_big{
-      font-size: 12px;
-  }
-
-  
-  .greenEstado{
-    background:#68BF50;
-    color: white;
-    width: 100px;
-    text-align: center;
-    border-radius: 4px;
-    padding: 2px;
+.font_title_big {
+  font-size: 12px;
 }
 
-.redEstado{
-    background: #F23041;
-    color: white;
-    width: 100px;
-    text-align: center;
-    border-radius: 4px;
-    padding: 2px;
+.greenEstado {
+  background: rgba(38, 166, 106, 0.3);
+  color: #26a66a;
+  width: 100px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px;
 }
 
-.yellowEstado{
-    background: #F2CB05;
-    color: white;
-    width: 100px;
-    text-align: center;
-    border-radius: 4px;
-    padding: 2px;
+.redEstado {
+  background: rgba(242, 5, 25, 0.3);
+  color: #bb0f15;
+  width: 100px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+.yellowEstado {
+  background: #f2cb05;
+  color: white;
+  width: 100px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+form#form_evaluador {
+  /* width: 70%; */
+  font-size: 12px;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 @media screen and (max-width: 600px) {
-    ul.tabs li {
-        width: 40%;
-    }
-    ul.tabs li a {
-        padding: 15px 0px;
-    }
-    .secciones article {
-        padding: 10px;
-    }
-    .div-table {
-        padding-top: 150px;
-        width: 100%;
-    }
-    .styled-table {
-        width: 100%;
-        display: block;
-        overflow-x: auto;
-    }
-
+  ul.tabs li {
+    width: 40%;
+  }
+  ul.tabs li a {
+    padding: 15px 0px;
+  }
+  .secciones article {
+    padding: 10px;
+  }
+  .div-table {
+    padding-top: 150px;
+    width: 100%;
+  }
+  .styled-table {
+    width: 100%;
+    display: block;
+    overflow-x: auto;
+  }
 }

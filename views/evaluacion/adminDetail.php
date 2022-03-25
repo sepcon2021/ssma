@@ -1,8 +1,8 @@
 <div id="competenciaDetalle" class="container_documento scroll1">
 
   <div id="compteneciaDetalle_title" class="item_format">
-    <a href="#/dashboard/kardex"> <i class="fa-solid fa-angle-left back-kardex"></i> </a>
-    <p class="subTitle">Evaluación de competencias</p>
+    <a href="#/dashboard/kardex"> <i class="fa-solid fa-angle-left back-kardex fa-xl"></i> </a>
+    <h3 class="title_content">Evaluación de competencias</h3>
   </div>
 
   <br><br>

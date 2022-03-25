@@ -6,8 +6,8 @@ export default function EvaluacionCargaUsuario() {
 <div class="competenciadetail_cargausuario">
 
   <div id="competenciadetail_cargausuario_header" class="item_format_rigth">
-    <button type="submit" id="button_cargarusuario" class="competencia_detail_button">Cargar usuarios</button>
-    <button type="submit" id="button_downloadformat" class="competencia_detail_button">Descargar formato</button>
+    <button type="submit" id="button_cargarusuario" class="competencia_detail_button"><i class="fa-solid fa-plus"></i>  Cargar usuarios</button>
+    <button type="submit" id="button_downloadformat" class="competencia_detail_button"><i class="fa-solid fa-arrow-down"></i> Descargar formato</button>
   </div>
 
 
@@ -62,7 +62,7 @@ export default function EvaluacionCargaUsuario() {
     <div class="modal-content-inventario">
       <div class="div-align-start item_format">
         <i class="fa-solid fa-angle-left  close"></i>
-        <p class="subTitle"><h3>Archivo</h3></p>
+        <h3 class="subtitle_content">Archivo</h3>
       </div>
 
       <div id="modalContentRegister">
@@ -81,7 +81,7 @@ export default function EvaluacionCargaUsuario() {
           <br><br>
 
           <div class="item_format_rigth ">
-          <button type="submit" id="modalContentButtonForm" class="button_send_form_general">Subir</button>
+          <button type="submit" id="modalContentButtonForm" class="button_send_form_general">Subir<i class="fa-solid fa-arrow-up"></i></button>
           </div>
         </form>
       </div>
@@ -211,10 +211,10 @@ function drawHtmlUsuario(listUsuario) {
         <table class="styled-table">
           <thead>
             <tr class="active-row">
-              <th>Id</th>
+              <th>DNI</th>
               <th>Nombre</th>
               <th>Cargo</th>
-              <th>DNI</th>
+              <th>Proyecto / Sede</th>
             </tr>
             <thead>
             <tbody id="table_evaluador_data">
@@ -233,10 +233,10 @@ function drawHtmlUsuario(listUsuario) {
         <table class="styled-table">
           <thead>
             <tr class="active-row">
-              <th>Id</th>
+              <th>DNI</th>
               <th>Nombre</th>
               <th>Cargo</th>
-              <th>DNI</th>
+              <th>Proyecto / Sede</th>
             </tr>
             <thead>
             <tbody id="table_evaluado_data">${htmlEvaluado}
@@ -246,12 +246,6 @@ function drawHtmlUsuario(listUsuario) {
 
     </div>
   `;
-
-  //table_evaluado_data
-
-  //document.getElementById("table_evaluado_data").innerHTML = htmlEvaluado;
-
-  //document.getElementById("table_evaluador_data").innerHTML = htmlEvaluador;
 }
 
 export function loadInitUsuario() {
@@ -284,7 +278,8 @@ function emptyListHtml() {
   <div class="competencia_content_load competencia_content_empty">
     <div>
     <div><i class="fa-solid fa-box-open fa-2x"></i></div>
-  <div>Aun no contamos con usuarios</div>
+    <br>
+  <div>No contamos con usuarios</div>
   </div>
   </div>
 

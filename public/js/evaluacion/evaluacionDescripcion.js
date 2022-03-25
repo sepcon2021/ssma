@@ -21,12 +21,14 @@ export default function EvaluacionDescripcion() {
         </div>
         <div class="item_format"><label for="Nombre">Puesto evaluador</label></div>
         <div class="item_format">
-          <input type="text" name="puestoEvaluador" id="puestoEvaluador" class="item_format_select">
+          <input type="text" name="puestoEvaluado" id="puestoEvaluado" class="item_format_select">
         </div>
 
         <div class="item_format"><label for="Nombre">Puesto evaluado</label></div>
-        <div class="item_format">
-          <input type="text" name="puestoEvaluado" id="puestoEvaluado" class="item_format_select">
+
+
+                <div class="item_format">
+          <input type="text" name="puestoEvaluador" id="puestoEvaluador" class="item_format_select">
         </div>
 
         <div id="content_button" class="item_format_rigth">
@@ -119,7 +121,7 @@ function hiddenHtmlForm(stateData) {
 function addButtonHtml() {
   document.getElementById(
     "content_button"
-  ).innerHTML = `<button  type="submit" id="competenciaDetalle_content_descripcion_form_button" class="button_send_form_general">Actualizar</button>`;
+  ).innerHTML = `<button  type="submit" id="competenciaDetalle_content_descripcion_form_button" class="button_send_form_general">Actualizar  <i class="fa-solid fa-arrow-right"></i></button>`;
 }
 
 function MessageHttp(posts, formData) {

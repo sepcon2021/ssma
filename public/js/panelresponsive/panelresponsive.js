@@ -18,17 +18,20 @@ $(function () {
 
     if (permiso.length > 0) {
       contentHTML = `
-            <div class="active"> Documentos</div>
-            <div>Seguimiento</div>
-            <div>Admin seguimiento</div>
-            <div>Reportes</div>
-            <div>Estadística</div>
-            <div>Formulario</div>
-            <div>Admin formulario</div>
-            <div>Lecciones aprendidas</div>
-            <div>Admin de lecciones</div>
-            <div>Evaluaciones por competencia </div>
-            <div>Admin evaluaciones </div>
+            <div class="active">  <i class="fa-solid fa-file-lines fa-2x"></i></div>
+            <div> <i class="fa-solid fa-hammer  fa-2x"></i> </div>
+            <div> <i class="fa-solid fa-hammer  fa-2x"></i> </div>
+
+            <div> <i class="fa-solid fa-table fa-2x"></i></div>
+            <div> <i class="fa-solid fa-file-chart-column fa-2x"></i></div>
+             
+            <div> <i class="fa-solid fa-book fa-2x"></i> </div>
+            <div> <i class="fa-solid fa-book fa-2x"></i> </div>
+
+            <div><i class="fa-solid fa-chalkboard-user fa-2x"></i></div>
+            <div><i class="fa-solid fa-chalkboard-user fa-2x"></i></div>
+            <div> <i class="fa-solid fa-graduation-cap fa-2x"></i></div>
+            <div> <i class="fa-solid fa-graduation-cap fa-2x"></i></div>
             `;
     } else {
       contentHTML = `
@@ -186,7 +189,7 @@ $(function () {
       removeClass();
     }
     if (indexPage == COMPONENT.ESTADISTICA) {
-      $(".mainpage").load("views/dashboard/estadistica.html");
+      $(".mainpage").html("");
       removeClass();
     }
     if (indexPage == COMPONENT.FORMULARIO) {

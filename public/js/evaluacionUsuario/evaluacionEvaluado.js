@@ -5,6 +5,7 @@ import UsuarioEvaluadoDetail, {
 } from "./usuarioEvaluadoDetail.js";
 
 const ETIQUETA_MAIN_CONTAINER = "competenciadetail_seguimiento_content";
+let listEvaluado = [];
 
 const data = JSON.parse(sessionStorage.getItem("dataTrabajador")),
   dni = data.result[0].dni;
@@ -26,15 +27,16 @@ export function initUsuarioEvaluado() {
 
   let formData = new FormData();
   formData.append("dni", dni);
-  formData.append("estado", 0);
+  formData.append("estado", 1);
 
   ajaxPost({
-    url: RUTA + "evaluacion/getListSeguimientoByEvaluador",
+    url: RUTA + "evaluacion/getListSeguimientoByEvaluado",
     body: formData,
     cbSuccess: (data) => {
       loadHtml(ETIQUETA_MAIN_CONTAINER, false);
       const listUsuario = data.result[0].success_message;
       if (listUsuario.length > 0) {
+        listEvaluado = listUsuario;
         drawHtmlUsuario(listUsuario);
         listenGroup();
       } else {
@@ -61,7 +63,6 @@ function drawHtmlUsuario(listUsuario) {
         <td>${usuario.id}</td>
         <td>${usuario.usuarioEvaluado}</td>
         <td>${usuario.descripcionCargo}</td>
-        <td>${usuario.estado == 0 ? "Pendiente" : "Finalizado"}</td>
       </tr>
       `;
 
@@ -75,9 +76,8 @@ function drawHtmlUsuario(listUsuario) {
           <thead>
             <tr class="active-row">
               <th>Id</th>
-              <th>Evaluado</th>
+              <th>Evaluador</th>
               <th>Cargo</th>
-              <th>Estado</th>
             </tr>
             <thead>
             <tbody id="table_seguimiento">
@@ -109,16 +109,19 @@ function listenGroup() {
       loadHtml(ETIQUETA_MAIN_CONTAINER, true);
 
       let dataTr = event.target.parentNode;
+      let evaludoObjetivo = [];
 
       const idGrupo = dataTr.querySelectorAll("td")[0].innerText,
         nombre = dataTr.querySelectorAll("td")[1].innerText,
         cargo = dataTr.querySelectorAll("td")[2].innerText;
 
-      document.querySelector(".mainpage").innerHTML = UsuarioEvaluadoDetail(
-        idGrupo,
-        nombre,
-        cargo
-      );
+      listEvaluado.forEach((data) => {
+        if (data.id == idGrupo) {
+          evaludoObjetivo = data;
+        }
+      });
+      document.querySelector(".mainpage").innerHTML =
+        UsuarioEvaluadoDetail(evaludoObjetivo);
       firma();
       initUsuarioEvaluadoDetail();
       sendFormEvaluado();

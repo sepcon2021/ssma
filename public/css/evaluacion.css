@@ -79,13 +79,11 @@
 }
 
 div#competencia_content {
-  margin-right: 50px;
-  margin-left: 50px;
+  margin-right: 25px;
   margin-top: 50px;
 }
 div#competencia_header {
-  margin-right: 50px;
-  margin-left: 50px;
+  margin-right: 25px;
 }
 
 .competencia_content_empty {
@@ -106,7 +104,7 @@ div#competencia_header {
 
 .competencia_detail_button {
   margin-right: 20px;
-  background: #f24822;
+  background: #26a66a;
   border-color: transparent;
   border-radius: 5px;
   padding: 5px;
@@ -119,7 +117,7 @@ div#modalContentRegister {
 }
 
 .button_send_form_general {
-  background: #29d884;
+  background: #26a66a;
   border-radius: 5px;
   width: 20%;
   height: 40px;
@@ -127,6 +125,9 @@ div#modalContentRegister {
   color: white;
   cursor: grab;
   font-size: 18px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 div#competenciaDetalle_content {
@@ -134,7 +135,7 @@ div#competenciaDetalle_content {
 }
 
 .button_send_form_upload {
-  background: #29d884;
+  background: #123859;
   border-radius: 5px;
   height: 30px;
   border-color: transparent;
@@ -228,5 +229,51 @@ div#competenciaDetalle_content {
 }
 
 .evaluacion_puntaje {
-  background: rgba(242, 72, 34, 0.1);
+  background: #8bb4d9;
+}
+
+.align_items_space {
+  display: flex;
+  padding-top: 5px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.border_firma {
+  border-color: #222;
+}
+
+.div_aling_start {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table_form_evaluacion,
+.table_form_evaluacion td,
+.table_form_evaluacion th {
+  border: 0.5px solid;
+}
+
+.table_form_evaluacion {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th.aspecto_evaluar {
+  background: #1f4c73;
+  color: white;
+}
+
+.desempeño_promedio {
+  background: #f2efc4;
+  color: black;
+}
+
+.botton_download {
+  background: #2076e8;
+  color: white;
+  border-color: transparent;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: grab;
 }

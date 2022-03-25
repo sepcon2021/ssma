@@ -6,19 +6,19 @@ class EvaluacionEntity
   public string $idUsuario;
   public string $nombre;
   public string $descripcion;
-  public string $puestoObservado;
+  public string $puestoEvaluador;
   public string $puestoEvaluado;
   public int $disponible;
 
 
-  function __construct($idGroup, $idUsuario, $nombre, $descripcion, $puestoObservado, $puestoEvaluado)
+  function __construct($idGroup, $idUsuario, $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado)
   {
     $this->idGroup = $idGroup;
     $this->idUsuario = $idUsuario;
     $this->nombre = $nombre;
     $this->descripcion = $nombre;
     $this->puestoEvaluado = $puestoEvaluado;
-    $this->puestoObservado = $puestoObservado;
+    $this->puestoEvaluador = $puestoEvaluador;
     $this->descripcion = $descripcion;
   }
 }

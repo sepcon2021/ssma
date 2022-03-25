@@ -6,7 +6,7 @@ export default function EvaluacionAdmin() {
  <div class="competencia container_documento scroll1">
 
   <div id="competencia_header" >
-    <div id="competencia_header_title" class="item_format"> <h3>Administrador de evaluación por competencias</h3></div>
+    <div id="competencia_header_title" class="item_format"> <h3 class="title_content">Administrador de evaluación por competencias</h3></div>
     <div id="competencia_header_add" class="item_format_rigth"> <button id="competencia_header_add_button" class="button_send_form_upload">Agregar</button></div>
   </div>
 
@@ -38,7 +38,7 @@ export function initEvaluacionAdmin() {
                   <td>${element.id}</td>
           <td>${element.nombre}</td>
           <td>${element.descripcion}</td>
-          <td>${element.puestoObservado}</td>
+          <td>${element.puestoEvaluador}</td>
           <td>${element.puestoEvaluado}</td>
           <td>${element.registro}</td>
         </tr>

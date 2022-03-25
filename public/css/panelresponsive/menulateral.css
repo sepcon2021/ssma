@@ -7,19 +7,23 @@ body {
   height: 100%;
 }
 .sidebar .sidebar__menu div {
-  position: relative;
-  height: 35px;
-  width: 230px;
-  font-weight: 600;
+  /* position: relative; */
+  height: 40px;
+  width: 60px;
+  /* font-weight: 600; */
   font-size: 16px;
-  padding: 0px 20px;
+  padding: 5px 18px;
   display: flex;
   align-items: center;
   cursor: pointer;
   color: white;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  /* border-top-right-radius: 5px; */
+  /* border-bottom-right-radius: 5px; */
+  border-radius: 5px;
   margin-top: 20px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+  /* padding-top: 5px; */
 }
 
 .sidebar .sidebar__menu div:before {
@@ -45,7 +49,7 @@ body {
 
 .sidebar .sidebar__menu div.active {
   color: white;
-  background: #f24822;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .sidebar .sidebar__menu div.active:before {
@@ -93,4 +97,15 @@ body {
   height: auto;
   margin-top: 40px;
   margin-left: 60px;
+}
+
+.sidebar__img p {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  color: white;
+  font-weight: 400;
+  font-size: 18px;
 }

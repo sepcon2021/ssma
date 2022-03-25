@@ -48,10 +48,21 @@ function drawHtmlUsuario(listUsuario) {
   listUsuario.forEach((usuario) => {
     html += `
       <tr>
-        <td>${index}</td>
+        <td>${usuario.id}</td>
         <td>${usuario.usuarioEvaluador}</td>
         <td>${usuario.usuarioEvaluado}</td>
-        <td>${usuario.estado == 0 ? "Pendiente" : "Finalizado"}</td>
+        <td>${
+          usuario.firmaEvaluador == ""
+            ? "<div class='redEstado'>Pendiente</div>"
+            : "<div class='greenEstado'>Finalizado</div>"
+        }</td>
+        <td>${
+          usuario.firmaEvaluado == ""
+            ? "<div class='redEstado'>Pendiente</div>"
+            : "<div class='greenEstado'>Finalizado</div>"
+        } </td>
+
+        <td> <button class="botton_download" ><i class="fa-solid fa-download"></i></button></td>
       </tr>
       `;
 
@@ -59,6 +70,18 @@ function drawHtmlUsuario(listUsuario) {
   });
 
   document.getElementById("competenciadetail_seguimiento_content").innerHTML = `
+
+  <div class="div_aling_start item_format">
+    <div class="item_format w40p">
+        <input  class="w80p" type="search" name="keyWordValue" id="keyWordValue" class="w20p">
+    <button id="buttonSearchProduct"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <button id="competencia_detail_download" class="competencia_detail_button"><i class="fa-solid fa-arrow-down"></i> Reporte </button>
+  </div>
+
+  <br><br>
+
     <div id="table_evaluador">
       <div id="comptencia_content_table">
         <table class="styled-table">
@@ -67,7 +90,9 @@ function drawHtmlUsuario(listUsuario) {
               <th>Id</th>
               <th>Evaluador</th>
               <th>Evaluado</th>
-              <th>Estado</th>
+              <th>Estado evaluador</th>
+              <th>Estado evaluado</th>
+              <th>PDF</th>
             </tr>
             <thead>
             <tbody id="table_seguimiento">
@@ -76,7 +101,12 @@ function drawHtmlUsuario(listUsuario) {
         </table>
       </div>
     </div>
+
+    <div id="download_report"></div>
   `;
+
+  downloadReport();
+  pruebaBotton();
 }
 
 function emptyListHtml(etiqueta) {
@@ -120,4 +150,61 @@ function createSeguimiento() {
       },
     });
   };
+}
+
+function downloadReport() {
+  document.getElementById("competencia_detail_download").onclick = function (
+    event
+  ) {
+    event.preventDefault();
+
+    document.getElementById("table_evaluador").hidden = true;
+    loadHtml("download_report", true);
+
+    let formData = new FormData();
+    formData.append("idGroup", localStorage.getItem("idGroup"));
+
+    ajaxPost({
+      url: RUTA + "evaluacion/downloadReporte",
+      body: formData,
+      cbSuccess: (data) => {
+        const url = data.result[0].success_message;
+        window.location.href = url;
+        document.getElementById("table_evaluador").hidden = false;
+        loadHtml("download_report", false);
+      },
+    });
+  };
+}
+
+function pruebaBotton() {
+  var myTable = document.getElementById("table_seguimiento");
+  myTable.addEventListener(
+    "click",
+    function (e) {
+      var button = e.target;
+      var cell = button.parentNode;
+      var row = cell.parentNode;
+      var rowFirstCellText = row.querySelector("td").innerHTML;
+
+      let formData = new FormData();
+      formData.append("id", rowFirstCellText);
+
+      document.getElementById("table_evaluador").hidden = true;
+      loadHtml("download_report", true);
+
+      ajaxPost({
+        url: RUTA + "evaluacion/downloadPdfReport",
+        body: formData,
+        cbSuccess: (data) => {
+          const url = data.result[0].success_message;
+          //window.location.href = url;
+          window.open(url, "_blank");
+          document.getElementById("table_evaluador").hidden = false;
+          loadHtml("download_report", false);
+        },
+      });
+    },
+    false
+  );
 }

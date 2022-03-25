@@ -55,7 +55,7 @@
         </div>
 
         <div id="header_usuario_datos">
-          <div>
+          <!-- <div>
             <p id="header_usuario_apellido">Nombre apellidos</p>
           </div>
           <div>
@@ -64,7 +64,7 @@
 
           <div>
             <button class="cerrar_sesion">Cerrar sesión</button>
-          </div>
+          </div>-->
         </div>
 
       </div>
@@ -75,7 +75,8 @@
       <div class="sidebar__title">
 
         <div class="sidebar__img">
-          <img id="sidebar_logo_empresa" src="public/img/logo.png" alt="logo" />
+          <!-- <img id="sidebar_logo_empresa" src="public/img/logo2.png" alt="logo" />-->
+          <p>SSMA</p>
         </div>
 
         <div class="sidebar_box_close">

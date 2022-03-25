@@ -1,6 +1,10 @@
 import { ajaxPost } from "../helpers/ajax.js";
 import UsuarioEvaluador, { initUsuarioEvaluador } from "./usuarioEvaluador.js";
 
+import EvaluacionUsuario, {
+  initEvaluacionUsuario,
+} from "./evaluacionUsuario.js";
+
 export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
   const data = JSON.parse(sessionStorage.getItem("dataTrabajador")),
     dni = data.result[0].dni;
@@ -11,14 +15,15 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
   </div>
 
   <div id="usuarioDetail_content">
-    <div id="usuarioDetail_content_header">
+    <div id="usuarioDetail_content_header" class="item_format">
+
+    <a href="#/dashboard/kardex"> <i class="fa-solid fa-angle-left back-kardex fa-xl"></i> </a>
+    <h3 class="title_content">Evaluación</h3>
 
     </div>
 
-    <div id="usuarioDetail_content_body_usuario">
-      <div class="item_format">Nombre y apellidos : ${nombre}</div>
-      <div class="item_format">Cargo : ${cargo}</div>
-    </div>
+    <br><br>
+
 
     <form id="form_evaluador">
       <div id="usuarioDetail_content_body_form">
@@ -48,6 +53,8 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
           <div class="wrap_document_format_head">
 
             <div class="wrap_document_format_head_icon">
+            <div class="item_format">Nombre y apellidos : ${nombre}</div>
+      <div class="item_format">Cargo : ${cargo}</div>
             </div>
 
             <div class="wrap_document_format_head_title">
@@ -90,19 +97,19 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
 
 
 
-              <div class="box_format">
+              <div>
                 <!--TITLE ELEMENT-->
 
                 <!--CONTENT ELEMENT-->
-                <div class="item_format">
-                  <table class="w100p">
+                <div>
+                  <table class="table_form_evaluacion w100p">
 
                     <thead>
 
                       <tr>
-                        <th colspan="2">Aspecto a evaluar</th>
-                        <th>Peso</th>
-                        <th>Calificación</th>
+                        <th colspan="2" class="aspecto_evaluar">Aspecto a evaluar</th>
+                        <th class="aspecto_evaluar">Peso</th>
+                        <th class="aspecto_evaluar">Calificación</th>
                       </tr>
                     </thead>
 
@@ -111,9 +118,9 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                     <tbody>
                       <tr>
                         <td rowspan="6" class="w20p">
-                          <h2>Nivel de compromiso</h2>
+                          <h3 class="w80p">NIVEL DE COMPROMISO</h3>
                         </td>
-                        <td class="w50p">Finaliza oportunamente las tareas asignadas, sin necesidad de reprocesos.</td>
+                        <td class="item_align_form">Finaliza oportunamente las tareas asignadas, sin necesidad de reprocesos.</td>
                         <td class="w10p">20%</td>
                         <td class="w20p"> <select id="compromiso_1" name="compromiso_1">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -125,7 +132,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                           </select></td>
                       </tr>
                       <tr>
-                        <td>Se autodirige, es decir, no es necesario recordarle continuamente lo que se debe hacer.</td>
+                        <td class="item_align_form">Se autodirige, es decir, no es necesario recordarle continuamente lo que se debe hacer.</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="compromiso_2" name="compromiso_2">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -137,7 +144,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Realiza recomendaciones apropiadas o acertadas.</td>
+                        <td class="item_align_form">Realiza recomendaciones apropiadas o acertadas.</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="compromiso_3" name="compromiso_3">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -149,7 +156,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Pone su conocimiento y experiencia de format total al servicio de la empresa.</td>
+                        <td class="item_align_form">Pone su conocimiento y experiencia de format total al servicio de la empresa.</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="compromiso_4" name="compromiso_4">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -160,7 +167,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                           </select></td>
                       </tr>
                       <tr>
-                        <td>Se enfoca en solucionar los problemas en lugar de buscar culpables..</td>
+                        <td class="item_align_form">Se enfoca en solucionar los problemas en lugar de buscar culpables.</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="compromiso_5" name="compromiso_5">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -172,8 +179,8 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Desempeño promedio</td>
-                        <td>100%</td>
+                        <td class="item_align_form desempeño_promedio">Desempeño promedio</td>
+                        <td class="desempeño_promedio" >100%</td>
                         <td><input type="number" readonly="readonly" id="compromiso_total" name="compromiso_total"
                             class="evaluacion_puntaje w30p"></td>
                       </tr>
@@ -182,34 +189,32 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                   </table>
                 </div>
                 <!-- ERRROR ELEMENT -->
-                <div class="item_format">
-                  <p class="error_message" id="tipo_inspeccion_error"></p>
-                </div>
+
               </div>
 
 
-              <div class="box_format">
+              <div>
                 <!--TITLE ELEMENT-->
 
                 <!--CONTENT ELEMENT-->
-                <div class="item_format">
-                  <table class="w100p">
+                <div >
+                  <table class="table_form_evaluacion w100p">
 
                     <thead>
 
                       <tr>
-                        <th colspan="2">Aspecto a evaluar</th>
-                        <th>Peso</th>
-                        <th>Calificación</th>
+                        <th colspan="2" class="aspecto_evaluar">Aspecto a evaluar</th>
+                        <th class="aspecto_evaluar">Peso</th>
+                        <th class="aspecto_evaluar">Calificación</th>
                       </tr>
                     </thead>
 
                     <tbody>
                       <tr>
                         <td rowspan="6" class="w20p">
-                          <h2>DESEMPEÑO DE SEGURIDAD</h2>
+                          <h3 class="w80p" >DESEMPEÑO DE SEGURIDAD</h3>
                         </td>
-                        <td class="w50p">Cumple los procedimientos y usa los formatos que corresponden a la empresa</td>
+                        <td class="item_align_form">Cumple los procedimientos y usa los formatos que corresponden a la empresa</td>
                         <td class="w10p">20%</td>
                         <td class="w20p">
                           <select id="seguridad_1" name="seguridad_1">
@@ -223,7 +228,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                         </td>
                       </tr>
                       <tr>
-                        <td>Demuestra su liderazgo visible en seguridad.</td>
+                        <td class="item_align_form">Demuestra su liderazgo visible en seguridad.</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="seguridad_2" name="seguridad_2">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -235,8 +240,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Realiza adecuadamente la clasificación de residuos y vela porque los demás también lo hagan
-                        </td>
+                        <td class="item_align_form">Realiza adecuadamente la clasificación de residuos y vela porque los demás también lo hagan</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="seguridad_3" name="seguridad_3">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -248,7 +252,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Implementa o fomenta prácticas de trabajo seguro en su area de trabajo</td>
+                        <td class="item_align_form">Implementa o fomenta prácticas de trabajo seguro en su area de trabajo</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="seguridad_4" name="seguridad_4">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -259,10 +263,8 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                           </select></td>
                       </tr>
                       <tr>
-                        <td>Realiza observaciones de comportamientos riesgosos e informa oportunamente a la empresa
-                          acerca
-                          de
-                          los peligros y riesgos latentes en su lugar de trabajo</td>
+                        <td class="item_align_form">Realiza observaciones de comportamientos riesgosos e informa oportunamente a la empresa
+                          acerca de los peligros y riesgos latentes en su lugar de trabajo</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="seguridad_5" name="seguridad_5">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -274,8 +276,8 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Desempeño promedio</td>
-                        <td>100%</td>
+                        <td class="item_align_form desempeño_promedio">Desempeño promedio</td>
+                        <td class="desempeño_promedio" >100%</td>
                         <td><input type="number" readonly="readonly" id="seguridad_total" name="seguridad_total"
                             class="evaluacion_puntaje w30p"></td>
 
@@ -285,33 +287,31 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                   </table>
                 </div>
                 <!-- ERRROR ELEMENT -->
-                <div class="item_format">
-                  <p class="error_message" id="tipo_inspeccion_error"></p>
-                </div>
+               
               </div>
 
-              <div class="box_format">
+              <div>
                 <!--TITLE ELEMENT-->
 
                 <!--CONTENT ELEMENT-->
-                <div class="item_format">
-                  <table class="w100p">
+                <div >
+                  <table class="table_form_evaluacion w100p">
 
                     <thead>
 
                       <tr>
-                        <th colspan="2">Aspecto a evaluar</th>
-                        <th>Peso</th>
-                        <th>Calificación</th>
+                        <th colspan="2" class="aspecto_evaluar">Aspecto a evaluar</th>
+                        <th class="aspecto_evaluar">Peso</th>
+                        <th class="aspecto_evaluar">Calificación</th>
                       </tr>
                     </thead>
 
                     <tbody>
                       <tr>
                         <td rowspan="6" class="w20p">
-                          <h2>TOLERANCIA AL ESTRÉS</h2>
+                          <h3 class="w80p">TOLERANCIA AL ESTRÉS</h3>
                         </td>
-                        <td class="w50p">Se comunica de forma adecuada con todos sus compañeros.</td>
+                        <td class="item_align_form">Se comunica de forma adecuada con todos sus compañeros.</td>
                         <td class="w10p">20%</td>
                         <td class="w20p">
                           <select id="estres_1" name="estres_1">
@@ -324,7 +324,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                         </td>
                       </tr>
                       <tr>
-                        <td>Fomenta y practica el respeto hacia todos los trabajadores de la empresa.</td>
+                        <td class="item_align_form">Fomenta y practica el respeto hacia todos los trabajadores de la empresa.</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="estres_2" name="estres_2">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -336,7 +336,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Capacidad para interceder en los conflictos que existen dentro de su equipo de trabajo</td>
+                        <td class="item_align_form">Capacidad para interceder en los conflictos que existen dentro de su equipo de trabajo</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="estres_3" name="estres_3">
                             <option value="" disabled="" selected="" hidden=""> Puntaje </option>
@@ -348,7 +348,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Sabe trabajar en equipo, integrándose y participando positivamente para alcanzar los
+                        <td class="item_align_form">Sabe trabajar en equipo, integrándose y participando positivamente para alcanzar los
                           objetivos
                           y
                           metas comunes</td>
@@ -362,7 +362,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                           </select></td>
                       </tr>
                       <tr>
-                        <td>Capacidad de desempeñarse eficientemente en situaciones estresantes y poder sobrellevar las
+                        <td class="item_align_form">Capacidad de desempeñarse eficientemente en situaciones estresantes y poder sobrellevar las
                           complicaciones</td>
                         <td>20%</td>
                         <td class="w20p"> <select id="estres_5" name="estres_5">
@@ -375,8 +375,8 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                       </tr>
 
                       <tr>
-                        <td>Desempeño promedio</td>
-                        <td>100%</td>
+                        <td class="item_align_form desempeño_promedio">Desempeño promedio</td>
+                        <td class="desempeño_promedio" >100%</td>
                         <td><input type="number" readonly="readonly" id="estres_total" name="estres_total"
                             class=" evaluacion_puntaje w30p"></td>
                       </tr>
@@ -385,9 +385,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                   </table>
                 </div>
                 <!-- ERRROR ELEMENT -->
-                <div class="item_format">
-                  <p class="error_message" id="tipo_inspeccion_error"></p>
-                </div>
+
               </div>
 
 
@@ -397,7 +395,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                 <!--TITLE ELEMENT-->
 
                 <div class="item_format">
-                  <label for="">Oportunidades de mejora</label>
+                  <label for=""><h4>Oportunidades de mejora</h4></label>
                 </div>
 
                 <!--CONTENT ELEMENT-->
@@ -407,12 +405,8 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                     rows="10"></textarea>
                 </div>
 
-                <!-- ERRROR ELEMENT -->
-                <div class="item_format">
-                  <p class="error_message" id="descripcion_error"></p>
-                </div>
 
-              </div>
+
 
 
               <div class="box_format">
@@ -436,10 +430,37 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
                 </div>
               </div>
 
+              
+
+              
+              </div>
+
+                           <div class="box_format">
+
+                <!--TITLE ELEMENT-->
+
+                <div class="item_format">
+                  <label for=""><h4>Importante : </h4></label>
+                </div>
+
+                <!--CONTENT ELEMENT-->
+
+                <div class="item_format">
+                  <h4>AL FIRMAR ESTA FICHA, USTED ES RESPONSABLE DE LA EVALUACIONES Y CON ELLO A SU CONTENIDO, EL CUAL SERÁ USADO POR LA DIRECCIÓN DEL PROYECTO PARA LOS FINES QUE CONSIDERE CONVENIENTE</h4>
+                </div>
+
+
+
+              </div>
+ 
+
 
               <div class="box_format item_format_rigth">
-                <button type="submit" id="button_send_form_evaluador">Enviar</button>
+                <button type="submit" id="button_send_form_evaluador" class="button_send_form_general">Enviar</button>
               </div>
+
+
+
 
 
 
@@ -550,7 +571,9 @@ function loadHtml(etiqueta, stateData) {
 }
 
 function usuarioEvaluadorHtml() {
-  document.querySelector(".mainpage").innerHTML = `
+  document.querySelector(".mainpage").innerHTML = EvaluacionUsuario();
+  initEvaluacionUsuario();
+  /*document.querySelector(".mainpage").innerHTML = `
 
 <div id="competenciaDetalle"  class="container_documento scroll1">
 
@@ -584,5 +607,5 @@ function usuarioEvaluadorHtml() {
   // We need init a default html content
   document.getElementById("competenciaDetalle_content").innerHTML =
     UsuarioEvaluador();
-  initUsuarioEvaluador();
+  initUsuarioEvaluador();*/
 }

@@ -1,45 +1,4 @@
-import { ajaxPost } from "../helpers/ajax.js";
-import { initUsuarioEvaluado } from "./evaluacionEvaluado.js";
-import EvaluacionUsuario, {
-  initEvaluacionUsuario,
-} from "./evaluacionUsuario.js";
-
-export default function UsuarioEvaluadoDetail(dataform) {
-  console.log(dataform);
-  const { nombre } = dataform;
-  console.log(dataform);
-  const data = JSON.parse(sessionStorage.getItem("dataTrabajador")),
-    dni = data.result[0].dni;
-
-  const listCompromiso = [
-    dataform["compromiso1"],
-    dataform["compromiso2"],
-    dataform["compromiso3"],
-    dataform["compromiso4"],
-    dataform["compromiso5"],
-  ];
-
-  const listEstres = [
-    dataform["estres1"],
-    dataform["estres2"],
-    dataform["estres3"],
-    dataform["estres4"],
-    dataform["estres5"],
-  ];
-
-  const listSeguridad = [
-    dataform["seguridad1"],
-    dataform["seguridad2"],
-    dataform["seguridad3"],
-    dataform["seguridad4"],
-    dataform["seguridad5"],
-  ];
-
-  const averageCompromiso = calculateAverage(listCompromiso).toFixed(2),
-    averageSeguridad = calculateAverage(listSeguridad).toFixed(2),
-    averageEstres = calculateAverage(listEstres).toFixed(2);
-
-  return `<div id="usuarioDetail" class="container_documento scroll1">
+<div id="usuarioDetail" class="container_documento scroll1">
 
   <div id="usuarioDetail_header">
   </div>
@@ -355,9 +314,7 @@ export default function UsuarioEvaluadoDetail(dataform) {
 
                 <div class="item_format">
                   <textarea class="item_format_input item_format_textarea" name="oportunidadMejora"
-                    id="oportunidadMejora" cols="30" rows="10" readonly>${
-                      dataform.oportunidadMejora
-                    }</textarea>
+                    id="oportunidadMejora" cols="30" rows="10">${dataform.oportunidadMejora}</textarea>
                 </div>
 
 
@@ -372,13 +329,9 @@ export default function UsuarioEvaluadoDetail(dataform) {
 
                 <div>
                   <div class="border_firma"><img src="firmas/${
-                    dataform.firmaEvaluador
-                  }"></div>
+                  dataform.firmaEvaluador
+                }"></div>
                   <div> Firma del evaluador</div>
-                  <div>${dataform["usuarioEvaluado"]}</div>
-                                    <div>${dataform["dni"]}</div>
-                  <div>${dataform["descripcionCargo"]}</div>
-
                 </div>
 
                 <div class="box_format">
@@ -448,72 +401,4 @@ export default function UsuarioEvaluadoDetail(dataform) {
 </form>
 
 </div>
-</div>`;
-}
-
-export function initUsuarioEvaluadoDetail() {}
-
-function calculateAverage(list) {
-  const suma = funcSuma(list);
-  console.log(suma);
-  const result = (suma * 20) / 15;
-  return result;
-}
-
-function funcSuma(list) {
-  let sum = 0;
-  list.forEach((data) => {
-    sum += parseInt(data);
-  });
-  return sum;
-}
-
-export function sendFormEvaluado() {
-  document
-    .getElementById("form_evaluador")
-    .addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      var firmaTrabajador = document.getElementById("firma");
-
-      const dataformImg = new FormData();
-      dataformImg.append("img", firmaTrabajador.toDataURL());
-
-      const dataform = new FormData(event.target);
-
-      loadHtml("usuarioDetail", true);
-
-      ajaxPost({
-        url: RUTA + "public/inc/uploadFirmaEvaluacion.php",
-        body: dataformImg,
-        cbSuccess: (data) => {
-          console.log(data.url);
-
-          dataform.append("firmaEvaluado", data.url);
-          dataform.append("estado", 2);
-
-          ajaxPost({
-            url: RUTA + "evaluacion/updateEvaluado",
-            body: dataform,
-            cbSuccess: (dataJson) => {
-              console.log(dataJson);
-              usuarioEvaluadorHtml();
-            },
-          });
-        },
-      });
-    });
-}
-
-function loadHtml(etiqueta, stateData) {
-  document.getElementById(etiqueta).innerHTML = stateData
-    ? `<div class="competencia_content_load">
-<i class="fas fa-circle-notch fa-spin fa-2x"></i>
-</div>`
-    : ``;
-}
-
-function usuarioEvaluadorHtml() {
-  document.querySelector(".mainpage").innerHTML = EvaluacionUsuario();
-  initEvaluacionUsuario();
-}
+</div>

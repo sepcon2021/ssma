@@ -4,7 +4,8 @@ require_once 'entity/evaluacionEntity.php';
 require_once 'status/repuestas.php';
 require_once 'public/PHPExcel/PHPExcel.php';
 require_once 'public/upload-photo/upload-image.php';
-
+require_once 'public/generarExcel/reportEvaluacionCompetencia.php';
+require_once 'public/generate-pdf/GenerateEvaluacionCompetencia.php';
 
 class Evaluacion extends Controller
 {
@@ -35,12 +36,12 @@ class Evaluacion extends Controller
     $idUsuario = $_POST["idUsuario"];
     $nombre = $_POST["nombre"];
     $descripcion = isset($_POST["descripcion"]) ?  $_POST["descripcion"] : '';
-    $puestoObservado = isset($_POST["puestoObservado"]) ? $_POST["puestoObservado"] :
+    $puestoEvaluador = isset($_POST["puestoEvaluador"]) ? $_POST["puestoEvaluador"] :
       '';
     $puestoEvaluado = isset($_POST["puestoEvaluado"]) ? $_POST["puestoEvaluado"] :
       '';
 
-    $evaluacionEntity =  new EvaluacionEntity(0, $idUsuario, $nombre, $descripcion, $puestoObservado, $puestoEvaluado);
+    $evaluacionEntity =  new EvaluacionEntity(0, $idUsuario, $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
     $result = $this->model->createGroup($evaluacionEntity);
     echo json_encode($respuesta->success_200($result));
   }
@@ -59,13 +60,13 @@ class Evaluacion extends Controller
     $idGroup = $_POST["idGroup"];
     $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : '';
     $descripcion = isset($_POST["descripcion"]) ?  $_POST["descripcion"] : '';
-    $puestoObservado = isset($_POST["puestoObservado"]) ? $_POST["puestoObservado"] :
+    $puestoEvaluador = isset($_POST["puestoEvaluador"]) ? $_POST["puestoEvaluador"] :
       '';
     $puestoEvaluado = isset($_POST["puestoEvaluado"]) ? $_POST["puestoEvaluado"] :
       '';
 
 
-    $evaluacionEntity =  new EvaluacionEntity($idGroup, '', $nombre, $descripcion, $puestoObservado, $puestoEvaluado);
+    $evaluacionEntity =  new EvaluacionEntity($idGroup, '', $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
 
     $result = $this->model->updateGroup($evaluacionEntity);
 
@@ -255,5 +256,50 @@ class Evaluacion extends Controller
     $result = $this->model->updateEvaluador($data);
 
     echo json_encode($respuesta->success_200($result));
+  }
+
+
+  public function updateEvaluado()
+  {
+
+    $respuesta =  new respuestas();
+
+    $firmaEvaluado = $_POST["firmaEvaluado"];
+    $idCompetenciaEvaluacion = $_POST["idCompetenciaEvaluacion"];
+    $estado = $_POST["estado"];
+
+    $data = compact(
+      "estado",
+      "idCompetenciaEvaluacion",
+      "firmaEvaluado"
+    );
+
+    $result = $this->model->updateEvaluado($data);
+
+    echo json_encode($respuesta->success_200($result));
+  }
+
+  public function downloadReporte()
+  {
+    $respuesta =  new respuestas();
+
+    $idGroup = $_POST["idGroup"];
+    $listUsuario = $this->model->getListSeguimientoEvaluacion($idGroup);
+    $evaluacionCompetencia =  new ReportEvaluacionCompetencia();
+    $url = $evaluacionCompetencia->generateEvaluacionCompetenciaById($listUsuario);
+
+    echo json_encode($respuesta->success_200($url));
+  }
+
+  public function downloadPdfReport()
+  {
+
+    $respuesta =  new respuestas();
+
+    $id = $_POST["id"];
+    $data = $this->model->getSeguimientoById($id);
+    $generateEvaluacion =  new GenerateEvaluacionCompetencia();
+    $url = $generateEvaluacion->generatePDF($data);
+    echo json_encode($respuesta->success_200($url));
   }
 }
