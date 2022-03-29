@@ -1,5 +1,6 @@
 import { ajaxPost, ajaxNormal } from "../helpers/ajax.js";
 import UsuarioEvaluadorDetail, {
+  backUsuarioEvaluador,
   initUsuarioEvaluadorDetail,
   sendFormEvaluador,
 } from "./usuarioEvaluadorDetail.js";
@@ -123,6 +124,7 @@ function listenGroup() {
       firma();
       initUsuarioEvaluadorDetail();
       sendFormEvaluador();
+      backUsuarioEvaluador();
     });
 }
 

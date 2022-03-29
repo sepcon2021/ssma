@@ -225,6 +225,8 @@ FROM
 competencia_evaluacion INNER JOIN rrhh.tabla_aquarius  AS tabla_aquarius_evaluador ON competencia_evaluacion.dniEvaluador = tabla_aquarius_evaluador.dni
 					 INNER JOIN rrhh.tabla_aquarius  AS tabla_aquarius_evaluado ON competencia_evaluacion.dniEvaluado = tabla_aquarius_evaluado.dni
 WHERE competencia_evaluacion.idGrupo = :idGrupo
+
+ORDER BY competencia_evaluacion.dniEvaluador DESC
      ");
 
       $query->execute(["idGrupo" => $idGroup]);
@@ -630,6 +632,7 @@ competencia_evaluacion INNER JOIN rrhh.tabla_aquarius  AS tabla_aquarius_evaluad
 INNER JOIN rrhh.tabla_aquarius  AS tabla_aquarius_evaluado ON competencia_evaluacion.dniEvaluado = tabla_aquarius_evaluado.dni
 
 WHERE competencia_evaluacion.id = :id
+ORDER BY competencia_evaluacion.dniEvaluador DESC
      ");
 
       $query->execute(["id" => $id]);
@@ -640,6 +643,90 @@ WHERE competencia_evaluacion.id = :id
 
       return $list;
     } catch (PDOException $exception) {
+      echo $exception;
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+  public function getListGroupByIdAndEstadoCreado(int $idGroup, int $estadoCreado, int $idTipoUsuario)
+  {
+
+    $list = array();
+    try {
+
+      $query = $this->db->connect()->prepare("SELECT  
+     id,idTipoUsuario,idGrupo,dni,estadoCreado
+     FROM competencia_usuario
+     WHERE idGrupo = :idGroup AND estadoCreado =:estadoCreado AND idTipoUsuario =:idTipoUsuario
+     ");
+
+      $query->execute([
+        "idGroup" => $idGroup,
+        "estadoCreado" => $estadoCreado,
+        "idTipoUsuario" => $idTipoUsuario
+      ]);
+
+      while ($row = $query->fetch()) {
+        array_push($list, $row);
+      }
+
+      return $list;
+    } catch (PDOException $exception) {
+      echo "Paso1";
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+  public function getListGroupById(int $idGroup, $idTipoUsuario)
+  {
+
+    $list = array();
+
+    try {
+
+      $query = $this->db->connect()->prepare("SELECT  
+      id,idTipoUsuario,idGrupo,dni,estadoCreado
+     FROM competencia_usuario
+     WHERE idGrupo = :idGroup AND idTipoUsuario = :idTipoUsuario
+     ");
+
+      $query->execute([
+        "idGroup" => $idGroup,
+        "idTipoUsuario" => $idTipoUsuario,
+      ]);
+
+      while ($row = $query->fetch()) {
+        array_push($list, $row);
+      }
+
+      return $list;
+    } catch (PDOException $exception) {
+      echo "Paso 2";
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+  public function updateCompetenciaUsuarioByIdUsuario($idGroup, $idTipoUsuario)
+  {
+
+    try {
+
+      $query = $this->db->connect()->prepare("UPDATE competencia_usuario SET competencia_usuario.estadoCreado = 1 
+      WHERE  competencia_usuario.idGrupo = :idGrupo AND competencia_usuario.idTipoUsuario = :idTipoUsuario
+     ");
+
+      $query->execute(["idGrupo" => $idGroup, "idTipoUsuario" => $idTipoUsuario]);
+
+      return true;
+    } catch (PDOException $exception) {
+      echo "Paso3";
+
       echo $exception;
       $respuesta =  new respuestas();
       echo json_encode($respuesta->error_404());

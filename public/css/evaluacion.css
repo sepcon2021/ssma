@@ -135,7 +135,7 @@ div#competenciaDetalle_content {
 }
 
 .button_send_form_upload {
-  background: #123859;
+  background: #26a66a;
   border-radius: 5px;
   height: 30px;
   border-color: transparent;
@@ -147,7 +147,7 @@ div#competenciaDetalle_content {
 
 .success_message_descripcion {
   background: #aef29b;
-  color: #29d884;
+  color: #26a66a;
   border-radius: 5px;
   width: 40%;
   margin-bottom: 20px;
@@ -197,7 +197,7 @@ div#competenciaDetalle_content {
 
 .sidebarCompetencia .sidebarCompetencia__menu div.active {
   color: white;
-  background: #123859;
+  background: #c5c7c4;
 }
 
 .sidebarCompetencia .sidebarCompetencia__menu div.active:before {
@@ -276,4 +276,30 @@ th.aspecto_evaluar {
   padding: 5px;
   border-radius: 5px;
   cursor: grab;
+}
+
+#table_seguimiento {
+  padding: 10px;
+  font-size: 1em;
+}
+
+#table_seguimiento td {
+  padding: 5px;
+}
+
+#table_seguimiento tr.noSearch {
+  font-size: 0.8em;
+}
+
+#table_seguimiento tr.noSearch td {
+  padding-top: 10px;
+  text-align: right;
+}
+
+.hide {
+  display: none;
+}
+
+.red {
+  color: Red;
 }

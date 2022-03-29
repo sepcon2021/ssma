@@ -1,3 +1,6 @@
+import EvaluacionAdmin, {
+  initEvaluacionAdmin,
+} from "../evaluacion/evaluacionAdmin.js";
 import UsuarioEvaluado, { initUsuarioEvaluado } from "./evaluacionEvaluado.js";
 import UsuarioEvaluador, { initUsuarioEvaluador } from "./usuarioEvaluador.js";
 
@@ -16,7 +19,6 @@ export default function EvaluacionUsuario() {
 
         <div class="active">Evaluador</div>
         <div>Evaluado</div>
-        <div>Historial</div>
       </div>
 
     </div>
@@ -64,11 +66,6 @@ function typeContentHtml(index) {
       document.getElementById("competenciaDetalle_content").innerHTML =
         UsuarioEvaluado();
       initUsuarioEvaluado();
-      break;
-    case 2:
-      document.getElementById("competenciaDetalle_content").innerHTML =
-        "Pendiente historial";
-
       break;
     default:
       break;

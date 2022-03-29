@@ -9,7 +9,7 @@ body {
 .sidebar .sidebar__menu div {
   /* position: relative; */
   height: 40px;
-  width: 60px;
+  width: 100%;
   /* font-weight: 600; */
   font-size: 16px;
   padding: 5px 18px;
@@ -100,7 +100,7 @@ body {
 }
 
 .sidebar__img p {
-  width: 100px;
+  width: 200px;
   display: flex;
   justify-content: center;
   height: 100%;
@@ -108,4 +108,8 @@ body {
   color: white;
   font-weight: 400;
   font-size: 18px;
+}
+
+.space-between {
+  padding-right: 10px;
 }

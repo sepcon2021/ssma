@@ -1,5 +1,4 @@
 import { ajaxPost } from "../helpers/ajax.js";
-import UsuarioEvaluador, { initUsuarioEvaluador } from "./usuarioEvaluador.js";
 
 import EvaluacionUsuario, {
   initEvaluacionUsuario,
@@ -17,10 +16,11 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
   <div id="usuarioDetail_content">
     <div id="usuarioDetail_content_header" class="item_format">
 
-    <a href="#/dashboard/kardex"> <i class="fa-solid fa-angle-left back-kardex fa-xl"></i> </a>
+    <a id="back_usuario_evaluador" href="#"> <i class="fa-solid fa-angle-left back-kardex fa-xl"></i> </a>
     <h3 class="title_content">Evaluación</h3>
 
     </div>
+    <div class="item_format">Evaluador / Evaluación</div>
 
     <br><br>
 
@@ -53,11 +53,12 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
           <div class="wrap_document_format_head">
 
             <div class="wrap_document_format_head_icon">
-            <div class="item_format">Nombre y apellidos : ${nombre}</div>
-      <div class="item_format">Cargo : ${cargo}</div>
+
             </div>
 
             <div class="wrap_document_format_head_title">
+                        <div class="item_format">Nombre y apellidos : ${nombre}</div>
+            <div class="item_format">Cargo : ${cargo}</div>
             </div>
 
             <div class="wrap_document_format_head_code">
@@ -573,39 +574,11 @@ function loadHtml(etiqueta, stateData) {
 function usuarioEvaluadorHtml() {
   document.querySelector(".mainpage").innerHTML = EvaluacionUsuario();
   initEvaluacionUsuario();
-  /*document.querySelector(".mainpage").innerHTML = `
+}
 
-<div id="competenciaDetalle"  class="container_documento scroll1">
-
-  <div id="compteneciaDetalle_title" class="item_format">
-    <p class="subTitle">Bienvenido</p>
-  </div>
-
-  <br><br>
-  <div id="competenciaDetalle_tabs">
-    <div class="sidebarCompetencia">
-
-      <div class="sidebarCompetencia__menu sidebarCompetencia_position">
-
-        <div class="active">Evaluador</div>
-        <div>Evaluado</div>
-        <div>Historial</div>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="competenciaDetalle_content">
-
-
-
-  </div>
-
-</div>
-`;
-
-  // We need init a default html content
-  document.getElementById("competenciaDetalle_content").innerHTML =
-    UsuarioEvaluador();
-  initUsuarioEvaluador();*/
+export function backUsuarioEvaluador() {
+  document.getElementById("back_usuario_evaluador").onclick = function (event) {
+    document.querySelector(".mainpage").innerHTML = EvaluacionUsuario();
+    initEvaluacionUsuario();
+  };
 }

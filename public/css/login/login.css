@@ -10,7 +10,7 @@
 /*
 #F24822 Naranjado
 #343A40 Plomo oscuro
-#29D884 verde
+#26a66a verde
 
 */
 
@@ -75,7 +75,7 @@
   border-radius: 5px;
 
   box-sizing: border-box;
-  border: 1px solid #123859;
+  border: 1px solid #26a66a;
 
   -webkit-transition: 0.5s;
   transition: 0.5s;

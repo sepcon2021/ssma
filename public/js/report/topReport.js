@@ -1,11 +1,15 @@
-function htmlTopReport(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) {
+function htmlTopReport(
+  json,
+  proyecto,
+  fecha_inicio,
+  fecha_fin,
+  nombreDocumento
+) {
+  let list = ``;
+  let amount = 1;
 
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr class="active-row">
+  json.result.forEach((element) => {
+    list += `<tr class="active-row">
         <td>${amount}</td>
         <td>${element.reportado}</td>
         <td>${element.proyecto}</td>
@@ -34,13 +38,13 @@ function htmlTopReport(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) 
         <td>${element.observadoRetroalimentacion}</td>
         <td>${element.observadoReincidente}</td>
         <td>${element.observadoComentario}</td>
+        <td> <a href="${element.url_pdf}" target="_blank">PDF</a></td>
     </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr class="active-row">
@@ -74,6 +78,7 @@ function htmlTopReport(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) 
                         <th>Retroalimentación </th>
                         <th>Reincidente</th>
                         <th>Comentario</th>
+                        <th>PDF</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,20 +87,27 @@ function htmlTopReport(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) 
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable)
-
-
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
+function htmlSeguridad(
+  json,
+  proyecto,
+  fecha_inicio,
+  fecha_fin,
+  nombreDocumento
+) {
+  let list = ``;
+  let amount = 1;
 
-function htmlSeguridad(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) {
-
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr class="active-row">
+  json.result.forEach((element) => {
+    list += `<tr class="active-row">
         <td>${amount}</td>
         <td>${element.proyecto}</td>
         <td>${element.fechaInspeccion}</td>
@@ -117,11 +129,10 @@ function htmlSeguridad(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) 
         <td>${element.responsableArea}</td>
     </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -152,17 +163,27 @@ function htmlSeguridad(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) 
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable)
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
-function htmlIncidencia(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
+function htmlIncidencia(
+  json,
+  proyecto,
+  fecha_inicio,
+  fecha_fin,
+  nombreDocumento
+) {
+  let list = ``;
+  let amount = 1;
 
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr>
+  json.result.forEach((element) => {
+    list += `<tr>
                     <td></td>
                     <td>${element.proyectoNombre}</td>
                     <td>${element.cliente}</td>
@@ -174,11 +195,10 @@ function htmlIncidencia(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento)
                     <td class="center"><a href="${element.urlPdf}" target="_blank">PDF</td>
                 </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -199,18 +219,21 @@ function htmlIncidencia(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento)
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
+function htmlOpt(json, proyecto, fecha_inicio, fecha_fin, nombreDocumento) {
+  let list = ``;
+  let amount = 1;
 
-function htmlOpt(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
-
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr>
+  json.result.forEach((element) => {
+    list += `<tr>
                     <td></td>
                     <td>${element.opt.usuario_nombres} ${element.opt.usuario_apellidos}</td>
                     <td>${element.opt.proyecto_nombre}</td>
@@ -232,11 +255,10 @@ function htmlOpt(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
 
                 </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -266,17 +288,21 @@ function htmlOpt(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
-function htmlIperc(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
+function htmlIperc(json, proyecto, fecha_inicio, fecha_fin, nombreDocumento) {
+  let list = ``;
+  let amount = 1;
 
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr>
+  json.result.forEach((element) => {
+    list += `<tr>
                     <td></td>
                     <td>${element.nombres_usuario} ${element.apellidos_usuario}</td>
                     <td>${element.nombre_proyecto}</td>
@@ -291,11 +317,10 @@ function htmlIperc(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
 
                 </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -318,17 +343,21 @@ function htmlIperc(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
-function htmlPtar(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
+function htmlPtar(json, proyecto, fecha_inicio, fecha_fin, nombreDocumento) {
+  let list = ``;
+  let amount = 1;
 
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr>
+  json.result.forEach((element) => {
+    list += `<tr>
                     <td></td>
                     <td>${element.proyecto}</td>
                     <td>${element.area}</td>
@@ -371,11 +400,10 @@ function htmlPtar(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
 
                 </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -429,97 +457,105 @@ function htmlPtar(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
+function htmlGerencial(
+  json,
+  proyecto,
+  fecha_inicio,
+  fecha_fin,
+  nombreDocumento
+) {
+  let list = ``;
+  let amount = 1;
 
-function htmlGerencial(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
-
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr>
+  json.result.forEach((element) => {
+    list += `<tr>
                     <td></td> 
-                    <td>${element.usuario }</td> 
-                    <td>${element.proyecto }</td> 
-                    <td>${element.razonsocial }</td> 
-                    <td>${element.ruc }</td> 
-                    <td>${element.domicilio }</td> 
-                    <td>${element.acteconomica }</td> 
-                    <td>${element.responsable1 }</td> 
+                    <td>${element.usuario}</td> 
+                    <td>${element.proyecto}</td> 
+                    <td>${element.razonsocial}</td> 
+                    <td>${element.ruc}</td> 
+                    <td>${element.domicilio}</td> 
+                    <td>${element.acteconomica}</td> 
+                    <td>${element.responsable1}</td> 
                     <td>${element.numeroTrabajadores}</td> 
-                    <td>${element.areasinspeccion }</td> 
+                    <td>${element.areasinspeccion}</td> 
                     <td>${element.fechainspeccion}</td> 
-                    <td>${element.responsableInspeccion }</td> 
-                    <td>${element.tipoInspeccion }</td> 
-                    <td>${element.otros }</td> 
-                    <td>${element.notas }</td> 
-                    <td>${element.visita }</td> 
+                    <td>${element.responsableInspeccion}</td> 
+                    <td>${element.tipoInspeccion}</td> 
+                    <td>${element.otros}</td> 
+                    <td>${element.notas}</td> 
+                    <td>${element.visita}</td> 
 
                     <td>${typeAnswer(element.saludOcupacional1)}</td> 
-                    <td>${element.saludOcupacionalDetalle1 }</td> 
+                    <td>${element.saludOcupacionalDetalle1}</td> 
                     <td>${typeAnswer(element.saludOcupacional2)}</td> 
-                    <td>${element.saludOcupacionalDetalle2 }</td> 
+                    <td>${element.saludOcupacionalDetalle2}</td> 
                     <td>${typeAnswer(element.saludOcupacional3)}</td> 
-                    <td>${element.saludOcupacionalDetalle3 }</td> 
+                    <td>${element.saludOcupacionalDetalle3}</td> 
                     <td>${typeAnswer(element.saludOcupacional4)}</td> 
-                    <td>${element.saludOcupacionalDetalle4 }</td> 
+                    <td>${element.saludOcupacionalDetalle4}</td> 
                     <td>${typeAnswer(element.saludOcupacional5)}</td> 
-                    <td>${element.saludOcupacionalDetalle5 }</td> 
+                    <td>${element.saludOcupacionalDetalle5}</td> 
                     <td>${typeAnswer(element.saludOcupacional6)}</td> 
-                    <td>${element.saludOcupacionalDetalle6 }</td> 
+                    <td>${element.saludOcupacionalDetalle6}</td> 
                     <td>${typeAnswer(element.saludOcupacional7)}</td> 
-                    <td>${element.saludOcupacionalDetalle7 }</td> 
+                    <td>${element.saludOcupacionalDetalle7}</td> 
                     <td>${typeAnswer(element.saludOcupacional8)}</td> 
-                    <td>${element.saludOcupacionalDetalle8 }</td> 
+                    <td>${element.saludOcupacionalDetalle8}</td> 
                     <td>${typeAnswer(element.seguridad1)}</td> 
-                    <td>${element.seguridadDetalle1 }</td> 
+                    <td>${element.seguridadDetalle1}</td> 
                     <td>${typeAnswer(element.seguridad2)}</td> 
-                    <td>${element.seguridadDetalle2 }</td> 
+                    <td>${element.seguridadDetalle2}</td> 
                     <td>${typeAnswer(element.seguridad3)}</td> 
-                    <td>${element.seguridadDetalle3 }</td> 
-                    <td>${typeAnswer(element.seguridad4 )}</td> 
-                    <td>${element.seguridadDetalle4 }</td> 
+                    <td>${element.seguridadDetalle3}</td> 
+                    <td>${typeAnswer(element.seguridad4)}</td> 
+                    <td>${element.seguridadDetalle4}</td> 
                     <td>${typeAnswer(element.seguridad5)}</td> 
-                    <td>${element.seguridadDetalle5 }</td> 
+                    <td>${element.seguridadDetalle5}</td> 
                     <td>${typeAnswer(element.seguridad6)}</td> 
-                    <td>${element.seguridadDetalle6 }</td> 
+                    <td>${element.seguridadDetalle6}</td> 
                     <td>${typeAnswer(element.seguridad7)}</td> 
-                    <td>${element.seguridadDetalle7 }</td> 
-                    <td>${typeAnswer(element.seguridad8 )}</td> 
-                    <td>${element.seguridadDetalle8 }</td> 
+                    <td>${element.seguridadDetalle7}</td> 
+                    <td>${typeAnswer(element.seguridad8)}</td> 
+                    <td>${element.seguridadDetalle8}</td> 
                     <td>${typeAnswer(element.seguridad9)}</td> 
-                    <td>${element.seguridadDetalle9 }</td> 
-                    <td>${typeAnswer(element.seguridad10 )}</td> 
-                    <td>${element.seguridadDetalle10 }</td> 
-                    <td>${typeAnswer(element.seguridad11 )}</td> 
-                    <td>${element.seguridadDetalle11 }</td> 
+                    <td>${element.seguridadDetalle9}</td> 
+                    <td>${typeAnswer(element.seguridad10)}</td> 
+                    <td>${element.seguridadDetalle10}</td> 
+                    <td>${typeAnswer(element.seguridad11)}</td> 
+                    <td>${element.seguridadDetalle11}</td> 
                     <td>${typeAnswer(element.medioAmbiente1)}</td> 
-                    <td>${element.medioAmbienteDetalle1 }</td> 
-                    <td>${typeAnswer(element.medioAmbiente2 )}</td> 
-                    <td>${element.medioAmbienteDetalle2 }</td> 
-                    <td>${typeAnswer(element.medioAmbiente3 )}</td> 
-                    <td>${element.medioAmbienteDetalle3 }</td> 
-                    <td>${typeAnswer(element.medioAmbiente4 )}</td> 
-                    <td>${element.medioAmbienteDetalle4 }</td> 
+                    <td>${element.medioAmbienteDetalle1}</td> 
+                    <td>${typeAnswer(element.medioAmbiente2)}</td> 
+                    <td>${element.medioAmbienteDetalle2}</td> 
+                    <td>${typeAnswer(element.medioAmbiente3)}</td> 
+                    <td>${element.medioAmbienteDetalle3}</td> 
+                    <td>${typeAnswer(element.medioAmbiente4)}</td> 
+                    <td>${element.medioAmbienteDetalle4}</td> 
                     <td>${typeAnswer(element.medioAmbiente5)}</td> 
                     <td>${element.medioAmbienteDetalle5}</td> 
 
                     
-                    <td>${element.conclusiones }</td> 
-                    <td>${element.responsabletrabajo }</td> 
-                    <td>${element.responsablecargo }</td> 
+                    <td>${element.conclusiones}</td> 
+                    <td>${element.responsabletrabajo}</td> 
+                    <td>${element.responsablecargo}</td> 
                     <td>${element.fecharegistro}</td> 
 
                 </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -616,41 +652,49 @@ function htmlGerencial(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
+function htmlSuspencion(
+  json,
+  proyecto,
+  fecha_inicio,
+  fecha_fin,
+  nombreDocumento
+) {
+  let list = ``;
+  let amount = 1;
 
-function htmlSuspencion(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento){
+  console.log("Data");
+  console.log(json.result);
 
-    let list = ``;
-    let amount = 1;
-    
-
-    console.log("Data")
-    console.log(json.result);
-
-    json.result.forEach(element => {
-
-        list += `<tr>
-                    <td>${element.proyecto }</td> 
-                    <td>${element.fase }</td> 
-                    <td>${element.responsable }</td> 
-                    <td>${element.cargo }</td> 
-                    <td>${element.fecha }</td> 
-                    <td>${element.hora }</td> 
+  json.result.forEach((element) => {
+    list += `<tr>
+                    <td>${element.proyecto}</td> 
+                    <td>${element.fase}</td> 
+                    <td>${element.responsable}</td> 
+                    <td>${element.cargo}</td> 
+                    <td>${element.fecha}</td> 
+                    <td>${element.hora}</td> 
                     
                     <td>${answerBinary(element.conduccion)}</td> 
-                    <td>${answerBinary(element.ptar )}</td> 
+                    <td>${answerBinary(element.ptar)}</td> 
                     <td>${answerBinary(element.confinados)}</td> 
-                    <td>${answerBinary(element.energias )}</td> 
-                    <td>${answerBinary(element.excavaciones )}</td> 
-                    <td>${answerBinary(element.altura )}</td> 
+                    <td>${answerBinary(element.energias)}</td> 
+                    <td>${answerBinary(element.excavaciones)}</td> 
+                    <td>${answerBinary(element.altura)}</td> 
                     <td>${answerBinary(element.caliente)}</td> 
                     <td>${answerBinary(element.izaje)}</td> 
 
                     <td>${element.otros}</td> 
-                    <td>${element.descripcion }</td> 
-                    <td>${element.acciones }</td> 
+                    <td>${element.descripcion}</td> 
+                    <td>${element.acciones}</td> 
                     
                     <td>${answerRiesgo(element.riesgo)}</td> 
 
@@ -663,11 +707,10 @@ function htmlSuspencion(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento)
 
                 </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -707,18 +750,27 @@ function htmlSuspencion(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento)
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable);
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
+function htmlInspeccionBotiquin(
+  json,
+  proyecto,
+  fecha_inicio,
+  fecha_fin,
+  nombreDocumento
+) {
+  let list = ``;
+  let amount = 1;
 
-function htmlInspeccionBotiquin(json, proyecto, fecha_inicio, fecha_fin,nombreDocumento) {
-
-    let list = ``;
-    let amount = 1;
-
-    json.result.forEach(element => {
-
-        list += `<tr class="active-row">
+  json.result.forEach((element) => {
+    list += `<tr class="active-row">
         <td>${amount}</td>
         <td>${element.tipo_inspeccion}</td>
         <td>${element.sede}</td>
@@ -737,11 +789,10 @@ function htmlInspeccionBotiquin(json, proyecto, fecha_inicio, fecha_fin,nombreDo
         <td>${convertListPhotoToHtml(element.evidencia)}</td>
     </tr>`;
 
-        amount++;
+    amount++;
+  });
 
-    });
-
-    htmlTable = `
+  htmlTable = `
                 <table id="topsTableNuevo" class="styled-table">
                 <thead>
                     <tr>
@@ -770,50 +821,59 @@ function htmlInspeccionBotiquin(json, proyecto, fecha_inicio, fecha_fin,nombreDo
             </table>
     `;
 
-    return contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable)
+  return contentBody(
+    proyecto,
+    fecha_inicio,
+    fecha_fin,
+    nombreDocumento,
+    htmlTable
+  );
 }
 
-
-function answerRiesgo(data){
-    let answer = ""
-    if(data == 1){
-        answer = "Alto"
-    }
-    if(data == 2){
-        answer = "Medio"
-    }
-    if(data == 3){
-        answer = "Bajo"
-    }
-    return answer;
+function answerRiesgo(data) {
+  let answer = "";
+  if (data == 1) {
+    answer = "Alto";
+  }
+  if (data == 2) {
+    answer = "Medio";
+  }
+  if (data == 3) {
+    answer = "Bajo";
+  }
+  return answer;
 }
 
-
-function answerBinary(data){
-    if(data == 1){
-        return "Si"
-    }else{
-        return "No"
-    }
+function answerBinary(data) {
+  if (data == 1) {
+    return "Si";
+  } else {
+    return "No";
+  }
 }
 
-
-function typeAnswer(data){
-    let answer = ""
-    if(data == 1){
-        answer = "Bueno"
-    }
-    if(data == 2){
-        answer = "Require correción"
-    }
-    if(data == 3){
-        answer = "Sin verificar"
-    }
-    return answer;
+function typeAnswer(data) {
+  let answer = "";
+  if (data == 1) {
+    answer = "Bueno";
+  }
+  if (data == 2) {
+    answer = "Require correción";
+  }
+  if (data == 3) {
+    answer = "Sin verificar";
+  }
+  return answer;
 }
 
-function contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTable) {
-    return `
+function contentBody(
+  proyecto,
+  fecha_inicio,
+  fecha_fin,
+  nombreDocumento,
+  htmlTable
+) {
+  return `
     <div class="container_reporte scroll1">
     <div class="container_reporte_content">
         <div class="container_report_content_head">
@@ -871,22 +931,19 @@ function contentBody(proyecto, fecha_inicio, fecha_fin,nombreDocumento, htmlTabl
 }
 
 function convertListPhotoToHtml(list) {
-    let htmlPhoto = ``;
+  let htmlPhoto = ``;
 
-    if (list != null) {
-        let listPhoto = list.split(",")
+  if (list != null) {
+    let listPhoto = list.split(",");
 
-        listPhoto.forEach(element => {
+    listPhoto.forEach((element) => {
+      console.log("size");
+      console.log(element.length);
+      if (element.length != 1) {
+        htmlPhoto += `<img class="img_report" src="${RUTA}public/photos/${element}">`;
+      }
+    });
+  }
 
-            console.log("size");
-            console.log(element.length);
-            if (element.length != 1) {
-                htmlPhoto += `<img class="img_report" src="${RUTA}public/photos/${element}">`
-            }
-        });
-    }
-
-
-    return htmlPhoto;
-
+  return htmlPhoto;
 }

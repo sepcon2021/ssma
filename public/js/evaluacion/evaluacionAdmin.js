@@ -1,4 +1,5 @@
 import evaluacionAdminDetail from "../evaluacion/evaluacionAdminDetail.js";
+
 import { ajax, ajaxNormal, ajaxPost } from "../helpers/ajax.js";
 
 export default function EvaluacionAdmin() {
@@ -116,6 +117,8 @@ export function createGroup() {
             cbSuccess: (posts) => {
               document.querySelector(".mainpage").innerHTML = posts;
               evaluacionAdminDetail();
+
+              //backEvaluacionGeneral();
             },
           });
         },
@@ -163,6 +166,7 @@ function listenGroup() {
         cbSuccess: (posts) => {
           document.querySelector(".mainpage").innerHTML = posts;
           evaluacionAdminDetail();
+          //backEvaluacionGeneral();
         },
       });
     });

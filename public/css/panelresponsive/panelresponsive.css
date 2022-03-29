@@ -15,7 +15,7 @@ body {
     "sidebar  mainpage"
     "sidebar  mainpage";
   grid-template-rows: 80px 1fr 80px;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 200px 1fr;
   grid-gap: 0px 10px;
 }
 
@@ -184,7 +184,7 @@ body {
   display: flex;
   justify-content: center;
   padding-bottom: 20px;
-  color: #123859;
+  color: #26a66a;
 }
 
 .notificacion_button {

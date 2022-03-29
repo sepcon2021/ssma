@@ -26,6 +26,7 @@ export default function evaluacionAdminDetail() {
     EvaluacionDescripcion();
   fillForm();
   listenForm();
+  //backEvaluacionGeneral();
 }
 
 function typeContentHtml(index) {
@@ -35,6 +36,7 @@ function typeContentHtml(index) {
         EvaluacionDescripcion();
       fillForm();
       listenForm();
+      // backEvaluacionGeneral();
 
       break;
     case 1:
@@ -43,13 +45,25 @@ function typeContentHtml(index) {
       loadInitUsuario();
       eventTableGeneral();
       sendForm();
+      //backEvaluacionGeneral();
+
       break;
     case 2:
       document.getElementById("competenciaDetalle_content").innerHTML =
         EvaluacionSeguimiento();
       init();
+      //backEvaluacionGeneral();
+
       break;
     default:
       break;
   }
+}
+
+function backEvaluacionGeneral() {
+  console.log("Prueba");
+  document.getElementById("back_evaluacion_general").onclick = function () {
+    document.querySelector(".mainpage").innerHTML = EvaluacionAdmin();
+    initEvaluacionAdmin();
+  };
 }

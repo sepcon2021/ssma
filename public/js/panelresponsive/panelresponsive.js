@@ -18,30 +18,30 @@ $(function () {
 
     if (permiso.length > 0) {
       contentHTML = `
-            <div class="active">  <i class="fa-solid fa-file-lines fa-2x"></i></div>
-            <div> <i class="fa-solid fa-hammer  fa-2x"></i> </div>
-            <div> <i class="fa-solid fa-hammer  fa-2x"></i> </div>
+            <div class="active">  <i class="fa-solid fa-file-lines fa-xs space-between "></i> Documentos</div>
+            <div> <i class="fa-solid fa-hammer  fa-xs space-between"></i>Seguimiento </div>
+            <div> <i class="fa-solid fa-hammer  fa-xs space-between"></i>Admin seguimiento </div>
 
-            <div> <i class="fa-solid fa-table fa-2x"></i></div>
-            <div> <i class="fa-solid fa-file-chart-column fa-2x"></i></div>
+            <div> <i class="fa-solid fa-table fa-xs space-between"></i>Reportes</div>
+            <div> <i class="fa-solid fa-file-chart-column fa-xs space-between"></i></div>
              
-            <div> <i class="fa-solid fa-book fa-2x"></i> </div>
-            <div> <i class="fa-solid fa-book fa-2x"></i> </div>
+            <div> <i class="fa-solid fa-book fa-xs space-between"></i>Formulario</div>
+            <div> <i class="fa-solid fa-book fa-xs space-between"></i>Admin formulario</div>
 
-            <div><i class="fa-solid fa-chalkboard-user fa-2x"></i></div>
-            <div><i class="fa-solid fa-chalkboard-user fa-2x"></i></div>
-            <div> <i class="fa-solid fa-graduation-cap fa-2x"></i></div>
-            <div> <i class="fa-solid fa-graduation-cap fa-2x"></i></div>
+            <div><i class="fa-solid fa-chalkboard-user fa-xs space-between"></i>Lecciones aprendidas</div>
+            <div><i class="fa-solid fa-chalkboard-user fa-xs space-between"></i>Admin L. aprendidas</div>
+            <div> <i class="fa-solid fa-graduation-cap fa-xs space-between"></i>Evaluación competencias</div>
+            <div> <i class="fa-solid fa-graduation-cap fa-xs space-between"></i>Admin E. Competencias</div>
             `;
     } else {
       contentHTML = `
-            <div class="active"> Documentos</div>
-            <div>Seguimiento</div>
-            <div>Reportes</div>
+            <div class="active"> <i class="fa-solid fa-file-lines fa-xs space-between "></i> Documentos</div>
+            <div><i class="fa-solid fa-hammer  fa-xs space-between"></i> Seguimiento</div>
+            <div><i class="fa-solid fa-table fa-xs space-between"></i>Reportes</div>
             <div>Estadística</div>
-            <div>Formulario</div>
-            <div>Lecciones aprendidas</div>
-            <div>Evaluaciones por competencia </div>
+            <div><i class="fa-solid fa-book fa-xs space-between"></i>Formulario</div>
+            <div><i class="fa-solid fa-chalkboard-user fa-xs space-between"></i>Lecciones aprendidas</div>
+            <div><i class="fa-solid fa-graduation-cap fa-xs space-between"></i>Evaluaciones por competencia </div>
             `;
     }
 

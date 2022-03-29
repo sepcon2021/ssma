@@ -51,6 +51,7 @@ export default function UsuarioEvaluadoDetail(dataform) {
       <h3 class="title_content">Evaluación</h3>
 
     </div>
+    <div class="item_format">Evaluado / Evaluación</div>
 
     <br><br>
 

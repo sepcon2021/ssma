@@ -1,385 +1,71 @@
-<div id="usuarioDetail" class="container_documento scroll1">
+<h1>Buscar en el contenido de una tabla</h1>
 
-  <div id="usuarioDetail_header">
-  </div>
+<form>
 
-  <div id="usuarioDetail_content">
-    <div id="usuarioDetail_content_header">
-
-    </div>
-
-    <div id="usuarioDetail_content_body_usuario">
-      <div class="item_format">Nombre y apellidos : ${
-        dataform["usuarioEvaluado"]
-        } </div>
-      <div class="item_format">Cargo : ${dataform.descripcionCargo}</div>
-    </div>
-
-    <form id="form_evaluador">
-      <div id="usuarioDetail_content_body_form">
-        <input type="hidden" name="idCompetenciaEvaluacion" id="idCompetenciaEvaluacion" value="${
-          dataform.id
-        }">
-        <input type="hidden" name="dniEvaluado" id="dniEvaluado" value="${dni}">
-
-        <div class="wrap_document_format">
-          <div class="wrap_document_format_head">
-
-            <div class="wrap_document_format_head_icon">
-              <img class="enterprise_logo" src="public/img/logo.png" alt="">
-            </div>
-
-            <div class="wrap_document_format_head_title">
-              <p>EVALUACIÓN DE COMPETENCIAS SSMA</p>
-            </div>
-
-            <div class="wrap_document_format_head_code">
-              <p>PSPC-110-X-FR-0XX</p>
-              <p>Revisión: 0</p>
-              <p>Emisión: XX/03/2022</p>
-              <p>Pagina: 1 de 1</p>
-            </div>
-
-          </div>
-
-          <div class="wrap_document_format_head">
-
-            <div class="wrap_document_format_head_icon">
-            </div>
-
-            <div class="wrap_document_format_head_title">
-            </div>
-
-            <div class="wrap_document_format_head_code">
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Excelente</td>
-                    <td>3</td>
-                  </tr>
-                  <tr>
-                    <td>Bueno</td>
-                    <td>2</td>
-                  </tr>
-
-                  <tr>
-                    <td>Deficiente</td>
-                    <td>1</td>
-                  </tr>
-
-
-                  <tr>
-                    <td>No cumple</td>
-                    <td>0</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-
-          <div class="wrap_document_format_body">
-
-            <div class="box_format">
-              <!--TITLE ELEMENT-->
-
-              <!--CONTENT ELEMENT-->
-              <div class="item_format">
-                <table class="w100p">
-
-                  <thead>
-
-                    <tr>
-                      <th colspan="2" class="aspecto_evaluar">Aspecto a evaluar</th>
-                      <th class="aspecto_evaluar">Peso</th>
-                      <th class="aspecto_evaluar">Calificación</th>
-                    </tr>
-                  </thead>
-
-
-
-                  <tbody>
-                    <tr>
-                      <td rowspan="6" class="w20p">
-                        <h3 class="w80p">NIVEL DE COMPROMISO</h3>
-                      </td>
-                      <td class="item_align_form">Finaliza oportunamente las tareas asignadas, sin necesidad de
-                        reprocesos.</td>
-                      <td class="w10p">20%</td>
-                      <td class="w20p"> ${dataform["compromiso1"]}</td>
-                    </tr>
-                    <tr>
-                      <td class="item_align_form">Se autodirige, es decir, no es necesario recordarle continuamente lo
-                        que se debe hacer.</td>
-                      <td>20%</td>
-                      <td class="w20p"> ${dataform["compromiso2"]}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form"> Realiza recomendaciones apropiadas o acertadas.</td>
-                      <td>20%</td>
-                      <td class="w20p"> ${dataform["compromiso3"]}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form">Pone su conocimiento y experiencia de format total al servicio de la
-                        empresa.</td>
-                      <td>20%</td>
-                      <td class="w20p"> ${dataform["compromiso4"]}</td>
-                    </tr>
-                    <tr>
-                      <td class="item_align_form">Se enfoca en solucionar los problemas en lugar de buscar culpables..
-                      </td>
-                      <td>20%</td>
-                      <td class="w20p"> ${dataform["compromiso5"]}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form desempeño_promedio">Desempeño promedio</td>
-                      <td class="desempeño_promedio">100%</td>
-                      <td><input value="${averageCompromiso.trim()}" type="number" readonly="readonly"
-                          id="compromiso_total" name="compromiso_total" class="evaluacion_puntaje w30p">
-                      </td>
-                    </tr>
-                  </tbody>
-
-                </table>
-              </div>
-              <!-- ERRROR ELEMENT -->
-              <div class="item_format">
-                <p class="error_message" id="tipo_inspeccion_error"></p>
-              </div>
-            </div>
-
-
-            <div class="box_format">
-              <!--TITLE ELEMENT-->
-
-              <!--CONTENT ELEMENT-->
-              <div class="item_format">
-                <table class="table_form_evaluacion w100p">
-
-                  <thead>
-
-                    <tr>
-                      <th colspan="2" class="aspecto_evaluar">Aspecto a evaluar</th>
-                      <th class="aspecto_evaluar">Peso</th>
-                      <th class="aspecto_evaluar">Calificación</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td rowspan="6" class="w20p">
-                        <h2>DESEMPEÑO DE SEGURIDAD</h2>
-                      </td>
-                      <td class="item_align_form">Cumple los procedimientos y usa los formatos que corresponden a la
-                        empresa</td>
-                      <td class="w10p">20%</td>
-                      <td class="w20p">
-                        ${dataform["seguridad1"]}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="item_align_form">Demuestra su liderazgo visible en seguridad.</td>
-                      <td>20%</td>
-                      <td class="w20p">
-                        ${dataform["seguridad2"]}
-
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form">Realiza adecuadamente la clasificación de residuos y vela porque los
-                        demás también lo hagan
-                      </td>
-                      <td>20%</td>
-                      <td class="w20p">
-                        ${dataform["seguridad3"]}
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form">Implementa o fomenta prácticas de trabajo seguro en su area de trabajo
-                      </td>
-                      <td>20%</td>
-                      <td class="w20p">
-                        ${dataform["seguridad4"]}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="item_align_form">Realiza observaciones de comportamientos riesgosos e informa
-                        oportunamente a la empresa
-                        acerca
-                        de
-                        los peligros y riesgos latentes en su lugar de trabajo</td>
-                      <td>20%</td>
-                      <td class="w20p">${dataform["seguridad5"]}
-
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form desempeño_promedio">Desempeño promedio</td>
-                      <td class="desempeño_promedio">100%</td>
-                      <td><input type="number" readonly="readonly" id="seguridad_total" name="seguridad_total"
-                          class="evaluacion_puntaje w30p" value="${averageSeguridad}"></td>
-
-                    </tr>
-                  </tbody>
-
-                </table>
-              </div>
-              <!-- ERRROR ELEMENT -->
-              <div class="item_format">
-                <p class="error_message" id="tipo_inspeccion_error"></p>
-              </div>
-            </div>
-
-            <div class="box_format">
-              <!--TITLE ELEMENT-->
-
-              <!--CONTENT ELEMENT-->
-              <div class="item_format">
-                <table class="w100p">
-
-                  <thead>
-
-                    <tr>
-                      <th colspan="2" class="aspecto_evaluar">Aspecto a evaluar</th>
-                      <th class="aspecto_evaluar">Peso</th>
-                      <th class="aspecto_evaluar">Calificación</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr>
-                      <td rowspan="6" class="w20p">
-                        <h2>TOLERANCIA AL ESTRÉS</h2>
-                      </td>
-                      <td class="item_align_form"></td>Se comunica de forma adecuada con todos sus compañeros.</td>
-                      <td class="w10p">20%</td>
-                      <td class="w20p">
-                        ${dataform["estres1"]}
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="item_align_form"></td>Fomenta y practica el respeto hacia todos los trabajadores de la
-                      empresa.</td>
-                      <td>20%</td>
-                      <td class="w20p"> ${dataform["estres2"]}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form"></td>Capacidad para interceder en los conflictos que existen dentro de
-                      su equipo de trabajo</td>
-                      <td>20%</td>
-                      <td class="w20p">${dataform["estres3"]}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form"></td>Sabe trabajar en equipo, integrándose y participando
-                      positivamente para alcanzar los
-                      objetivos
-                      y
-                      metas comunes</td>
-                      <td>20%</td>
-                      <td class="w20p">${dataform["estres4"]}</td>
-                    </tr>
-                    <tr>
-                      <td class="item_align_form"></td>Capacidad de desempeñarse eficientemente en situaciones
-                      estresantes y poder sobrellevar las
-                      complicaciones</td>
-                      <td>20%</td>
-                      <td class="w20p">${dataform["estres5"]}</td>
-                    </tr>
-
-                    <tr>
-                      <td class="item_align_form">Desempeño promedio</td>
-                      <td>100%</td>
-                      <td><input type="number" readonly="readonly" id="estres_total" name="estres_total"
-                          class=" evaluacion_puntaje w30p" value="${averageEstres}"></td>
-                    </tr>
-                  </tbody>
-
-                </table>
-              </div>
-              <!-- ERRROR ELEMENT -->
-              <div class="item_format">
-                <p class="error_message" id="tipo_inspeccion_error"></p>
-              </div>
-            </div>
-
-
-
-            <div class="box_format">
-
-              <!--TITLE ELEMENT-->
-
-              <div class="item_format">
-                <label for="">Oportunidades de mejora</label>
-              </div>
-
-              <!--CONTENT ELEMENT-->
-
-              <div class="item_format">
-                <textarea readonly="readonly" class="item_format_input item_format_textarea" name="oportunidadMejora"
-                  id="oportunidadMejora" cols="30" rows="10">${
-                    dataform.oportunidadMejora
-                  }</textarea>
-              </div>
-
-              <!-- ERRROR ELEMENT -->
-              <div class="item_format">
-                <p class="error_message" id="descripcion_error"></p>
-              </div>
-
-            </div>
-
-
-            <div class="align_items_space">
-
-              <div>
-                <div class="border_firma"><img src="firmas/${
-                  dataform.firmaEvaluador
-                }"></div>
-                <div> Firma del evaluador</div>
-              </div>
-
-              <div class="box_format">
-                <div class="item_format">
-                  <br>
-                  <h4>Firma</h4>
-                  <br>
-                </div>
-                <div class="item_format">
-                  <div>
-                    <canvas class="firmaBordes" id="firma" width="240" height="300"></canvas>
-                    <span id="firmado" class="oculto"></span>
-                  </div>
-                </div>
-                <div class="item_format">
-                  <p id="firmaMessage"></p>
-
-                </div>
-                <div class="item_format">
-                  <button type="button" class="button-blue" id="draw-clearBtn">Borrar firma </button>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="box_format item_format_rigth">
-              <button type="submit" id="button_send_form_evaluador">Enviar</button>
-            </div>
-
-
-
-          </div>
-        </div>
-
-      </div>
-    </form>
-
-  </div>
-</div>
+  Texto a buscar <input id="searchTerm" type="text" onkeyup="doSearch()" />
+
+</form>
+
+<p>
+
+<table id="datos">
+
+  <tr>
+
+    <th>id</th>
+    <th>Nombre</th>
+    <th>Apellidos</th>
+    <th>Sexo</th>
+    <th>Edad</th>
+
+  </tr>
+
+  <tr>
+
+    <td>1</td>
+    <td>Juan</td>
+    <td>Perez</td>
+    <td>M</td>
+    <td>30</td>
+
+  </tr>
+
+  <tr>
+
+    <td>2</td>
+    <td>Jose</td>
+    <td>Vazquez</td>
+    <td>M</td>
+    <td>31</td>
+
+  </tr>
+
+  <tr>
+
+    <td>3</td>
+    <td>Luis</td>
+    <td>Astorga</td>
+    <td>M</td>
+    <td>25</td>
+
+  </tr>
+
+  <tr>
+
+    <td>4</td>
+    <td>Luisa</td>
+    <td>Valdes</td>
+    <td>F</td>
+    <td>56</td>
+
+  </tr>
+
+  <tr class='noSearch hide'>
+
+    <td colspan="5"></td>
+
+  </tr>
+
+</table>
+
+</p>

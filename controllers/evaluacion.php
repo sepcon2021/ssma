@@ -12,6 +12,8 @@ class Evaluacion extends Controller
 
   const EVALUADOR = 1;
   const EVALUADO = 2;
+  const ESTADO_CREADO = 0;
+  const ESTADO_FINALIZADO = 1;
 
   public function __construct()
   {
@@ -301,5 +303,84 @@ class Evaluacion extends Controller
     $generateEvaluacion =  new GenerateEvaluacionCompetencia();
     $url = $generateEvaluacion->generatePDF($data);
     echo json_encode($respuesta->success_200($url));
+  }
+
+  public function updateSeguimiento()
+  {
+
+    $respuesta =  new respuestas();
+
+    $idGroup = $_POST['idGroup'];
+
+    $listEvaluado =
+      $this->model->getListGroupByIdAndEstadoCreado((int)$idGroup, self::ESTADO_CREADO, self::EVALUADO);
+    $listEvaluador =
+      $this->model->getListGroupByIdAndEstadoCreado((int)$idGroup, self::ESTADO_CREADO, self::EVALUADOR);
+
+    if (count($listEvaluador) == 0 && count($listEvaluado) > 0) {
+      $this->updateJustEvaluado($listEvaluado, $idGroup);
+    }
+    if (count($listEvaluador) > 0 && count($listEvaluado) == 0) {
+      $this->updateJustEvaluador($listEvaluador, $idGroup);
+    }
+    if (count($listEvaluador) > 0 && count($listEvaluado) > 0) {
+      $this->model->updateAllEvaluacion($idGroup);
+    }
+
+    $listResult = $this->model->getListSeguimientoEvaluacion($idGroup);
+
+    echo json_encode($respuesta->success_200($listResult));
+  }
+
+  function updateAllEvaluacion($idGroup)
+  {
+
+    // Primera caso de actualizar los evaluados
+    $listEvaluadores  =  $this->model->getListGroupByIdAndEstadoCreado((int)$idGroup, self::ESTADO_CREADO, self::EVALUADOR);
+    $listEvaluadoTemp =
+      $this->model->getListGroupById((int)$idGroup, self::EVALUADO);
+    $this->model->insertBulkSeguimiento($idGroup, $listEvaluadoTemp, $listEvaluadores);
+    $this->model->updateCompetenciaUsuarioByIdUsuario($idGroup, self::EVALUADOR);
+
+    // Segundo caso de actualizar los evaluadores
+    // En listTemp extraemos los evaluadores que aun no realizaron el cruce con los demas evaluados
+    $listTemp = array();
+    $listEvaluadorTemp = $this->model->getListGroupById((int)$idGroup, self::EVALUADOR);
+
+    foreach ($listEvaluadorTemp as $evaluadorTemp) {
+      $state = false;
+      foreach ($listEvaluadores as $evaluador) {
+        if ($evaluadorTemp["dni"] == $evaluador["dni"]) {
+          $state = true;
+        }
+      }
+
+      if (!$state) {
+        array_push($listTemp, $evaluadorTemp);
+      }
+    }
+
+
+    $listEvaluados  =  $this->model->getListGroupByIdAndEstadoCreado((int)$idGroup, self::ESTADO_CREADO, self::EVALUADO);
+
+
+    $this->model->insertBulkSeguimiento($idGroup, $listEvaluados, $listTemp);
+    $this->model->updateCompetenciaUsuarioByIdUsuario($idGroup, self::EVALUADO);
+  }
+
+  function updateJustEvaluador($listEvaluador, $idGroup)
+  {
+    $listEvaluado = $this->model->getListGroupById($idGroup, self::EVALUADO);
+
+    $this->model->insertBulkSeguimiento($idGroup, $listEvaluado, $listEvaluador);
+    $this->model->updateCompetenciaUsuarioByIdUsuario($idGroup, self::EVALUADOR);
+  }
+
+  function updateJustEvaluado($listEvaluado, $idGroup)
+  {
+    $listEvaluador = $this->model->getListGroupById($idGroup, self::EVALUADOR);
+
+    $this->model->insertBulkSeguimiento($idGroup, $listEvaluado, $listEvaluador);
+    $this->model->updateCompetenciaUsuarioByIdUsuario($idGroup, self::EVALUADO);
   }
 }

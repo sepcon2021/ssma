@@ -1,71 +1,66 @@
-
 .bordes {
-
-    margin: 20px;
-    padding: 10px;
-    background-color: #F2F2F2;
-    border-radius: 5px;
+  margin: 20px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
 }
 
 .succesMessage {
-    margin: 20px;
-    padding: 10px;
-    font-size: 20px;
+  margin: 20px;
+  padding: 10px;
+  font-size: 20px;
 }
 
-
-.button-style{
-background: #29D884;
-    border-radius: 10px;
-    font-size: 1rem;
-    padding: 10px;
-    margin: 10px;
-    border-color: transparent;
-    width: 20%;
+.button-style {
+  background: #26a66a;
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 10px;
+  margin: 10px;
+  border-color: transparent;
+  width: 20%;
 }
 
 .firmaBordes {
-    border: 1px dotted #12203E;
+  border: 1px dotted #12203e;
 }
 
 #btnRegister {
-    background-color: #1989FF;
-    border-radius: 16px;
-    border: 1px solid white;
-    width: 100%;
-    height: 50px;
-    color: white;
+  background-color: #1989ff;
+  border-radius: 16px;
+  border: 1px solid white;
+  width: 100%;
+  height: 50px;
+  color: white;
 }
 
-
-
 .error_message {
-    color: red;
-    visibility: hidden;
+  color: red;
+  visibility: hidden;
 }
 
 #firmaMessage {
-    color: red;
-    size: 14px;
+  color: red;
+  size: 14px;
 }
 
 .descargar {
-    background-color: #1989FF;
-    border-radius: 16px;
-    border: 1px solid #1989FF;
-    width: 100%;
-    height: 30px;
-    padding: 2px;
-    color: white;
+  background-color: #1989ff;
+  border-radius: 16px;
+  border: 1px solid #1989ff;
+  width: 100%;
+  height: 30px;
+  padding: 2px;
+  color: white;
 }
 
 .buttonInicio {
-    background-color: #1989FF;
-    border-radius: 16px;
-    border: 1px solid #1989FF;
-    height: 30px;
-    padding: 20px;
-    color: white;
+  background-color: #1989ff;
+  border-radius: 16px;
+  border: 1px solid #1989ff;
+  height: 30px;
+  padding: 20px;
+  color: white;
 }
 
 /*#comentario {
@@ -74,140 +69,131 @@ background: #29D884;
 }*/
 
 .comentario {
-    width: 100%;
-    height: 80px;
-    margin-top: 8px;
+  width: 100%;
+  height: 80px;
+  margin-top: 8px;
 }
 
-.tableroDescarga{
-    width: 100%;
-    height: auto;
-    background:#12203E ;
-    border-radius: 8px;
+.tableroDescarga {
+  width: 100%;
+  height: auto;
+  background: #12203e;
+  border-radius: 8px;
 }
 
-.button-eliminar{
-
-    background: rgb(255, 51, 51);
-    border-radius: 16px;
-    border: 1px solid rgb(255, 51, 51);
-    font-size: 1rem;
-    padding: 10px;
-    margin: 10px;
-    border-color: transparent;
-    color: white;
+.button-eliminar {
+  background: rgb(255, 51, 51);
+  border-radius: 16px;
+  border: 1px solid rgb(255, 51, 51);
+  font-size: 1rem;
+  padding: 10px;
+  margin: 10px;
+  border-color: transparent;
+  color: white;
 }
-
 
 .descargarDocumento {
-    background-color: #1989FF;
-    border-radius: 16px;
-    border: 1px solid #1989FF;
-    width: 20%;
-    padding: 10px;
-    margin: 10px;
-    color: white;
+  background-color: #1989ff;
+  border-radius: 16px;
+  border: 1px solid #1989ff;
+  width: 20%;
+  padding: 10px;
+  margin: 10px;
+  color: white;
 }
 
-.icon-download{
-    width: 20px;
-    height: 20px;
+.icon-download {
+  width: 20px;
+  height: 20px;
 }
 
-.titulo-descargable{
-    color:white;
-    padding-left: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+.titulo-descargable {
+  color: white;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-
-.contenidoStart{
-
-    border: 5px solid white;
-    border-radius: .5em;
-    display: flex;
-    width: 100%;
-    height: auto;
-    justify-content: flex-start;
-    align-items: flex-start;
+.contenidoStart {
+  border: 5px solid white;
+  border-radius: 0.5em;
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
-.contenidoFinish{
-
-    /*border: 5px solid white;*/
-    border-radius: .5em;
-    display: flex;
-    width: 100%;
-    height: auto;
-    justify-content: flex-end;
-    align-items: flex-end;
+.contenidoFinish {
+  /*border: 5px solid white;*/
+  border-radius: 0.5em;
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .titulos {
-    width: 100%;
-    height: auto;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    font-size: 18px;
-    
+  width: 100%;
+  height: auto;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  font-size: 18px;
 }
 
-
-.alternativa{
-    width: 100%;
-    height: 25px;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    
+.alternativa {
+  width: 100%;
+  height: 25px;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
 }
 
-.boxAlternativa{
-    margin-top: 16px;
-    margin-bottom: 16px;
+.boxAlternativa {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
-.puntaje{
-    width: 80px;
+.puntaje {
+  width: 80px;
 }
 
-.iconoEliminar{
-    width: 15px;
-    height: 15px;
+.iconoEliminar {
+  width: 15px;
+  height: 15px;
 }
 
 .eliminar {
-    background-color: transparent;
-    border-color: transparent;
+  background-color: transparent;
+  border-color: transparent;
 }
 
-.iconoEliminarAlternativa{
-    width: 7px;
-    height: 7px;
+.iconoEliminarAlternativa {
+  width: 7px;
+  height: 7px;
 }
-.buttonEliminarAlternativa{
-    background-color: transparent;
-    border-color: transparent;
-}
-
-.agregarAlternativa{
-    background: #29D884;
-    border-radius: 5%;
-    font-size: 1rem;
-    padding: 5px;
-    border-color: transparent;
-    color: white;
+.buttonEliminarAlternativa {
+  background-color: transparent;
+  border-color: transparent;
 }
 
+.agregarAlternativa {
+  background: #26a66a;
+  border-radius: 5%;
+  font-size: 1rem;
+  padding: 5px;
+  border-color: transparent;
+  color: white;
+}
 
 .icon_plus {
-    height: 30px;
-    width: 30px;
+  height: 30px;
+  width: 30px;
 }
 
-.download{
-    padding: 10px;
-    text-decoration: revert;
+.download {
+  padding: 10px;
+  text-decoration: revert;
 }
