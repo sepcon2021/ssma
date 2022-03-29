@@ -41,7 +41,7 @@ $(function () {
             <div>Estadística</div>
             <div><i class="fa-solid fa-book fa-xs space-between"></i>Formulario</div>
             <div><i class="fa-solid fa-chalkboard-user fa-xs space-between"></i>Lecciones aprendidas</div>
-            <div><i class="fa-solid fa-graduation-cap fa-xs space-between"></i>Evaluaciones por competencia </div>
+            <div><i class="fa-solid fa-graduation-cap fa-xs space-between"></i>Evaluación competencias </div>
             `;
     }
 
@@ -283,6 +283,14 @@ $(function () {
       );
       removeClass();
     }
+    if (indexPage == 6) {
+      document.querySelector(".mainpage").innerHTML = EvaluacionUsuario();
+      initEvaluacionUsuario();
+      removeClass();
+    }
+
+    console.log("index");
+    console.log(indexPage);
   }
 
   function getFirstWordName(name, apellido) {

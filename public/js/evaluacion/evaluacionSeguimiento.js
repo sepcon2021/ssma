@@ -64,7 +64,7 @@ function drawHtmlUsuario(listUsuario) {
             : "<div class='greenEstado'>Finalizado</div>"
         } </td>
 
-        <td> <button class="botton_download" ><i class="fa-solid fa-download"></i></button></td>
+        <td> <button class="botton_download" ><!--<i class="fa-solid fa-download"></i>--> Descargar </button></td>
       </tr>
       `;
 
@@ -207,6 +207,8 @@ function downloadPDF() {
       var row = cell.parentNode;
       var rowFirstCellText = row.querySelector("td").innerHTML;
 
+      console.log(rowFirstCellText);
+
       let formData = new FormData();
       formData.append("id", rowFirstCellText);
 
@@ -222,6 +224,7 @@ function downloadPDF() {
           window.open(url, "_blank");
           document.getElementById("table_evaluador").hidden = false;
           loadHtml("download_report", false);
+          rowFirstCellText = null;
         },
       });
     },

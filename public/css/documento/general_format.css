@@ -560,6 +560,10 @@ a {
   border: 1px dotted #12203e;
 }
 
+.firmaBordes_fail {
+  border: 3px dotted red;
+}
+
 .error_message {
   color: red;
   visibility: hidden;

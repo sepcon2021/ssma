@@ -1,4 +1,5 @@
 import { ajaxPost } from "../helpers/ajax.js";
+import { validateCamposGeneral } from "../validate/validate.js";
 
 import EvaluacionUsuario, {
   initEvaluacionUsuario,
@@ -533,33 +534,37 @@ export function sendFormEvaluador() {
     .addEventListener("submit", function (event) {
       event.preventDefault();
 
-      var firmaTrabajador = document.getElementById("firma");
+      if (answerValidateCampos()) {
+        var firmaTrabajador = document.getElementById("firma");
 
-      const formDataImg = new FormData();
-      formDataImg.append("img", firmaTrabajador.toDataURL());
+        const formDataImg = new FormData();
+        formDataImg.append("img", firmaTrabajador.toDataURL());
 
-      const formData = new FormData(event.target);
+        const formData = new FormData(event.target);
 
-      loadHtml("usuarioDetail", true);
+        loadHtml("usuarioDetail", true);
 
-      ajaxPost({
-        url: RUTA + "public/inc/uploadFirmaEvaluacion.php",
-        body: formDataImg,
-        cbSuccess: (data) => {
-          console.log(data.url);
+        ajaxPost({
+          url: RUTA + "public/inc/uploadFirmaEvaluacion.php",
+          body: formDataImg,
+          cbSuccess: (data) => {
+            console.log(data.url);
 
-          formData.append("firmaEvaluador", data.url);
+            formData.append("firmaEvaluador", data.url);
 
-          ajaxPost({
-            url: RUTA + "evaluacion/updateEvaluador",
-            body: formData,
-            cbSuccess: (dataJson) => {
-              console.log(dataJson);
-              usuarioEvaluadorHtml();
-            },
-          });
-        },
-      });
+            ajaxPost({
+              url: RUTA + "evaluacion/updateEvaluador",
+              body: formData,
+              cbSuccess: (dataJson) => {
+                console.log(dataJson);
+                usuarioEvaluadorHtml();
+              },
+            });
+          },
+        });
+      } else {
+        alert("Es obligatorio llenar todos los campos");
+      }
     });
 }
 
@@ -581,4 +586,35 @@ export function backUsuarioEvaluador() {
     document.querySelector(".mainpage").innerHTML = EvaluacionUsuario();
     initEvaluacionUsuario();
   };
+}
+
+function answerValidateCampos() {
+  const SELECT = 1;
+
+  let listCampos = [
+    { campo: "compromiso_1", tipo: SELECT },
+    { campo: "compromiso_2", tipo: SELECT },
+    { campo: "compromiso_3", tipo: SELECT },
+    { campo: "compromiso_4", tipo: SELECT },
+    { campo: "compromiso_5", tipo: SELECT },
+    { campo: "compromiso_1", tipo: SELECT },
+
+    { campo: "seguridad_1", tipo: SELECT },
+    { campo: "seguridad_2", tipo: SELECT },
+    { campo: "seguridad_3", tipo: SELECT },
+    { campo: "seguridad_4", tipo: SELECT },
+    { campo: "seguridad_5", tipo: SELECT },
+
+    { campo: "estres_1", tipo: SELECT },
+    { campo: "estres_2", tipo: SELECT },
+    { campo: "estres_3", tipo: SELECT },
+    { campo: "estres_4", tipo: SELECT },
+    { campo: "estres_5", tipo: SELECT },
+  ];
+
+  if (validateCamposGeneral(listCampos) > 0) {
+    return false;
+  } else {
+    return true;
+  }
 }

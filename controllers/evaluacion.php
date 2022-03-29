@@ -1,6 +1,6 @@
 <?php
 
-require_once 'entity/evaluacionEntity.php';
+/*require_once 'entity/evaluacionEntity.php';*/
 require_once 'status/repuestas.php';
 require_once 'public/PHPExcel/PHPExcel.php';
 require_once 'public/upload-photo/upload-image.php';
@@ -45,7 +45,7 @@ class Evaluacion extends Controller
       '';
 
     $evaluacionEntity =
-      compact('idGroup,idUsuario,nombre,descripcion, puestoEvaluador, puestoEvaluado');
+      compact('idGroup', 'idUsuario', 'nombre', 'descripcion', 'puestoEvaluador', 'puestoEvaluado');
     //new EvaluacionEntity(0, $idUsuario, $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
 
     $result = $this->model->createGroup($evaluacionEntity);
@@ -73,7 +73,7 @@ class Evaluacion extends Controller
 
 
     $evaluacionEntity =
-      compact('idGroup', 'idUsuario', 'nombre', '', 'puestoEvaluador', 'puestoEvaluado');
+      compact('idGroup', 'nombre', 'descripcion', 'puestoEvaluador', 'puestoEvaluado');
     //new EvaluacionEntity($idGroup, '', $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
 
 

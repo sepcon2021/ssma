@@ -11,7 +11,7 @@ class EvaluacionModel extends Model
     parent::__construct();
   }
 
-  public function createGroup(EvaluacionEntity $evaluacionEntity)
+  public function createGroup($evaluacionEntity)
   {
 
     $conexion_bbdd = $this->db->connect();
@@ -72,6 +72,7 @@ class EvaluacionModel extends Model
 
       return $list;
     } catch (PDOException $exception) {
+      echo $exception->getMessage();
       $respuesta =  new respuestas();
       echo json_encode($respuesta->error_404());
       exit;
@@ -79,7 +80,7 @@ class EvaluacionModel extends Model
   }
 
 
-  public function updateGroup(EvaluacionEntity $evaluacionEntity)
+  public function updateGroup($evaluacionEntity)
   {
 
     try {
