@@ -35,6 +35,7 @@ class Evaluacion extends Controller
 
     $respuesta =  new respuestas();
 
+    $idGroup = 0;
     $idUsuario = $_POST["idUsuario"];
     $nombre = $_POST["nombre"];
     $descripcion = isset($_POST["descripcion"]) ?  $_POST["descripcion"] : '';
@@ -43,7 +44,10 @@ class Evaluacion extends Controller
     $puestoEvaluado = isset($_POST["puestoEvaluado"]) ? $_POST["puestoEvaluado"] :
       '';
 
-    $evaluacionEntity =  new EvaluacionEntity(0, $idUsuario, $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
+    $evaluacionEntity =
+      compact('idGroup,idUsuario,nombre,descripcion, puestoEvaluador, puestoEvaluado');
+    //new EvaluacionEntity(0, $idUsuario, $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
+
     $result = $this->model->createGroup($evaluacionEntity);
     echo json_encode($respuesta->success_200($result));
   }
@@ -68,7 +72,10 @@ class Evaluacion extends Controller
       '';
 
 
-    $evaluacionEntity =  new EvaluacionEntity($idGroup, '', $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
+    $evaluacionEntity =
+      compact('idGroup', 'idUsuario', 'nombre', '', 'puestoEvaluador', 'puestoEvaluado');
+    //new EvaluacionEntity($idGroup, '', $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
+
 
     $result = $this->model->updateGroup($evaluacionEntity);
 

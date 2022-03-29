@@ -23,12 +23,23 @@ class EvaluacionModel extends Model
     (:idUsuario ,:nombre,:descripcion,:puestoEvaluador,:puestoEvaluado)");
 
       $query->execute([
+        "idUsuario" => $evaluacionEntity["idUsuario"],
+        "nombre" => $evaluacionEntity["nombre"],
+        "descripcion" => $evaluacionEntity["descripcion"],
+        "puestoEvaluador" => $evaluacionEntity["puestoEvaluador"],
+        "puestoEvaluado" => $evaluacionEntity["puestoEvaluado"],
+      ]);
+
+      /**
+       * 
+       *       $query->execute([
         "idUsuario" => $evaluacionEntity->idUsuario,
         "nombre" => $evaluacionEntity->nombre,
         "descripcion" => $evaluacionEntity->descripcion,
         "puestoEvaluador" => $evaluacionEntity->puestoEvaluador,
         "puestoEvaluado" => $evaluacionEntity->puestoEvaluado,
       ]);
+       */
 
       $last_insert_id = $conexion_bbdd->lastInsertId();
 
@@ -84,13 +95,22 @@ class EvaluacionModel extends Model
     ");
 
 
+
       $query->execute([
+        "nombre" => $evaluacionEntity["nombre"],
+        "descripcion" => $evaluacionEntity["descripcion"],
+        "puestoEvaluador" => $evaluacionEntity["puestoEvaluador"],
+        "puestoEvaluado" => $evaluacionEntity["puestoEvaluado"],
+        "id" => $evaluacionEntity["idGroup"]
+      ]);
+
+      /*$query->execute([
         "nombre" => $evaluacionEntity->nombre,
         "descripcion" => $evaluacionEntity->descripcion,
         "puestoEvaluador" => $evaluacionEntity->puestoEvaluador,
         "puestoEvaluado" => $evaluacionEntity->puestoEvaluado,
         "id" => $evaluacionEntity->idGroup
-      ]);
+      ]);*/
 
       return true;
     } catch (PDOException $exception) {
