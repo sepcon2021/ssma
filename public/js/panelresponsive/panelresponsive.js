@@ -53,9 +53,12 @@ $(function () {
   }
 
   function emptySession() {
-    if (sessionStorage.getItem("dataTrabajador") == null) {
+    if (getCookie("dataTrabajador") == undefined) {
       window.location.replace(RUTA);
     } else {
+      //let dataJson = JSON.parse(getCookie("dataTrabajador"));
+
+      sessionStorage.setItem("dataTrabajador", getCookie("dataTrabajador"));
       dataJson = JSON.parse(sessionStorage.getItem("dataTrabajador"));
 
       var nombres = dataJson.result[0].nombres;
@@ -341,4 +344,13 @@ function logout() {
     sessionStorage.removeItem("dataTrabajador");
     window.location.replace(RUTA);
   };
+}
+
+function getCookie(name) {
+  let cookie = {};
+  document.cookie.split(";").forEach(function (el) {
+    let [k, v] = el.split("=");
+    cookie[k.trim()] = v;
+  });
+  return cookie[name];
 }
