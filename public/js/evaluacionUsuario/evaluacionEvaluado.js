@@ -63,6 +63,9 @@ function drawHtmlUsuario(listUsuario) {
         <td>${usuario.id}</td>
         <td>${usuario.usuarioEvaluado}</td>
         <td>${usuario.descripcionCargo}</td>
+                <td>${usuario.dni}</td>
+        <td>${usuario.dcostos}</td>
+        <td>${usuario.estado == 1 ? "Pendiente" : "Finalizado"}</td>
       </tr>
       `;
 
@@ -76,8 +79,11 @@ function drawHtmlUsuario(listUsuario) {
           <thead>
             <tr class="active-row">
               <th>Id</th>
-              <th>Evaluador</th>
+              <th>Evaluado</th>
               <th>Cargo</th>
+              <th>DNI</th>
+              <th>C. costos</th>
+              <th>Estado</th>
             </tr>
             <thead>
             <tbody id="table_seguimiento">

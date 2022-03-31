@@ -50,8 +50,12 @@
           <span class="amount_notification">3</span>
         </div>
 
-        <div class="circle">
+        <div class="circle" id="circle">
           <p id="header_usuario_inicial"> J</p>
+          <div id="header_cerrar_sesion">
+
+
+          </div>
         </div>
 
         <div id="header_usuario_datos">

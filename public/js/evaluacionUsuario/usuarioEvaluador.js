@@ -62,6 +62,8 @@ function drawHtmlUsuario(listUsuario) {
         <td>${usuario.id}</td>
         <td>${usuario.usuarioEvaluado}</td>
         <td>${usuario.descripcionCargo}</td>
+        <td>${usuario.dni}</td>
+        <td>${usuario.dcostos}</td>
         <td>${usuario.estado == 0 ? "Pendiente" : "Finalizado"}</td>
       </tr>
       `;
@@ -78,6 +80,8 @@ function drawHtmlUsuario(listUsuario) {
               <th>Id</th>
               <th>Evaluado</th>
               <th>Cargo</th>
+              <th>DNI</th>
+              <th>C. costos</th>
               <th>Estado</th>
             </tr>
             <thead>
@@ -113,12 +117,14 @@ function listenGroup() {
 
       const idGrupo = dataTr.querySelectorAll("td")[0].innerText,
         nombre = dataTr.querySelectorAll("td")[1].innerText,
-        cargo = dataTr.querySelectorAll("td")[2].innerText;
+        cargo = dataTr.querySelectorAll("td")[2].innerText,
+        dni = dataTr.querySelectorAll("td")[3].innerText;
 
       document.querySelector(".mainpage").innerHTML = UsuarioEvaluadorDetail(
         idGrupo,
         nombre,
-        cargo
+        cargo,
+        dni
       );
 
       firma();

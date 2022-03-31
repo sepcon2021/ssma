@@ -7,7 +7,8 @@
 
 
   <div class="item_format">Administrador de evaluación por competencias / Evaluación</div>
-
+  <div class="item_format_rigth"> <button id="competencia_detail_delete" class="botton_delete_evento"> <i class="fa-solid fa-xmark"></i>
+      Eliminar</button></div>
   <br><br>
   <div id="competenciaDetalle_tabs">
     <div class="sidebarCompetencia">

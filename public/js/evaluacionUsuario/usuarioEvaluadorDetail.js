@@ -5,7 +5,12 @@ import EvaluacionUsuario, {
   initEvaluacionUsuario,
 } from "./evaluacionUsuario.js";
 
-export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
+export default function UsuarioEvaluadorDetail(
+  idGrupo,
+  nombre,
+  cargo,
+  dniEvaluado
+) {
   const data = JSON.parse(sessionStorage.getItem("dataTrabajador")),
     dni = data.result[0].dni;
 
@@ -43,9 +48,9 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
             </div>
 
             <div class="wrap_document_format_head_code">
-              <p>PSPC-110-X-FR-0XX</p>
+              <p>PSPC-100-X-PR-010-FR-001</p>
               <p>Revisión: 0</p>
-              <p>Emisión: XX/03/2022</p>
+              <p>Emisión: 09/03/2022</p>
               <p>Pagina: 1 de 1</p>
             </div>
 
@@ -54,12 +59,10 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
           <div class="wrap_document_format_head">
 
             <div class="wrap_document_format_head_icon">
-
+            <h4>Datos del evaluado</h4>
             </div>
 
             <div class="wrap_document_format_head_title">
-                        <div class="item_format">Nombre y apellidos : ${nombre}</div>
-            <div class="item_format">Cargo : ${cargo}</div>
             </div>
 
             <div class="wrap_document_format_head_code">
@@ -90,11 +93,22 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
 
           </div>
 
+
+
+          <div class="wrap_document_format_head">
+            <div class="w50p item_format">Nombres y apellidos :${nombre} </div>
+            <div class="w30p item_format">Cargo : ${cargo}</div>
+            <div class="w20p">DNI : ${dniEvaluado}</div>
+          </div>
+
+
           <div class="wrap_document_format_body">
             <form class="general_form" action="" id="formDigital">
 
               <input type="hidden" id="nombres" name="nombres">
               <input type="hidden" id="internal" name="internal">
+
+
 
 
 
@@ -414,7 +428,7 @@ export default function UsuarioEvaluadorDetail(idGrupo, nombre, cargo) {
               <div class="box_format">
                 <div class="item_format">
                   <br>
-                  <h4>Firma del trabajador</h4>
+                  <h4>Firma</h4>
                   <br>
                 </div>
                 <div class="item_format">

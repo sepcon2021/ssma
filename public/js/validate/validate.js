@@ -41,7 +41,7 @@ function changeClassErrorSelect(name) {
   });
 }
 
-function isCanvasBlank() {
+export function isCanvasBlank() {
   var canvas = document.getElementById("firma");
 
   const context = canvas.getContext("2d");

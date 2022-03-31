@@ -1,5 +1,5 @@
 <?php
-require_once 'entity/evaluacionEntity.php';
+/*require_once 'entity/evaluacionEntity.php';*/
 require_once 'status/repuestas.php';
 
 
@@ -11,35 +11,23 @@ class EvaluacionModel extends Model
     parent::__construct();
   }
 
-  public function createGroup($evaluacionEntity)
+  public function createEvento($evento)
   {
-
     $conexion_bbdd = $this->db->connect();
 
     try {
 
-      $query = $conexion_bbdd->prepare("INSERT competencia_grupo 
-    (idUsuario ,nombre,descripcion,puestoEvaluador,puestoEvaluado) VALUES 
-    (:idUsuario ,:nombre,:descripcion,:puestoEvaluador,:puestoEvaluado)");
+      $query = $conexion_bbdd->prepare("INSERT competencia_evento 
+    (idUsuario ,idProyecto,nombre,carpeta) VALUES 
+    (:idUsuario ,:idProyecto ,:nombre,:carpeta)");
 
       $query->execute([
-        "idUsuario" => $evaluacionEntity["idUsuario"],
-        "nombre" => $evaluacionEntity["nombre"],
-        "descripcion" => $evaluacionEntity["descripcion"],
-        "puestoEvaluador" => $evaluacionEntity["puestoEvaluador"],
-        "puestoEvaluado" => $evaluacionEntity["puestoEvaluado"],
+        "idUsuario" => $evento["idUsuario"],
+        "nombre" => $evento["nombre"],
+        "carpeta" => $evento["carpeta"],
+        "idProyecto" => $evento["idProyecto"],
       ]);
 
-      /**
-       * 
-       *       $query->execute([
-        "idUsuario" => $evaluacionEntity->idUsuario,
-        "nombre" => $evaluacionEntity->nombre,
-        "descripcion" => $evaluacionEntity->descripcion,
-        "puestoEvaluador" => $evaluacionEntity->puestoEvaluador,
-        "puestoEvaluado" => $evaluacionEntity->puestoEvaluado,
-      ]);
-       */
 
       $last_insert_id = $conexion_bbdd->lastInsertId();
 
@@ -52,7 +40,97 @@ class EvaluacionModel extends Model
   }
 
 
-  public function getListGroup()
+  public function getListEvento($idProyecto)
+  {
+
+    $list = array();
+
+    try {
+
+      $query = $this->db->connect()->prepare("SELECT  
+     id,idUsuario,nombre,carpeta,disponible,registro,idProyecto
+     FROM competencia_evento
+     WHERE idProyecto = :idProyecto
+     ");
+
+      $query->execute(["idProyecto" => $idProyecto]);
+
+      while ($row = $query->fetch()) {
+        array_push($list, $row);
+      }
+
+      return $list;
+    } catch (PDOException $exception) {
+      echo $exception->getMessage();
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+  public function updateEvento($evento)
+  {
+    try {
+
+      $query = $this->db->connect()->prepare("UPDATE competencia_evento  SET 
+     nombre = :nombre 
+     WHERE id = :id
+    
+    ");
+
+
+
+      $query->execute([
+        "nombre" => $evento["nombre"],
+        "id" => $evento["id"]
+      ]);
+
+
+
+      return true;
+    } catch (PDOException $exception) {
+      echo $exception;
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+
+
+  public function createGroup($evaluacionEntity)
+  {
+
+    $conexion_bbdd = $this->db->connect();
+
+    try {
+
+      $query = $conexion_bbdd->prepare("INSERT competencia_grupo 
+    (idUsuario ,idEvento ,nombre,descripcion,puestoEvaluador,puestoEvaluado) VALUES 
+    (:idUsuario ,:idEvento,:nombre,:descripcion,:puestoEvaluador,:puestoEvaluado)");
+
+      $query->execute([
+        "idUsuario" => $evaluacionEntity["idUsuario"],
+        "nombre" => $evaluacionEntity["nombre"],
+        "descripcion" => $evaluacionEntity["descripcion"],
+        "puestoEvaluador" => $evaluacionEntity["puestoEvaluador"],
+        "puestoEvaluado" => $evaluacionEntity["puestoEvaluado"],
+        "idEvento" => $evaluacionEntity["idEvento"],
+      ]);
+
+
+      $last_insert_id = $conexion_bbdd->lastInsertId();
+
+      return $last_insert_id;
+    } catch (PDOException $exception) {
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+
+  public function getListGroup($idEvento)
   {
 
     $list = array();
@@ -62,9 +140,10 @@ class EvaluacionModel extends Model
       $query = $this->db->connect()->prepare("SELECT  
      id ,idUsuario ,nombre,descripcion,puestoEvaluador,puestoEvaluado,registro
      FROM competencia_grupo 
+     WHERE idEvento = :idEvento
      ");
 
-      $query->execute();
+      $query->execute(["idEvento" => $idEvento]);
 
       while ($row = $query->fetch()) {
         array_push($list, $row);
@@ -105,13 +184,7 @@ class EvaluacionModel extends Model
         "id" => $evaluacionEntity["idGroup"]
       ]);
 
-      /*$query->execute([
-        "nombre" => $evaluacionEntity->nombre,
-        "descripcion" => $evaluacionEntity->descripcion,
-        "puestoEvaluador" => $evaluacionEntity->puestoEvaluador,
-        "puestoEvaluado" => $evaluacionEntity->puestoEvaluado,
-        "id" => $evaluacionEntity->idGroup
-      ]);*/
+
 
       return true;
     } catch (PDOException $exception) {
@@ -264,6 +337,65 @@ ORDER BY competencia_evaluacion.dniEvaluador DESC
       exit;
     }
   }
+
+
+  public function getListSeguimientoEvaluacionGeneral($idEvento)
+  {
+
+    $list = array();
+
+    try {
+
+      $query = $this->db->connect()->prepare("SELECT 
+competencia_grupo.id AS idGrupo,
+competencia_evaluacion.id,
+competencia_evaluacion.dniEvaluador,
+CONCAT(tabla_aquarius_evaluador.nombres , ' ' ,tabla_aquarius_evaluador.apellidos) AS usuarioEvaluador , 
+competencia_evaluacion.dniEvaluado,
+CONCAT(tabla_aquarius_evaluado.nombres , ' ' ,tabla_aquarius_evaluado.apellidos) AS usuarioEvaluado ,
+      competencia_evaluacion.firmaEvaluador,
+      competencia_evaluacion.firmaEvaluado,
+      competencia_evaluacion.compromiso1 ,
+      competencia_evaluacion.compromiso2 ,
+      competencia_evaluacion.compromiso3 ,
+      competencia_evaluacion.compromiso4 ,
+      competencia_evaluacion.compromiso5 ,
+      competencia_evaluacion.seguridad1,
+      competencia_evaluacion.seguridad2 ,
+      competencia_evaluacion.seguridad3 ,
+      competencia_evaluacion.seguridad4 ,
+      competencia_evaluacion.seguridad5 ,
+      competencia_evaluacion.estres1 ,
+      competencia_evaluacion.estres2 ,
+      competencia_evaluacion.estres3 ,
+      competencia_evaluacion.estres4 ,
+      competencia_evaluacion.estres5 ,
+      competencia_evaluacion.oportunidadMejora,
+      competencia_grupo.idEvento
+FROM 
+
+competencia_evaluacion INNER JOIN rrhh.tabla_aquarius  AS tabla_aquarius_evaluador ON competencia_evaluacion.dniEvaluador = tabla_aquarius_evaluador.dni
+					 INNER JOIN rrhh.tabla_aquarius  AS tabla_aquarius_evaluado ON competencia_evaluacion.dniEvaluado = tabla_aquarius_evaluado.dni
+                     INNER JOIN competencia_grupo ON competencia_grupo.id = competencia_evaluacion.idGrupo
+WHERE competencia_grupo.idEvento = :idEvento
+ORDER BY competencia_evaluacion.dniEvaluador DESC
+     ");
+
+      $query->execute(["idEvento" => $idEvento]);
+
+      while ($row = $query->fetch()) {
+        array_push($list, $row);
+      }
+
+      return $list;
+    } catch (PDOException $exception) {
+      echo $exception;
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
 
   public function getListUsuario($idTipoUsuario, $idGroup)
   {
@@ -419,6 +551,7 @@ competencia_evaluacion.idGrupo,
 tabla_aquarius_evaluado.dni,
 CONCAT(tabla_aquarius_evaluado.nombres , ' ' ,tabla_aquarius_evaluado.apellidos) AS usuarioEvaluado ,
 tabla_aquarius_evaluado.dcargo AS descripcionCargo,
+tabla_aquarius_evaluado.dcostos,
 competencia_evaluacion.estado
 FROM 
 
@@ -456,6 +589,7 @@ competencia_evaluacion.idGrupo,
 tabla_aquarius_evaluador.dni,
 CONCAT(tabla_aquarius_evaluador.nombres , ' ' ,tabla_aquarius_evaluador.apellidos) AS usuarioEvaluado ,
 tabla_aquarius_evaluador.dcargo AS descripcionCargo,
+tabla_aquarius_evaluador.dcostos,
 competencia_evaluacion.estado,
 
 
@@ -643,9 +777,9 @@ tabla_aquarius_evaluado.dcargo AS descripcionCargoEvaluado,
       competencia_evaluacion.estres3 ,
       competencia_evaluacion.estres4 ,
       competencia_evaluacion.estres5 ,
-      competencia_evaluacion.oportunidadMejora 
+      competencia_evaluacion.oportunidadMejora,
 
-
+competencia_evaluacion.registro
 FROM 
 
 competencia_evaluacion INNER JOIN rrhh.tabla_aquarius  AS tabla_aquarius_evaluador ON competencia_evaluacion.dniEvaluador = tabla_aquarius_evaluador.dni
@@ -747,6 +881,44 @@ ORDER BY competencia_evaluacion.dniEvaluador DESC
       return true;
     } catch (PDOException $exception) {
       echo "Paso3";
+
+      echo $exception;
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+  public function deleteEvento($idEvento)
+  {
+
+    try {
+
+      $query = $this->db->connect()->prepare("DELETE FROM competencia_evento  WHERE competencia_evento.id = :id ");
+
+      $query->execute(["id" => $idEvento]);
+
+      return true;
+    } catch (PDOException $exception) {
+
+      echo $exception;
+      $respuesta =  new respuestas();
+      echo json_encode($respuesta->error_404());
+      exit;
+    }
+  }
+
+  public function deleteGrupo($idGrupo)
+  {
+
+    try {
+
+      $query = $this->db->connect()->prepare("DELETE FROM competencia_grupo  WHERE competencia_grupo.id = :id ");
+
+      $query->execute(["id" => $idGrupo]);
+
+      return true;
+    } catch (PDOException $exception) {
 
       echo $exception;
       $respuesta =  new respuestas();

@@ -30,12 +30,58 @@ class Evaluacion extends Controller
     $this->view->render("evaluacion/UsuarioDetail");
   }
 
+  public function createEvento()
+  {
+
+    $respuesta =  new respuestas();
+
+    $idUsuario = $_POST["idUsuario"];
+    $nombre = $_POST["nombre"];
+    $carpeta = $_POST["carpeta"];
+    $idProyecto = $_POST["idProyecto"];
+
+    $evento =
+      compact('idUsuario', 'nombre', 'carpeta', 'idProyecto');
+
+
+    $result = $this->model->createEvento($evento);
+    echo json_encode($respuesta->success_200($result));
+  }
+
+  public function getListEvento()
+  {
+    $idProyecto = $_POST["idProyecto"];
+
+    $respuesta =  new respuestas();
+    $result = $this->model->getListEvento($idProyecto);
+    echo json_encode($respuesta->success_200($result));
+  }
+
+
+  public function updateEvento()
+  {
+    $respuesta =  new respuestas();
+
+    $id = $_POST["id"];
+    $nombre = $_POST["nombre"];
+
+
+    $evento =
+      compact('id', 'nombre');
+
+    $result = $this->model->updateEvento($evento);
+
+    echo json_encode($respuesta->success_200($result));
+  }
+
+
   public function createGroup()
   {
 
     $respuesta =  new respuestas();
 
     $idGroup = 0;
+    $idEvento = $_POST["idEvento"];
     $idUsuario = $_POST["idUsuario"];
     $nombre = $_POST["nombre"];
     $descripcion = isset($_POST["descripcion"]) ?  $_POST["descripcion"] : '';
@@ -45,7 +91,7 @@ class Evaluacion extends Controller
       '';
 
     $evaluacionEntity =
-      compact('idGroup', 'idUsuario', 'nombre', 'descripcion', 'puestoEvaluador', 'puestoEvaluado');
+      compact('idGroup', 'idUsuario', 'nombre', 'descripcion', 'puestoEvaluador', 'puestoEvaluado', 'idEvento');
     //new EvaluacionEntity(0, $idUsuario, $nombre, $descripcion, $puestoEvaluador, $puestoEvaluado);
 
     $result = $this->model->createGroup($evaluacionEntity);
@@ -54,8 +100,9 @@ class Evaluacion extends Controller
 
   public function getListGroup()
   {
+    $idEvento =  $_POST["idEvento"];
     $respuesta =  new respuestas();
-    $result = $this->model->getListGroup();
+    $result = $this->model->getListGroup($idEvento);
     echo json_encode($respuesta->success_200($result));
   }
 
@@ -81,6 +128,10 @@ class Evaluacion extends Controller
 
     echo json_encode($respuesta->success_200($result));
   }
+
+
+
+
 
 
 
@@ -300,6 +351,18 @@ class Evaluacion extends Controller
     echo json_encode($respuesta->success_200($url));
   }
 
+  public function downloadReporteEvento()
+  {
+    $respuesta =  new respuestas();
+
+    $idEvento = $_POST["idEvento"];
+    $listUsuario = $this->model->getListSeguimientoEvaluacionGeneral($idEvento);
+    $evaluacionCompetencia =  new ReportEvaluacionCompetencia();
+    $url = $evaluacionCompetencia->generateEvaluacionCompetenciaById($listUsuario);
+
+    echo json_encode($respuesta->success_200($url));
+  }
+
   public function downloadPdfReport()
   {
 
@@ -389,5 +452,23 @@ class Evaluacion extends Controller
 
     $this->model->insertBulkSeguimiento($idGroup, $listEvaluado, $listEvaluador);
     $this->model->updateCompetenciaUsuarioByIdUsuario($idGroup, self::EVALUADO);
+  }
+
+  function deleteEvento()
+  {
+    $respuesta =  new respuestas();
+    $idEvento = $_POST["idEvento"];
+
+    $result = $this->model->deleteEvento($idEvento);
+    echo json_encode($respuesta->success_200($result));
+  }
+
+  function deleteGrupo()
+  {
+    $respuesta =  new respuestas();
+    $idGrupo = $_POST["idGroup"];
+
+    $result = $this->model->deleteGrupo($idGrupo);
+    echo json_encode($respuesta->success_200($result));
   }
 }

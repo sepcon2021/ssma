@@ -34,7 +34,13 @@
 
           </div>
           <div class="inicio_sesion_box_top">
-            <input type="text" id="inicio_sesion_dni">
+            <input type="text" id="inicio_sesion_dni" class="inicio_sesion_dni" placeholder="DNI">
+            <p id="inicio_sesion_box_error"></p>
+          </div>
+          <br>
+
+          <div class="inicio_sesion_box_top">
+            <input type="password" id="inicio_sesion_password" class="inicio_sesion_dni" placeholder="Contraseña">
             <p id="inicio_sesion_box_error"></p>
           </div>
 

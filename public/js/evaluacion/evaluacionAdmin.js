@@ -1,15 +1,39 @@
 import evaluacionAdminDetail from "../evaluacion/evaluacionAdminDetail.js";
 
 import { ajax, ajaxNormal, ajaxPost } from "../helpers/ajax.js";
+import EvaluacionEvento, {
+  createEvento,
+  eventTableGeneralEvento,
+  initEvaluacionEvento,
+} from "./evaluacionEvento.js";
 
 export default function EvaluacionAdmin() {
   return `
  <div class="competencia container_documento scroll1">
 
   <div id="competencia_header" >
-    <div id="competencia_header_title" class="item_format"> <h3 class="title_content">Administrador de evaluación por competencias</h3></div>
-    <div id="competencia_header_add" class="item_format_rigth"> <button id="competencia_header_add_button" class="button_send_form_upload">Agregar</button></div>
+    <div id="competencia_header_title" class="item_format"><a id="back_evaluacion_general" href="#"> <i class="fa-solid fa-angle-left back-kardex fa-xl"></i> </a> <h3 class="title_content">Grupo : ${localStorage.getItem(
+      "nombreEventoTemp"
+    )}</h3></div>
+    <div id="competencia_header_add" class="item_format_rigth"> 
+
+         
+            <button id="competencia_detail_delete" class="botton_delete_evento" > 
+              <div id="box_eliminar"> <i class="fa-solid fa-xmark"></i> Eliminar</div>
+            </button>
+        
+
+      <button id="competencia_detail_download" class="botton_download" > <i class="fa-solid fa-download"></i> Reporte global </button>
+
+      <button id="competencia_header_add_button" class="button_send_form_upload"><i class="fa-solid fa-plus"></i> Agregar grupo</button>
+    
+    </div>
   </div>
+
+  
+    <div class="item_format">Administrador/ ${localStorage.getItem(
+      "nombreProyecto"
+    )} / Evento </div>
 
   <div id="competencia_content">
 
@@ -26,13 +50,18 @@ export function initEvaluacionAdmin() {
 <i class="fas fa-circle-notch fa-spin fa-2x"></i>
 </div>`;
 
-  ajax({
+  let formData = new FormData();
+  formData.append("idEvento", localStorage.getItem("idEvento"));
+
+  ajaxPost({
     url: RUTA + "evaluacion/getListGroup",
+    body: formData,
     cbSuccess: (posts) => {
       let html = ``;
       let content = ``;
       const listGroup = posts.result[0].success_message;
-      if (listGroup.length > 0) {
+
+      if (listGroup != "") {
         listGroup.forEach((element) => {
           html += `
         <tr>
@@ -47,12 +76,16 @@ export function initEvaluacionAdmin() {
         });
 
         content = createTableHtml(html);
+        document.getElementById("competencia_content").innerHTML = content;
+        listenGroup();
       } else {
         content = emptyTable();
+        document.getElementById("competencia_content").innerHTML = content;
       }
 
-      document.getElementById("competencia_content").innerHTML = content;
-      listenGroup();
+      backEvaluacionGeneral();
+      downloadReport();
+      deleteEvento();
     },
   });
 }
@@ -74,7 +107,11 @@ function createTableHtml(html) {
                     ${html}
                   <tbody>
                 </table>
-              </div>`;
+
+              </div>
+                               <div id="download_report"></div>
+
+              `;
 }
 
 function emptyTable() {
@@ -85,7 +122,7 @@ function emptyTable() {
   <div>Evaluación vacía</div>
   </div>
 </div>
-  
+
   `;
 }
 
@@ -100,6 +137,7 @@ export function createGroup() {
       var formData = new FormData();
       formData.append("nombre", "Grupo");
       formData.append("idUsuario", dni);
+      formData.append("idEvento", localStorage.getItem("idEvento"));
 
       ajaxPost({
         url: RUTA + "evaluacion/createGroup",
@@ -170,4 +208,68 @@ function listenGroup() {
         },
       });
     });
+}
+
+function downloadReport() {
+  document.getElementById("competencia_detail_download").onclick = function (
+    event
+  ) {
+    event.preventDefault();
+
+    document.getElementById(
+      "download_report"
+    ).innerHTML = `<div class="competencia_content_load">
+<i class="fas fa-circle-notch fa-spin fa-2x"></i>
+</div>`;
+
+    document.getElementById("comptencia_content_table").hidden = true;
+
+    let formData = new FormData();
+    formData.append("idEvento", localStorage.getItem("idEvento"));
+
+    ajaxPost({
+      url: RUTA + "evaluacion/downloadReporteEvento",
+      body: formData,
+      cbSuccess: (data) => {
+        document.getElementById("download_report").innerHTML = ``;
+
+        const url = data.result[0].success_message;
+        window.location.href = url;
+        document.getElementById("comptencia_content_table").hidden = false;
+      },
+    });
+  };
+}
+
+function backEvaluacionGeneral() {
+  console.log("Prueba");
+  document.getElementById("back_evaluacion_general").onclick = function () {
+    document.querySelector(".mainpage").innerHTML = EvaluacionEvento();
+    initEvaluacionEvento();
+    eventTableGeneralEvento();
+    createEvento();
+  };
+}
+
+function deleteEvento() {
+  document.getElementById("competencia_detail_delete").onclick = function () {
+    document.getElementById("box_eliminar").innerHTML = ``;
+    document.getElementById(
+      "box_eliminar"
+    ).innerHTML = `<i class="fas fa-circle-notch fa-spin"></i>`;
+
+    let formData = new FormData();
+    formData.append("idEvento", localStorage.getItem("idEvento"));
+
+    ajaxPost({
+      url: RUTA + "evaluacion/deleteEvento",
+      body: formData,
+      cbSuccess: (data) => {
+        document.querySelector(".mainpage").innerHTML = EvaluacionEvento();
+        initEvaluacionEvento();
+        eventTableGeneralEvento();
+        createEvento();
+      },
+    });
+  };
 }

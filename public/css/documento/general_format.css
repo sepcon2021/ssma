@@ -706,6 +706,13 @@ form#examen {
   height: 20px;
 }
 
+.header_cerrar_sesion {
+  position: fixed;
+  top: 80px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
 @media only screen and (max-width: 620px) {
   .wrap_document_format_head_icon img {
     width: 90%;

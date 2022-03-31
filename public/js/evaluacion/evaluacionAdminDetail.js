@@ -1,3 +1,8 @@
+import { ajaxPost } from "../helpers/ajax.js";
+import EvaluacionAdmin, {
+  createGroup,
+  initEvaluacionAdmin,
+} from "./evaluacionAdmin.js";
 import EvaluacionCargaUsuario, {
   eventTableGeneral,
   loadInitUsuario,
@@ -26,7 +31,8 @@ export default function evaluacionAdminDetail() {
     EvaluacionDescripcion();
   fillForm();
   listenForm();
-  //backEvaluacionGeneral();
+  backEvaluacionGeneral();
+  deleteGrupo();
 }
 
 function typeContentHtml(index) {
@@ -36,8 +42,8 @@ function typeContentHtml(index) {
         EvaluacionDescripcion();
       fillForm();
       listenForm();
-      // backEvaluacionGeneral();
-
+      backEvaluacionGeneral();
+      deleteGrupo();
       break;
     case 1:
       document.getElementById("competenciaDetalle_content").innerHTML =
@@ -45,15 +51,13 @@ function typeContentHtml(index) {
       loadInitUsuario();
       eventTableGeneral();
       sendForm();
-      //backEvaluacionGeneral();
-
+      deleteGrupo();
       break;
     case 2:
       document.getElementById("competenciaDetalle_content").innerHTML =
         EvaluacionSeguimiento();
       init();
-      //backEvaluacionGeneral();
-
+      deleteGrupo();
       break;
     default:
       break;
@@ -65,5 +69,23 @@ function backEvaluacionGeneral() {
   document.getElementById("back_evaluacion_general").onclick = function () {
     document.querySelector(".mainpage").innerHTML = EvaluacionAdmin();
     initEvaluacionAdmin();
+    createGroup();
+  };
+}
+
+function deleteGrupo() {
+  document.getElementById("competencia_detail_delete").onclick = function () {
+    let formData = new FormData();
+    formData.append("idGroup", localStorage.getItem("idGroup"));
+
+    ajaxPost({
+      url: RUTA + "evaluacion/deleteGrupo",
+      body: formData,
+      cbSuccess: (data) => {
+        document.querySelector(".mainpage").innerHTML = EvaluacionAdmin();
+        initEvaluacionAdmin();
+        createGroup();
+      },
+    });
   };
 }

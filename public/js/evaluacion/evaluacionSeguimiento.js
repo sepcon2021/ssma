@@ -118,9 +118,6 @@ function drawHtmlUsuario(listUsuario) {
 
     <div id="download_report"></div>
 
-    <script>
-    console.log("Prueba de zona");
-    </script>
 
   `;
 

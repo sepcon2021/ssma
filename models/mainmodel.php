@@ -1,212 +1,212 @@
 <?php
-    require_once 'models/usuario.php';
-    require_once 'models/seguimientomodel.php';
+require_once 'models/usuario.php';
+require_once 'models/seguimientomodel.php';
 
-    class MainModel extends Model{
+class MainModel extends Model
+{
 
-        public function __construct()
-        {
-            parent::__construct();
-        }
+  public function __construct()
+  {
+    parent::__construct();
+  }
 
-        public function getByUserPass($user, $clave){
-           $item = new Usuario;
+  public function getByUserPass($user, $clave)
+  {
+    $item = new Usuario;
 
-           $query = $this->db->connectrrhh()->prepare('SELECT apellidos,nombres,correo,usuario,ssma,internal,dni
+    $query = $this->db->connectrrhh()->prepare('SELECT apellidos,nombres,correo,usuario,ssma,internal,dni
                                                     FROM tabla_aquarius
                                                     WHERE USUARIO = :usuario AND CLAVE = :clave');
 
-           try{
-                $query->execute(['usuario'  => $user, 'clave' => SHA1($clave)]);
+    try {
+      $query->execute(['usuario'  => $user, 'clave' => SHA1($clave)]);
 
-                while($row = $query->fetch()){
-                    $item->apellidos = $row['apellidos'];
-                    $item->nombres   = $row['nombres'];
-                    $item->correo    = $row['correo'];
-                    $item->usuario   = $row['usuario'];
-                    $item->ssma      = $row['ssma'];
-                    $item->internal     = $row['internal'];
-                    $item->dni     = $row['dni'];
+      while ($row = $query->fetch()) {
+        $item->apellidos = $row['apellidos'];
+        $item->nombres   = $row['nombres'];
+        $item->correo    = $row['correo'];
+        $item->usuario   = $row['usuario'];
+        $item->ssma      = $row['ssma'];
+        $item->internal     = $row['internal'];
+        $item->dni     = $row['dni'];
 
-                    echo "DNI";
-                    echo $item->dni;
-                    $item->iniciales = substr( $row['nombres'],0,1).substr($row['apellidos'],0,1 );
-                }
+        echo "DNI";
+        echo $item->dni;
+        $item->iniciales = substr($row['nombres'], 0, 1) . substr($row['apellidos'], 0, 1);
+      }
 
-                session_start();
-                $_SESSION['iniciales']  = $item->iniciales;
-                $_SESSION['nivel']      = $item->ssma;
-                $_SESSION['nombres']    = $item->nombres." ".$item->apellidos;
-                $_SESSION['usuario']    = $item->usuario;
-                $_SESSION['internal']    = $item->internal;
-                $_SESSION['dni']    = $item->dni;
+      session_start();
+      $_SESSION['iniciales']  = $item->iniciales;
+      $_SESSION['nivel']      = $item->ssma;
+      $_SESSION['nombres']    = $item->nombres . " " . $item->apellidos;
+      $_SESSION['usuario']    = $item->usuario;
+      $_SESSION['internal']    = $item->internal;
+      $_SESSION['dni']    = $item->dni;
 
-                return $item;
+      return $item;
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
 
-            }catch(PDOException $e){
-                return [];
-            }
-        }
 
+  public function getUserByDniTrabajador($dni)
+  {
+    $item = new Usuario;
 
-        public function getUserByDniTrabajador($dni){
-            $item = new Usuario;
- 
-            $query = $this->db->connectrrhh()->prepare('SELECT apellidos,nombres,correo,usuario,ssma,internal,dni
+    $query = $this->db->connectrrhh()->prepare('SELECT apellidos,nombres,correo,usuario,ssma,internal,dni
                                                      FROM tabla_aquarius
                                                      WHERE DNI = :dni ');
- 
-            try{
-                 $query->execute(['dni'  => $dni]);
- 
-                 while($row = $query->fetch()){
-                     $item->apellidos = $row['apellidos'];
-                     $item->nombres   = $row['nombres'];
-                     $item->correo    = $row['correo'];
-                     $item->usuario   = $row['usuario'];
-                     $item->ssma      = $row['ssma'];
-                     $item->internal     = $row['internal'];
-                     $item->dni     = $row['dni'];
 
-                     $item->iniciales = substr( $row['nombres'],0,1).substr($row['apellidos'],0,1 );
-                 }
- 
-                 session_start();
-                 $_SESSION['iniciales']  = $item->iniciales;
-                 $_SESSION['nivel']      = $item->ssma;
-                 $_SESSION['nombres']    = $item->nombres." ".$item->apellidos;
-                 $_SESSION['usuario']    = $item->usuario;
-                 $_SESSION['internal']    = $item->internal;
-                 $_SESSION['dni']    = $item->dni;
+    try {
+      $query->execute(['dni'  => $dni]);
 
-                 return $item;
- 
-             }catch(PDOException $e){
-                 return [];
-             }
-         }
+      while ($row = $query->fetch()) {
+        $item->apellidos = $row['apellidos'];
+        $item->nombres   = $row['nombres'];
+        $item->correo    = $row['correo'];
+        $item->usuario   = $row['usuario'];
+        $item->ssma      = $row['ssma'];
+        $item->internal     = $row['internal'];
+        $item->dni     = $row['dni'];
 
-        
-         public function getUserMovil($user,$pass) {
-            $item = new Usuario;
+        $item->iniciales = substr($row['nombres'], 0, 1) . substr($row['apellidos'], 0, 1);
+      }
 
-            $query = $this->db->connectrrhh()->prepare('SELECT internal,dni,apellidos,nombres,dcostos,ccostos,dsede,usuario,correo,ccargo,dcargo,perfil,ssma
+      session_start();
+      $_SESSION['iniciales']  = $item->iniciales;
+      $_SESSION['nivel']      = $item->ssma;
+      $_SESSION['nombres']    = $item->nombres . " " . $item->apellidos;
+      $_SESSION['usuario']    = $item->usuario;
+      $_SESSION['internal']    = $item->internal;
+      $_SESSION['dni']    = $item->dni;
+
+      return $item;
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
+
+
+  public function getUserMovil($user, $pass)
+  {
+    $item = new Usuario;
+
+    $query = $this->db->connectrrhh()->prepare('SELECT internal,dni,apellidos,nombres,dcostos,ccostos,dsede,usuario,correo,ccargo,dcargo,perfil,ssma
                                                         FROM tabla_aquarius
                                                         WHERE USUARIO = :usuario AND CLAVE = :clave');
 
-            
-
-            try {
-                $query->execute(['usuario'  => $user, 'clave' => SHA1($pass)]);
 
 
-                while ($row = $query->fetch()) {
-                    $item->internal     = $row['internal'];
-                    $item->nombres      = $row['nombres'];
-                    $item->apellidos      =$row['apellidos'];
-                    $item->ssma         = $row['ssma'];
-                    $item->usuario      = $row['usuario'];
-                    $item->correo      = $row['correo'];
-
-                    $item->dni = $row['dni'];    
-                    $item->dcostos = $row['dcostos'];     
-                    $item->ccostos   = $row['ccostos'];  
-                    $item->dsede = $row['dsede'];
-                    $item->ccargo = $row['ccargo'];
-                    $item->dcargo = $row['dcargo'];
-                    $item->perfil = $row['perfil'];
-                }
-
-                if ( !$item->internal )
-                {
-                    return null;
-                }
-                
-                return $item;
-
-            } catch (PDOException $e) {
-                return [];
-            }
-        }
+    try {
+      $query->execute(['usuario'  => $user, 'clave' => SHA1($pass)]);
 
 
-        public function getUserByDni($dni) {
-            $item = new Usuario;
-            $seguimientoModel = new SeguimientoModel;
+      while ($row = $query->fetch()) {
+        $item->internal     = $row['internal'];
+        $item->nombres      = $row['nombres'];
+        $item->apellidos      = $row['apellidos'];
+        $item->ssma         = $row['ssma'];
+        $item->usuario      = $row['usuario'];
+        $item->correo      = $row['correo'];
 
-            $query = $this->db->connectrrhh()->prepare('SELECT internal,dni,apellidos,nombres,dcostos,ccostos,dsede,usuario,correo,ccargo,dcargo,perfil,ssma
+        $item->dni = $row['dni'];
+        $item->dcostos = $row['dcostos'];
+        $item->ccostos   = $row['ccostos'];
+        $item->dsede = $row['dsede'];
+        $item->ccargo = $row['ccargo'];
+        $item->dcargo = $row['dcargo'];
+        $item->perfil = $row['perfil'];
+      }
+
+      if (!$item->internal) {
+        return null;
+      }
+
+      return $item;
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
+
+
+  public function getUserByDni($dni, $clave)
+  {
+    $item = new Usuario;
+    $seguimientoModel = new SeguimientoModel;
+
+    $query = $this->db->connectrrhh()->prepare('SELECT internal,dni,apellidos,nombres,dcostos,ccostos,dsede,usuario,correo,ccargo,dcargo,perfil,ssma
                                                         FROM tabla_aquarius
-                                                        WHERE DNI = :dni');
-
-            
-
-            try {
-                $query->execute(['dni'  => $dni]);
+                                                        WHERE DNI = :dni AND clave = :clave ');
 
 
-                while ($row = $query->fetch()) {
-                    $item->internal     = $row['internal'];
-                    $item->nombres      = $row['nombres'];
-                    $item->apellidos      =$row['apellidos'];
-                    $item->ssma         = $row['ssma'];
-                    $item->usuario      = $row['usuario'];
-                    $item->correo      = $row['correo'];
 
-                    $item->dni = $row['dni'];    
-                    $item->dcostos = $row['dcostos'];     
-                    $item->ccostos   = $row['ccostos'];  
-                    $item->dsede = $row['dsede'];
-                    $item->ccargo = $row['ccargo'];
-                    $item->dcargo = $row['dcargo'];
-                    $item->perfil = $row['perfil'];
+    try {
+      //$query->execute(['dni'  => $dni]);
 
-                    $item->permiso = $this->getPermiso($item->dni);
-                    $item->notificacion = $this->triggerNotification($row['dni']);
-                    $item->amountSeguimiento = count($seguimientoModel->listaAccionesPorEstado('1', $dni));
-                }
+      $query->execute(['dni'  => $dni, 'clave' => SHA1($clave)]);
 
-                if ( !$item->internal )
-                {
-                    return null;
-                }
-                
-                return $item;
+      while ($row = $query->fetch()) {
+        $item->internal     = $row['internal'];
+        $item->nombres      = $row['nombres'];
+        $item->apellidos      = $row['apellidos'];
+        $item->ssma         = $row['ssma'];
+        $item->usuario      = $row['usuario'];
+        $item->correo      = $row['correo'];
 
-            } catch (PDOException $e) {
-                return [];
-            }
-        }
+        $item->dni = $row['dni'];
+        $item->dcostos = $row['dcostos'];
+        $item->ccostos   = $row['ccostos'];
+        $item->dsede = $row['dsede'];
+        $item->ccargo = $row['ccargo'];
+        $item->dcargo = $row['dcargo'];
+        $item->perfil = $row['perfil'];
+
+        $item->permiso = $this->getPermiso($item->dni);
+        $item->notificacion = $this->triggerNotification($row['dni']);
+        $item->amountSeguimiento = count($seguimientoModel->listaAccionesPorEstado('1', $dni));
+      }
+
+      if (!$item->internal) {
+        return null;
+      }
+
+      return $item;
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
 
 
-        public function getPermiso($dni) {
-            $item = array();
+  public function getPermiso($dni)
+  {
+    $item = array();
 
-            $query = $this->db->connectrrhh()->prepare('SELECT idTypeRole ,dni
+    $query = $this->db->connectrrhh()->prepare('SELECT idTypeRole ,dni
                                                         FROM ssma.role
                                                         WHERE DNI = :dni');
 
-            try {
-                $query->execute(['dni'  => $dni]);
+    try {
+      $query->execute(['dni'  => $dni]);
 
 
-                while ($row = $query->fetch()) {
-                    array_push($item,$row);
-                }
+      while ($row = $query->fetch()) {
+        array_push($item, $row);
+      }
 
-                return $item;
+      return $item;
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
 
-            } catch (PDOException $e) {
-                return [];
-            }
-        }
 
+  public function getValuesTops()
+  {
+    $items = [];
 
-        public function getValuesTops()
-        {
-            $items = [];
-
-            try {
-                $query = $this->db->connect()->query("SELECT
+    try {
+      $query = $this->db->connect()->query("SELECT
                 Count(vwtops.sede) AS tops,
                 general.nombre AS sede
                 FROM
@@ -219,23 +219,24 @@
                 ORDER BY
                 general.nombre
                  ");
-                while($row = $query->fetch()){
-                    $item = $row['tops'];
+      while ($row = $query->fetch()) {
+        $item = $row['tops'];
 
-                    array_push($items,$item);
-                }
+        array_push($items, $item);
+      }
 
-                return $items;
-            } catch (PDOException $e) {
-                return [];
-            }
-        }
+      return $items;
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
 
-        public function getSedesTops(){
-            $items = [];
+  public function getSedesTops()
+  {
+    $items = [];
 
-            try {
-                $query = $this->db->connect()->query("SELECT
+    try {
+      $query = $this->db->connect()->query("SELECT
                 Count(vwtops.sede) AS tops,
                 general.nombre AS sede
                 FROM
@@ -248,30 +249,32 @@
                 ORDER BY
                 general.nombre
                  ");
-                while($row = $query->fetch()){
-                    $item = $row['sede'];
+      while ($row = $query->fetch()) {
+        $item = $row['sede'];
 
-                    array_push($items,$item);
-                }
+        array_push($items, $item);
+      }
 
-                return $items;
-            } catch (PDOException $e) {
-                return [];
-            }
-        }
+      return $items;
+    } catch (PDOException $e) {
+      return [];
+    }
+  }
 
-        public function getMonth(){
-            $mes = ["ENERO","FEBRERO","MARZO","ABRIL","MAYO","JUNIO","JULIO","AGOSTO","SETIEMBRE","OCTUBRE","NOVIEMBRE","DICIEMBRE"];
+  public function getMonth()
+  {
+    $mes = ["ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SETIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE"];
 
-            return $mes[date('n')-1];
-        }
+    return $mes[date('n') - 1];
+  }
 
-        public function getListNotificacionByDni($dni){
-            
-            $items = array();
+  public function getListNotificacionByDni($dni)
+  {
 
-            try {
-                $query = $this->db->connect()->query("SELECT 
+    $items = array();
+
+    try {
+      $query = $this->db->connect()->query("SELECT 
                 ssma.notificacion.idLeccionAprendida,
                 ssma.notificacion.dni,
                 ssma.notificacion.registro
@@ -279,82 +282,83 @@
                 ssma.notificacion
                 WHERE ssma.notificacion.dni = '$dni' ");
 
-                while($row = $query->fetch()){
-                    array_push($items,$row);
-                }
-                return $items;
+      while ($row = $query->fetch()) {
+        array_push($items, $row);
+      }
+      return $items;
+    } catch (PDOException $e) {
+      echo $e;
+      return [];
+    }
+  }
 
-            } catch (PDOException $e) {
-                echo $e;
-                return [];
-            }
-        }
 
+  public function getListLeccionesAprendidas()
+  {
 
-        public function getListLeccionesAprendidas(){
-            
-            $items = array();
+    $items = array();
 
-            try {
+    try {
 
-                $query = $this->db->connect()->query("SELECT 
+      $query = $this->db->connect()->query("SELECT 
                 ssma.lecciones_aprendidas.id,
                 ssma.lecciones_aprendidas.nombre,
                 ssma.lecciones_aprendidas.estado
                 FROM 
                 ssma.lecciones_aprendidas");
 
-                while($row = $query->fetch()){
-                    array_push($items,$row);
-                }
-                return $items;
+      while ($row = $query->fetch()) {
+        array_push($items, $row);
+      }
+      return $items;
+    } catch (PDOException $e) {
+      echo $e;
+      return [];
+    }
+  }
 
-            } catch (PDOException $e) {
-                echo $e;
-                return [];
-            }
-        }
+
+  function triggerNotification($dni)
+  {
+
+    $notificaciones = $this->getListNotificacionByDni($dni);
+    $leccionesAprendidas = $this->getListLeccionesAprendidas();
+
+    $estado = false;
+
+    if (count($notificaciones) < count($leccionesAprendidas)) {
+      $estado = true;
+    }
+
+    return $estado;
+  }
+
+  function updateNotification($dni)
+  {
+
+    $notificaciones = $this->getListNotificacionByDni($dni);
+    $leccionesAprendidas = $this->getListLeccionesAprendidas();
+
+    $limit = count($leccionesAprendidas) - count($notificaciones);
+
+    $listUpdate = $this->getListLeccionesAprendidasLimit($limit);
 
 
-        function triggerNotification($dni){
+    foreach ($listUpdate as $notificacion) {
+      $this->insertNotificacion($notificacion["id"], $dni);
+    }
+  }
 
-            $notificaciones = $this->getListNotificacionByDni($dni);
-            $leccionesAprendidas = $this->getListLeccionesAprendidas();
+  public function getListLeccionesAprendidasLimit($limit)
+  {
 
-            $estado = false;
-            
-            if (count($notificaciones) < count($leccionesAprendidas)) {
-                $estado = true;
-            }
+    $sql = $limit > 0 ? "LIMIT $limit " : "";
 
-            return $estado;
-        }
+    $items = array();
 
-        function updateNotification($dni){
+    try {
 
-            $notificaciones = $this->getListNotificacionByDni($dni);
-            $leccionesAprendidas = $this->getListLeccionesAprendidas();
-
-            $limit = count($leccionesAprendidas) - count($notificaciones);
-
-            $listUpdate = $this->getListLeccionesAprendidasLimit($limit);
-
-        
-            foreach($listUpdate as $notificacion){
-                $this->insertNotificacion($notificacion["id"],$dni);
-            }
-        
-        }
-
-        public function getListLeccionesAprendidasLimit($limit){
-
-            $sql = $limit > 0 ? "LIMIT $limit " : "";  
-            
-            $items = array();
-
-            try {
-
-                $query = $this->db->connect()->query("SELECT 
+      $query = $this->db->connect()->query("SELECT 
                 ssma.lecciones_aprendidas.id,
                 ssma.lecciones_aprendidas.nombre,
                 ssma.lecciones_aprendidas.estado
@@ -363,31 +367,29 @@
 
 
 
-                while($row = $query->fetch()){
-                    array_push($items,$row);
-                }
-                return $items;
-
-            } catch (PDOException $e) {
-                echo $e;
-                return [];
-            }
-        }
-
-        public function insertNotificacion($idLeccionAprendida,$dni){
-            try {
-                $query = $this->db->connect()->prepare('INSERT INTO NOTIFICACION (IDLECCIONAPRENDIDA,DNI)
-                                            VALUES (:idleccionaprendida,:dni)');
-                $query->execute([
-                    'idleccionaprendida' =>$idLeccionAprendida,
-                    'dni' => $dni
-                ]);
-                return true;
-            } catch (PDOException $e) {
-                echo $e;
-                return false;
-            }
-        }
+      while ($row = $query->fetch()) {
+        array_push($items, $row);
+      }
+      return $items;
+    } catch (PDOException $e) {
+      echo $e;
+      return [];
     }
-?>
+  }
 
+  public function insertNotificacion($idLeccionAprendida, $dni)
+  {
+    try {
+      $query = $this->db->connect()->prepare('INSERT INTO NOTIFICACION (IDLECCIONAPRENDIDA,DNI)
+                                            VALUES (:idleccionaprendida,:dni)');
+      $query->execute([
+        'idleccionaprendida' => $idLeccionAprendida,
+        'dni' => $dni
+      ]);
+      return true;
+    } catch (PDOException $e) {
+      echo $e;
+      return false;
+    }
+  }
+}

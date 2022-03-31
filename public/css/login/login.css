@@ -68,7 +68,7 @@
   /*background: blue;*/
 }
 
-#inicio_sesion_dni {
+.inicio_sesion_dni {
   width: 100%;
   height: 30px;
   border-width: 0.5px;
@@ -82,7 +82,7 @@
   outline: none;
 }
 
-#inicio_sesion_dni:focus {
+.inicio_sesion_dni:focus {
   border-color: #26a66a;
   border-width: 2px;
   border-radius: 5px;

@@ -3,6 +3,10 @@ import EvaluacionAdmin, {
   createGroup,
   initEvaluacionAdmin,
 } from "../evaluacion/evaluacionAdmin.js";
+import EvaluacionEvento, {
+  initEvaluacionEvento,
+} from "../evaluacion/evaluacionEvento.js";
+import EvaluadorMain, { initMainEvento } from "../evaluacion/evaluadorMain.js";
 import EvaluacionUsuario, {
   initEvaluacionUsuario,
 } from "../evaluacionUsuario/evaluacionUsuario.js";
@@ -234,9 +238,8 @@ $(function () {
       removeClass();
     }
     if (indexPage == COMPONENT.ADMIN_EVALUACION_COMPETENCIA) {
-      document.querySelector(".mainpage").innerHTML = EvaluacionAdmin();
-      initEvaluacionAdmin();
-      createGroup();
+      document.querySelector(".mainpage").innerHTML = EvaluadorMain();
+      initMainEvento();
       removeClass();
     }
   }
@@ -310,3 +313,32 @@ $(function () {
     }
   });
 });
+
+let state = false;
+
+document.getElementById("circle").onclick = function () {
+  state = !state;
+
+  if (state) {
+    document.getElementById("header_cerrar_sesion").innerHTML = `
+  <div><button id="logout">Cerrar sesión</button></div>
+  `;
+    document
+      .getElementById("header_cerrar_sesion")
+      .classList.add("header_cerrar_sesion");
+    logout();
+  } else {
+    document.getElementById("header_cerrar_sesion").innerHTML = `
+  `;
+    document
+      .getElementById("header_cerrar_sesion")
+      .classList.remove("header_cerrar_sesion");
+  }
+};
+
+function logout() {
+  document.getElementById("logout").onclick = function () {
+    sessionStorage.removeItem("dataTrabajador");
+    window.location.replace(RUTA);
+  };
+}

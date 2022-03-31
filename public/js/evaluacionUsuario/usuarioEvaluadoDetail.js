@@ -1,4 +1,5 @@
 import { ajaxPost } from "../helpers/ajax.js";
+import { isCanvasBlank } from "../validate/validate.js";
 import { initUsuarioEvaluado } from "./evaluacionEvaluado.js";
 import EvaluacionUsuario, {
   initEvaluacionUsuario,
@@ -9,7 +10,9 @@ export default function UsuarioEvaluadoDetail(dataform) {
   const { nombre } = dataform;
   console.log(dataform);
   const data = JSON.parse(sessionStorage.getItem("dataTrabajador")),
-    dni = data.result[0].dni;
+    dni = data.result[0].dni,
+    nombreEvaluado = data.result[0].nombres + " " + data.result[0].apellidos,
+    cargo = data.result[0].dcargo;
 
   const listCompromiso = [
     dataform["compromiso1"],
@@ -75,9 +78,9 @@ export default function UsuarioEvaluadoDetail(dataform) {
             </div>
 
             <div class="wrap_document_format_head_code">
-              <p>PSPC-110-X-FR-0XX</p>
+              <p>PSPC-100-X-PR-010-FR-001</p>
               <p>Revisión: 0</p>
-              <p>Emisión: XX/03/2022</p>
+              <p>Emisión: 09/03/2022</p>
               <p>Pagina: 1 de 1</p>
             </div>
 
@@ -118,6 +121,16 @@ export default function UsuarioEvaluadoDetail(dataform) {
             </div>
 
           </div>
+
+
+          
+          <div class="wrap_document_format_head">
+            <div class="w50p item_format">Nombres y apellidos :${nombreEvaluado} </div>
+            <div class="w30p item_format">Cargo : ${cargo}</div>
+            <div class="w20p">DNI : ${dni}</div>
+          </div>
+
+
 
           <div class="wrap_document_format_body">
             <form class="general_form" action="" id="formDigital">
@@ -329,7 +342,7 @@ export default function UsuarioEvaluadoDetail(dataform) {
                       <tr>
                         <td class="item_align_form desempeño_promedio">Desempeño promedio</td>
                         <td class="desempeño_promedio">100%</td>
-                        <td><input value="${averageEstres} type=" number" readonly="readonly" id="estres_total"
+                        <td><input value="${averageEstres}" type=" number" readonly="readonly" id="estres_total"
                             name="estres_total" class=" evaluacion_puntaje w30p"></td>
                       </tr>
                     </tbody>
@@ -482,27 +495,31 @@ export function sendFormEvaluado() {
 
       const dataform = new FormData(event.target);
 
-      loadHtml("usuarioDetail", true);
+      if (!isCanvasBlank()) {
+        loadHtml("usuarioDetail", true);
 
-      ajaxPost({
-        url: RUTA + "public/inc/uploadFirmaEvaluacion.php",
-        body: dataformImg,
-        cbSuccess: (data) => {
-          console.log(data.url);
+        ajaxPost({
+          url: RUTA + "public/inc/uploadFirmaEvaluacion.php",
+          body: dataformImg,
+          cbSuccess: (data) => {
+            console.log(data.url);
 
-          dataform.append("firmaEvaluado", data.url);
-          dataform.append("estado", 2);
+            dataform.append("firmaEvaluado", data.url);
+            dataform.append("estado", 2);
 
-          ajaxPost({
-            url: RUTA + "evaluacion/updateEvaluado",
-            body: dataform,
-            cbSuccess: (dataJson) => {
-              console.log(dataJson);
-              usuarioEvaluadorHtml();
-            },
-          });
-        },
-      });
+            ajaxPost({
+              url: RUTA + "evaluacion/updateEvaluado",
+              body: dataform,
+              cbSuccess: (dataJson) => {
+                console.log(dataJson);
+                usuarioEvaluadorHtml();
+              },
+            });
+          },
+        });
+      } else {
+        alert("Es necesario ingresar firma");
+      }
     });
 }
 
