@@ -781,7 +781,7 @@ function htmlInspeccionBotiquin(
         <td>${element.fecha}</td>
         <td>${element.ubicacion}</td>
         <td>${element.condicion}</td>
-        <td>${element.clasificacion}</td>   
+        <td>${clasificacionType(element.clasificacion)}</td>   
         <td>${element.accion_correctiva}</td> 
         <td>${element.usuario_responsable_detalle}</td>
         <td>${element.fecha_cumplimiento}</td>
@@ -810,7 +810,6 @@ function htmlInspeccionBotiquin(
                         <th width="250px">Acción correctiva</th>
                         <th width="20px">Responsable de la acción</th>
                         <th width="150px">Fecha de cumplimiento</th>
-                        <th width="150px">comentarios adicionales</th>
                         <th width="150px">Seguimiento</th>
                         <th width="150px">Evidencia</th>
                     </tr>
@@ -862,6 +861,20 @@ function typeAnswer(data) {
   }
   if (data == 3) {
     answer = "Sin verificar";
+  }
+  return answer;
+}
+
+function clasificacionType(data) {
+  let answer = "";
+  if (data == 1) {
+    answer = "A";
+  }
+  if (data == 2) {
+    answer = "B";
+  }
+  if (data == 3) {
+    answer = "C";
   }
   return answer;
 }

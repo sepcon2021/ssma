@@ -95,6 +95,7 @@ FROM
                         ORDER BY
                         ssma.tops.reg DESC";
 
+    echo $statement;
 
 
     $listReport = array();
@@ -1072,26 +1073,46 @@ FROM
       $sedeSQL = "idProyecto = '$proyecto'";
     }
 
-    $query = $this->db->connect()->prepare("SELECT     
-        tipo_inspeccion,
-        idProyecto,
-        sede, 
-        area,
-        lugar_inspeccion,
-        usuario,
-        responsable_area,
-        fecha,
-        registro,
-        ubicacion,
-        condicion,
-        clasificacion,
-        accion_correctiva,
-        usuario_responsable_detalle,
-        fecha_cumplimiento,
-        seguimiento,
-        evidencia
-        FROM view_inspeccion_botiquin
-        WHERE registro >= '$fechaInicio'  AND registro < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  ORDER BY registro DESC 
+    $query = $this->db->connect()->prepare("SELECT 
+
+        IF((ssma.inspeccion_botiquin.id_tipo_inspeccion = 1),
+            'Informal',
+            'Planeada') AS tipo_inspeccion,
+        ssma.inspeccion_botiquin.sede AS idProyecto,
+        ssma.wvsedes.nombre AS sede,
+        ssma.area_general.nombre AS area,
+        ssma.inspeccion_botiquin.lugar_inspeccion AS lugar_inspeccion,
+
+        CONCAT(rrhh.tabla_aquarius.nombres,
+                ' ',
+                rrhh.tabla_aquarius.apellidos) AS usuario,
+
+        ssma.inspeccion_botiquin.dni_responsable AS responsable_area ,
+        ssma.inspeccion_botiquin.fecha AS fecha,
+        ssma.inspeccion_botiquin.registro AS registro,
+        ssma.inspeccion_botiquin_detalle.ubicacion AS ubicacion,
+        ssma.inspeccion_botiquin_detalle.condicion AS condicion,
+        ssma.inspeccion_botiquin_detalle.clasificacion AS clasificacion,
+        ssma.inspeccion_botiquin_detalle.accion_correctiva AS accion_correctiva,
+        CONCAT(`tabla_responsable_detalle`.`nombres`,
+                ' ',
+                `tabla_responsable_detalle`.`apellidos`) AS `usuario_responsable_detalle`,
+        ssma.inspeccion_botiquin_detalle.fecha_cumplimiento AS fecha_cumplimiento,
+        ssma.inspeccion_botiquin_detalle.seguimiento AS seguimiento,
+        ssma.inspeccion_botiquin_detalle.evidencia AS evidencia
+    FROM
+        ssma.inspeccion_botiquin
+        JOIN ssma.wvsedes ON ssma.wvsedes.cod = ssma.inspeccion_botiquin.sede
+        JOIN ssma.area_general ON ssma.area_general.id = ssma.inspeccion_botiquin.id_area
+        JOIN rrhh.tabla_aquarius ON rrhh.tabla_aquarius.dni = ssma.inspeccion_botiquin.dni_inspeccionado
+
+
+        JOIN ssma.inspeccion_botiquin_detalle ON ssma.inspeccion_botiquin_detalle.id_inspeccion_botiquin = ssma.inspeccion_botiquin.id
+        LEFT JOIN rrhh.tabla_aquarius tabla_responsable_detalle ON tabla_responsable_detalle.dni = ssma.inspeccion_botiquin_detalle.dni_responsable
+
+     WHERE ssma.inspeccion_botiquin.registro  >= '$fechaInicio'  AND ssma.inspeccion_botiquin.registro  < DATE_ADD('$fechaFin',INTERVAL 1 DAY) AND $sedeSQL  
+    ORDER BY ssma.inspeccion_botiquin.registro DESC
+
 
                                                     ");
 
